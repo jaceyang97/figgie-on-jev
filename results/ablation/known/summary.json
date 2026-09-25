@@ -1,0 +1,63 @@
+{
+  "backend": "jev (openrouter, typesafe/jev-1.13)",
+  "decision_points": 100,
+  "jev_calls": 100,
+  "cost_usd": 0.012,
+  "brier_posterior": {
+    "mean": 0.6851,
+    "ci95": [
+      0.6385,
+      0.7286
+    ]
+  },
+  "brier_jev": {
+    "mean": 0.7081,
+    "ci95": [
+      0.6455,
+      0.7698
+    ]
+  },
+  "logloss_posterior": {
+    "mean": 1.2649,
+    "ci95": [
+      1.179,
+      1.3504
+    ]
+  },
+  "logloss_jev": {
+    "mean": 1.3147,
+    "ci95": [
+      1.1939,
+      1.4335
+    ]
+  },
+  "tv_distance": {
+    "mean": 0.2427,
+    "ci95": [
+      0.2225,
+      0.2641
+    ]
+  },
+  "top1_agree": {
+    "mean": 0.3,
+    "ci95": [
+      0.21,
+      0.39
+    ]
+  },
+  "action_agree": {
+    "mean": 0.08,
+    "ci95": [
+      0.03,
+      0.14
+    ]
+  },
+  "regret": {
+    "mean": 0.5662,
+    "ci95": [
+      0.3225,
+      0.8245
+    ]
+  },
+  "brier_uniform": 0.75
+}

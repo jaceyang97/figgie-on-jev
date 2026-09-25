@@ -27,8 +27,14 @@ RULES = (
 PRICE_LADDER = (2, 4, 6, 8, 11, 14, 18, 24)
 
 
-def describe_state(view: View, known: dict[str, int], goal_probs: dict[str, float] | None = None, n_trades: int = 12) -> dict:
-    """The JSON state sent to Jev. Only public information plus this seat's own hand."""
+def describe_state(view: View, known: dict[str, int] | None = None, goal_probs: dict[str, float] | None = None,
+                   n_trades: int = 12) -> dict:
+    """The JSON state sent to Jev: this seat's hand and chips, the book and recent trades.
+
+    Everything here is observed fact. `known` (cards known to exist, deduced by
+    code) and `goal_probs` (the exact posterior) are derived and only added
+    when given, for ablations.
+    """
     book = {}
     for s in SUITS:
         bid, ask = view.bids[s], view.asks[s]
@@ -51,18 +57,28 @@ def describe_state(view: View, known: dict[str, int], goal_probs: dict[str, floa
         "seconds_left": round(view.time_left),
         "order_book": book,
         "recent_trades_oldest_first": trades,
-        "cards_known_to_exist": dict(known),
     }
+    if known is not None:
+        state["cards_known_to_exist_derived"] = dict(known)
     if goal_probs is not None:
-        state["goal_suit_probability_from_card_counting"] = {s: round(p, 3) for s, p in goal_probs.items()}
+        state["goal_suit_probability_derived"] = {s: round(p, 3) for s, p in goal_probs.items()}
     return state
+
+
+def describe_log(view: View) -> list[str]:
+    """Every public event so far, oldest first, one line each: trades and quotes accepted onto the book."""
+    who = lambda p: "you" if p == view.me else f"P{p}"  # noqa: E731
+    events = [(o.t, f"t={o.t:.1f}s {who(o.player)} {o.side} {o.suit} {o.price}") for o in view.orders]
+    events += [(t.t, f"t={t.t:.1f}s trade {t.suit} {t.price}: {who(t.buyer)} bought from {who(t.seller)}")
+               for t in view.trades]
+    return [line for _, line in sorted(events, key=lambda e: e[0])]
 
 
 def _signed(counts: dict[str, int]) -> dict[str, int]:
     return {s: n for s, n in counts.items() if n}
 
 
-def describe_history(view: View, my_decisions: list[str] | None = None, n_prices: int = 6) -> dict:
+def describe_history(view: View, n_prices: int = 6) -> dict:
     """The whole public game log so far, compressed to per-suit and per-player summaries.
 
     Every trade and every quote accepted onto the book is public in Figgie, so
@@ -105,8 +121,6 @@ def describe_history(view: View, my_decisions: list[str] | None = None, n_prices
         }
         if p == view.me:
             info["starting_hand"] = {s: view.hand[s] - net[s] for s in SUITS}
-            if my_decisions:
-                info["my_recent_decisions"] = my_decisions
             players["me"] = info
         else:
             players[f"P{p}"] = info
@@ -148,6 +162,20 @@ def goal_question() -> dict:
     }
 
 
+def add_context(view: View, known=None, goal_probs=None, log: bool = False, summary: bool = False,
+                my_decisions: list[str] | None = None) -> dict:
+    """The state with optional context parts: the full event log, a numeric summary of it, and derived fields."""
+    state = describe_state(view, known, goal_probs)
+    if log:
+        del state["recent_trades_oldest_first"]  # the full log already has them
+        state["all_events_oldest_first"] = describe_log(view)
+    if summary:
+        state["game_summary"] = describe_history(view)
+    if my_decisions:
+        state["my_recent_decisions"] = my_decisions
+    return state
+
+
 class JevAgent(Agent):
     """Asks Jev which action to take, optionally with the classical posterior as a hint.
 
@@ -156,8 +184,8 @@ class JevAgent(Agent):
     round-trip time when `use_measured_latency` is set.
     """
 
-    def __init__(self, client, personality: str = "neutral", assist: bool = False, history: bool = False,
-                 greedy: bool = True, use_measured_latency: bool = False, **kw):
+    def __init__(self, client, personality: str = "neutral", assist: bool = False, known: bool = False,
+                 log: bool = False, summary: bool = False, greedy: bool = True, use_measured_latency: bool = False, **kw):
         kw.setdefault("wake_rate", 0.5)
         kw.setdefault("latency", 0.3)
         super().__init__(**kw)
@@ -166,11 +194,14 @@ class JevAgent(Agent):
         self.client = client
         self.personality = personality
         self.assist = assist
-        self.history = history
+        self.known = known
+        self.log = log
+        self.summary = summary
         self.decisions: list[tuple[float, str]] = []  # (time, label) of this seat's non-pass choices
         self.greedy = greedy
         self.use_measured_latency = use_measured_latency
-        self.name = f"jev:{personality}" + ("+history" if history else "") + ("+assist" if assist else "")
+        flags = [f for f, on in (("log", log), ("summary", summary), ("known", known), ("assist", assist)) if on]
+        self.name = f"jev:{personality}" + "".join(f"+{f}" for f in flags)
         self.last_answer = None
 
     def latency(self) -> float:
@@ -179,9 +210,8 @@ class JevAgent(Agent):
     def decide(self, view: View) -> Action:
         menu = action_menu(view)
         goal = self.counter.goal_probabilities() if self.assist else None
-        state = describe_state(view, self.counter.known(), goal)
-        if self.history:
-            state["game_so_far"] = describe_history(view, self.recent_decisions(view))
+        state = add_context(view, self.counter.known() if self.known else None, goal, self.log, self.summary,
+                            self.recent_decisions(view) if (self.log or self.summary) else None)
         answer = self.client.ask(state, {"action": action_question(menu, self.personality)})["action"]
         self.last_answer = answer
         if self.greedy:

@@ -116,7 +116,8 @@ def test_jev_payload_shape_matches_api():
     assert PERSONALITIES["hoarder"] in q["instructions"]
     state = describe_state(view, hands[0], {s: 0.25 for s in SUITS})
     assert state["my_hand"] == hands[0]
-    assert "goal_suit_probability_from_card_counting" in state
+    assert "goal_suit_probability_derived" in state and "cards_known_to_exist_derived" in state
+    assert "cards_known_to_exist_derived" not in describe_state(view)
 
 
 def test_history_summarises_public_log():
@@ -129,7 +130,7 @@ def test_history_summarises_public_log():
     orders = (Order(3, 2, "ask", "spades", 7), Order(8, 1, "bid", "spades", 9))
     view = View(t=20, t_end=240, me=0, hand=hand, chips=300,
                 bids={s: None for s in SUITS}, asks={s: None for s in SUITS}, trades=trades, orders=orders)
-    h = describe_history(view, ["t=12s buy_clubs: filled"])
+    h = describe_history(view)
     assert h["suits"]["spades"]["trades"] == 2 and h["suits"]["spades"]["avg_price"] == 8.0
     assert h["suits"]["spades"]["highest_bid_ever"] == 9
     me = h["players"]["me"]
@@ -137,23 +138,31 @@ def test_history_summarises_public_log():
     assert me["chips_from_trading"] == -7 + 9 - 4
     assert me["starting_hand"] == {"spades": 3, "clubs": 1, "hearts": 4, "diamonds": 1}
     assert h["players"]["P2"]["net_cards_bought"] == {"spades": -1}
-    assert me["my_recent_decisions"] == ["t=12s buy_clubs: filled"]
+    from figgie.agents.jev_agent import add_context, describe_log
+    log = describe_log(view)
+    assert log[0] == "t=3.0s P2 ask spades 7" and log[1] == "t=5.0s trade spades 7: you bought from P2"
+    assert len(log) == 5
+    st = add_context(view, log=True, summary=True, my_decisions=["t=12s buy_clubs: filled"])
+    assert "recent_trades_oldest_first" not in st and st["all_events_oldest_first"] == log
+    assert st["my_recent_decisions"] == ["t=12s buy_clubs: filled"] and "game_summary" in st
 
 
 def test_jev_history_agent_runs():
     client = MockJev(seed=3)
-    agents = [make_agent("jev:neutral+history", client), Fundamentalist(), BottomFeeder(), Noise()]
+    agents = [make_agent("jev:neutral+log+summary", client), Fundamentalist(), BottomFeeder(), Noise()]
     res = play_game(agents, random.Random(4), duration=40)
     assert sum(res.pnl) == pytest.approx(0.0)
-    assert agents[0].name == "jev:neutral+history"
+    assert agents[0].name == "jev:neutral+log+summary"
 
 
 def test_make_agent_specs():
     client = MockJev()
     a = make_agent("jev:value+assist", client)
-    assert a.personality == "value" and a.assist and not a.history
-    b = make_agent("jev:hoarder+history+assist", client)
-    assert b.history and b.assist
+    assert a.personality == "value" and a.assist and not a.log
+    b = make_agent("jev:hoarder+summary+known+assist", client)
+    assert b.summary and b.known and b.assist and not b.log
+    with pytest.raises(ValueError):
+        make_agent("jev:neutral+history", client)
     assert make_agent("fundamentalist").name == "fundamentalist"
     with pytest.raises(ValueError):
         make_agent("jev:nonexistent", client)

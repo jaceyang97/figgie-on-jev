@@ -30,7 +30,7 @@ def main(argv=None):
     ap.add_argument("--baselines", default="fundamentalist,noise",
                     help="classical agents to put in the same seat for reference ('' for none)")
     ap.add_argument("--assist", action="store_true", help="give each Jev agent the exact goal probabilities")
-    ap.add_argument("--history", action="store_true", help="add a compressed summary of the whole game log to Jev's state")
+    ap.add_argument("--context", default="", help="comma list of extra context parts: log, summary, known, assist")
     ap.add_argument("--games", type=int, default=10)
     ap.add_argument("--duration", type=float, default=240.0)
     ap.add_argument("--jev-latency", type=float, default=None)
@@ -44,7 +44,8 @@ def main(argv=None):
     if len(field) != 3:
         raise SystemExit("--field needs exactly 3 agents")
     rows = {}
-    flags = ("+history" if args.history else "") + ("+assist" if args.assist else "")
+    parts = [p for p in args.context.split(",") if p] + (["assist"] if args.assist else [])
+    flags = "".join(f"+{p}" for p in parts)
     seats = [(p, f"jev:{p}{flags}") for p in args.personalities.split(",") if p]
     seats += [(f"[{b}]", b) for b in args.baselines.split(",") if b]
     for p, spec in seats:
