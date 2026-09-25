@@ -11,7 +11,7 @@ Seats rotate each game so no personality keeps a seat advantage.
 
 Usage:
   python -m figgie.experiments.tournament --backend mock --games 20 \\
-      --lineup jev:hoarder,jev:market_maker,fundamentalist,bottom_feeder
+      --lineup jev:chartist,jev:market_maker,fundamentalist,bottom_feeder
 """
 
 from __future__ import annotations
@@ -21,6 +21,7 @@ import json
 import os
 import random
 from collections import defaultdict
+from concurrent.futures import ThreadPoolExecutor
 
 from ..agents import make_agent
 from ..engine import play_game
@@ -28,21 +29,36 @@ from ..jev import make_client
 from ..stats import bootstrap_ci, mean
 
 
-def run(args) -> dict:
-    rng = random.Random(args.seed)
+def game_rng(seed: int, g: int) -> random.Random:
+    """Each game gets its own seeded RNG, so games can run in any order or in parallel."""
+    return random.Random(seed * 1_000_003 + g)
+
+
+def run(args, client=None) -> dict:
     specs = args.lineup.split(",")
     if len(specs) != 4:
         raise SystemExit("--lineup needs exactly 4 agents")
-    client = make_client(args.backend, seed=args.seed, log_path=args.log, max_calls=args.max_calls, provider=args.provider) if any(s.startswith("jev") for s in specs) else None
+    if client is None and any(s.startswith("jev") for s in specs):
+        client = make_client(args.backend, seed=args.seed, log_path=args.log, max_calls=args.max_calls,
+                             provider=args.provider)
+
+    def play(g: int):
+        order = specs[g % 4 :] + specs[: g % 4]
+        agents = [make_agent(s, client, jev_latency=args.jev_latency) for s in order]
+        return g, order, play_game(agents, game_rng(args.seed, g), duration=args.duration)
+
+    # Jev games spend their time waiting on the API, so run them side by side;
+    # the client's rate limiter keeps the total under Jev's request limit.
+    workers = getattr(args, "workers", None) or (args.games if client else 1)
+    with ThreadPoolExecutor(max_workers=workers) as pool:
+        results = sorted(pool.map(play, range(args.games)), key=lambda r: r[0])
+
     pnl = defaultdict(list)
     trades_by = defaultdict(list)
     rejected_by = defaultdict(list)
     n_trades, mispricing = [], []
     games = []
-    for g in range(args.games):
-        order = specs[g % 4 :] + specs[: g % 4]
-        agents = [make_agent(s, client, jev_latency=args.jev_latency) for s in order]
-        res = play_game(agents, rng, duration=args.duration)
+    for g, order, res in results:
         goal = res.deck.goal
         for seat, spec in enumerate(order):
             key = f"{spec}#{specs.index(spec)}" if specs.count(spec) > 1 else spec
@@ -95,6 +111,7 @@ def main(argv=None):
     ap.add_argument("--jev-latency", type=float, default=None,
                     help="simulated Jev latency in seconds (default: the measured round-trip time)")
     ap.add_argument("--seed", type=int, default=0)
+    ap.add_argument("--workers", type=int, default=None, help="games played at once (default: all, when Jev plays)")
     ap.add_argument("--max-calls", type=int, default=5000, help="hard cap on Jev API calls")
     ap.add_argument("--log", help="append every Jev request/response to this JSONL file")
     ap.add_argument("--out", help="directory for summary.json and games.jsonl")

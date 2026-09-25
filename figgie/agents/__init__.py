@@ -1,12 +1,23 @@
 from .base import Agent
-from .classical import BottomFeeder, Chartist, Fundamentalist, Noise
+from .classical import (
+    BottomFeeder, Chartist, Contrarian, Disposition, Fundamentalist, Herder, MarketMaker, Noise, Sniper,
+    ZeroIntelligence,
+)
 from .jev_agent import JevAgent
 
+# The Figgie paper's four strategies, then the literature-backed extensions.
+CORE = ("fundamentalist", "bottom_feeder", "chartist", "noise")
 CLASSICAL = {
     "fundamentalist": Fundamentalist,
     "bottom_feeder": BottomFeeder,
     "chartist": Chartist,
     "noise": Noise,
+    "market_maker": MarketMaker,
+    "herder": Herder,
+    "contrarian": Contrarian,
+    "sniper": Sniper,
+    "zero_intelligence": ZeroIntelligence,
+    "disposition": Disposition,
 }
 
 
@@ -34,4 +45,4 @@ def make_agent(spec: str, client=None, jev_latency: float | None = None) -> Agen
     return CLASSICAL[spec]()
 
 
-__all__ = ["Agent", "Fundamentalist", "BottomFeeder", "Chartist", "Noise", "JevAgent", "make_agent", "CLASSICAL"]
+__all__ = ["Agent", "JevAgent", "make_agent", "CLASSICAL", "CORE", *(c.__name__ for c in CLASSICAL.values())]

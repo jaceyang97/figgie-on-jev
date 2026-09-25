@@ -33,32 +33,33 @@ def goal_probabilities(known: dict[str, int]) -> dict[str, float]:
 
 
 class CardCounter:
-    """Tracks how many cards of each suit are known to exist, from one seat's view.
+    """Card counting from one seat's view, as in the paper's Algorithm 3.
 
-    Known cards are the seat's initial hand plus, for every other player, the most
-    cards of a suit that player has ever been net short of (they must have held
-    them to sell them). Cards the seat buys are counted through the seller.
+    For each suit, L[p] is how many cards of it player p is known to hold. It
+    starts as this seat's own hand. On a trade the buyer gains one; the seller
+    loses one if it was known to hold one, otherwise it drops to 0 (the card was
+    not known before, so a new card has been revealed). The number of distinct
+    cards of a suit seen so far is the sum of L over players.
     """
 
     def __init__(self, me: int, hand: dict[str, int], n_players: int):
         self.me = me
         self.initial = dict(hand)
-        self.net_sold = [{s: 0 for s in SUITS} for _ in range(n_players)]
-        self.max_net_sold = [{s: 0 for s in SUITS} for _ in range(n_players)]
+        self.held = {s: [0] * n_players for s in SUITS}
+        for s in SUITS:
+            self.held[s][me] = hand[s]
 
     def on_trade(self, suit: str, buyer: int, seller: int) -> None:
-        self.net_sold[seller][suit] += 1
-        self.net_sold[buyer][suit] -= 1
-        m = self.max_net_sold[seller]
-        m[suit] = max(m[suit], self.net_sold[seller][suit])
+        held = self.held[suit]
+        if held[seller] < 1:
+            held[buyer] += 1
+            held[seller] = 0
+        else:
+            held[buyer] += 1
+            held[seller] -= 1
 
     def known(self) -> dict[str, int]:
-        known = dict(self.initial)
-        for p, sold in enumerate(self.max_net_sold):
-            if p != self.me:
-                for s in SUITS:
-                    known[s] += sold[s]
-        return known
+        return {s: sum(self.held[s]) for s in SUITS}
 
     def goal_probabilities(self) -> dict[str, float]:
         return goal_probabilities(self.known())
@@ -67,27 +68,34 @@ class CardCounter:
         return deck_posterior(self.known())
 
 
-def card_values(known: dict[str, int], hand: dict[str, int]) -> dict[str, tuple[float, float]]:
-    """(buy value, sell value) of one card of each suit, in chips.
+R_MAJORITY = 1.2  # the paper's r > 1; it gives no value, so this is our choice
 
-    A goal card pays 10 chips. It also moves you towards the majority bonus,
-    which needs n//2 + 1 cards of an n-card goal suit. The bonus is spread evenly
-    over the cards needed to reach that majority, so the next card is worth
-    bonus/majority while you are short of it and nothing once you have it.
-    This is a simplified version of the paper's geometric weighting.
+
+def majority_needed(deck: Deck) -> int:
+    """Goal cards that guarantee the majority: 5 of 8, 6 of 10 (the paper's Table 1)."""
+    return deck.count(deck.goal) // 2 + 1
+
+
+def buy_value(suit: str, n: int, post: dict[Deck, float], r: float = R_MAJORITY) -> float:
+    """The paper's e_b(j, n, m): expected value of buying one more card of `suit` holding n."""
+    total = 0.0
+    for deck, p in post.items():
+        if deck.goal != suit:
+            continue
+        x, pay = majority_needed(deck), deck.bonus
+        a = pay * (1 - r) / (1 - r ** x)
+        total += p * (GOAL_CARD_PAYOUT + (a * r ** n if n < x else 0.0))
+    return total
+
+
+def card_values(known: dict[str, int], hand: dict[str, int], r: float = R_MAJORITY) -> dict[str, tuple[float, float]]:
+    """(buy value, sell value) per suit, as the paper's fundamentalist computes them.
+
+    Buy value e_b(n) = sum over decks of P(deck) * v, with v = 0 unless the suit is
+    the goal suit, else 10 + a*r^n while n is below the majority threshold x and 0
+    after (a = payout*(1-r)/(1-r^x), so the shares over n = 0..x-1 sum to the
+    payout). Sell value e_s(n) = e_b(n-1).
     """
     post = deck_posterior(known)
-    values = {}
-    for s in SUITS:
-        buy = sell = 0.0
-        for deck, p in post.items():
-            if deck.goal != s:
-                continue
-            n = deck.count(s)
-            majority = n // 2 + 1
-            share = deck.bonus / majority
-            h = hand.get(s, 0)
-            buy += p * (GOAL_CARD_PAYOUT + (share if h < majority else 0.0))
-            sell += p * (GOAL_CARD_PAYOUT + (share if 0 < h <= majority else 0.0))
-        values[s] = (buy, sell)
-    return values
+    return {s: (buy_value(s, hand[s], post, r), buy_value(s, hand[s] - 1, post, r) if hand[s] > 0 else 0.0)
+            for s in SUITS}

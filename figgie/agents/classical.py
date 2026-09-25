@@ -1,15 +1,38 @@
-"""Hand-coded strategies modelled on Ozerov, DiSilvio and Luo (2021)."""
+"""Rule-based strategies.
+
+The core four follow Ozerov, DiSilvio and Luo (2021), "Traders in a Strange
+Land", section 2.3. They share one order rule (the paper's Algorithm 2) and
+differ only in how they value a card. The other six are extensions, each taken
+from a published model (see EXTENSION_SOURCES).
+
+Where the paper leaves a choice open we pick: the suit to act in is drawn at
+random among suits the agent can value; prices are whole chips (buy prices are
+rounded down, sell prices up); the chartist horizon is TAU trades.
+"""
 
 from __future__ import annotations
 
 import math
-from collections import defaultdict
 
 from ..cards import SUITS
 from ..engine import View
 from ..market import PASS, Action
 from ..posterior import card_values
 from .base import Agent
+
+TAU = 3  # chartist and contrarian look-back, in trades
+K_PREY = 4  # bottom-feeder: orders per side it averages (the paper's k)
+MM_HALF_SPREAD = 2  # market maker: chips either side of the last trade price
+MAX_PRICE = 30  # zero-intelligence sellers draw prices up to this
+
+EXTENSION_SOURCES = {
+    "market_maker": "Avellaneda & Stoikov (2008), Quantitative Finance 8(3); Glosten & Milgrom (1985), JFE 14(1)",
+    "herder": "Banerjee (1992), QJE 107(3); Bikhchandani, Hirshleifer & Welch (1992), JPE 100(5)",
+    "contrarian": "De Bondt & Thaler (1985), J. Finance 40(3); Lakonishok, Shleifer & Vishny (1994), J. Finance 49(5)",
+    "sniper": "Budish, Cramton & Shim (2015), QJE 130(4)",
+    "zero_intelligence": "Gode & Sunder (1993), JPE 101(1)",
+    "disposition": "Shefrin & Statman (1985), J. Finance 40(3); Odean (1998), J. Finance 53(5)",
+}
 
 
 def take_edges(view: View, values: dict[str, tuple[float, float]]) -> dict[Action, float]:
@@ -25,127 +48,226 @@ def take_edges(view: View, values: dict[str, tuple[float, float]]) -> dict[Actio
     return edges
 
 
-class Fundamentalist(Agent):
-    """Counts cards, computes the exact posterior, and trades against fair value.
+def trade_prices(view: View, suit: str) -> list[int]:
+    return [t.price for t in view.trades if t.suit == suit]
 
-    Takes any price at least `edge` chips better than its value; otherwise posts a
-    bid or ask `spread` chips away from value in a random suit.
-    """
+
+def buy_at(view: View, suit: str, price: float) -> Action:
+    """Limit buy at `price`: take the standing ask if it is at or below, else bid."""
+    ask = view.asks[suit]
+    if ask is not None and ask.player != view.me and ask.price <= price:
+        return Action("buy", suit) if ask.price <= view.chips else PASS
+    p = math.floor(price)
+    return Action("bid", suit, p) if 1 <= p <= view.chips else PASS
+
+
+def sell_at(view: View, suit: str, price: float) -> Action:
+    """Limit sell at `price`: take the standing bid if it is at or above, else offer."""
+    if view.hand[suit] < 1:
+        return PASS
+    bid = view.bids[suit]
+    if bid is not None and bid.player != view.me and bid.price >= price:
+        return Action("sell", suit)
+    return Action("ask", suit, max(1, math.ceil(price)))
+
+
+class PaperAgent(Agent):
+    """The paper's Algorithm 2 on top of a per-suit value (pb, ps)."""
+
+    def values(self, view: View) -> dict[str, tuple[float, float] | None]:
+        raise NotImplementedError
+
+    def decide(self, view: View) -> Action:
+        values = {s: v for s, v in self.values(view).items() if v is not None}
+        if not values:
+            return PASS
+        s = self.rng.choice(sorted(values))
+        pb, ps = values[s]
+        if self.rng.random() < 0.5:
+            return buy_at(view, s, self.rng.uniform(0, pb))
+        return sell_at(view, s, self.rng.uniform(ps, 2 * ps))
+
+
+class Fundamentalist(PaperAgent):
+    """Card counting (Algorithm 3), posterior over the 12 decks, separate buy and sell values."""
 
     name = "fundamentalist"
 
-    def __init__(self, edge: float = 1.0, spread: float = 2.0, **kw):
-        super().__init__(**kw)
-        self.edge = edge
-        self.spread = spread
-
-    def values(self, view: View) -> dict[str, tuple[float, float]]:
+    def values(self, view):
         return card_values(self.counter.known(), view.hand)
 
-    def decide(self, view: View) -> Action:
-        values = self.values(view)
-        edges = take_edges(view, values)
-        if edges:
-            best, gain = max(edges.items(), key=lambda kv: kv[1])
-            if gain >= self.edge:
-                return best
-        return self.quote(view, values)
 
-    def quote(self, view: View, values) -> Action:
-        options = []
-        for s in SUITS:
-            buy_val, sell_val = values[s]
-            bid, ask = view.bids[s], view.asks[s]
-            p = math.floor(buy_val - self.spread)
-            if p >= 1 and (bid is None or p > bid.price) and (ask is None or p < ask.price) and p <= view.chips:
-                options.append(Action("bid", s, p))
-            q = math.ceil(sell_val + self.spread)
-            if view.hand[s] > 0 and (ask is None or q < ask.price) and (bid is None or q > bid.price):
-                options.append(Action("ask", s, max(q, 1)))
-        return self.rng.choice(options) if options else PASS
-
-
-class BottomFeeder(Agent):
-    """Infers value from other players' recent quotes and trades against outliers.
-
-    For each suit it averages the last `window` bids and asks posted by each
-    other player, then takes any price `edge` chips better than that estimate.
-    """
+class BottomFeeder(PaperAgent):
+    """Values a suit at the mean of each opponent's (avg last k buy orders + avg last k sell orders) / 2."""
 
     name = "bottom_feeder"
 
-    def __init__(self, window: int = 4, edge: float = 1.0, **kw):
-        super().__init__(**kw)
-        self.window = window
-        self.edge = edge
-
-    def estimates(self, view: View) -> dict[str, float | None]:
-        by_player = defaultdict(list)
-        for o in view.orders:
-            if o.player != view.me:
-                by_player[(o.player, o.suit)].append(o.price)
-        est = {}
+    def values(self, view):
+        out = {}
         for s in SUITS:
-            means = [sum(v[-self.window :]) / len(v[-self.window :]) for (p, suit), v in by_player.items() if suit == s]
-            est[s] = sum(means) / len(means) if means else None
-        return est
-
-    def decide(self, view: View) -> Action:
-        est = self.estimates(view)
-        best, gain = PASS, self.edge
-        for s in SUITS:
-            v = est[s]
-            if v is None:
-                continue
-            ask, bid = view.asks[s], view.bids[s]
-            if ask is not None and ask.player != view.me and v - ask.price >= gain and ask.price <= view.chips:
-                best, gain = Action("buy", s), v - ask.price
-            if bid is not None and bid.player != view.me and view.hand[s] > 0 and bid.price - v >= gain:
-                best, gain = Action("sell", s), bid.price - v
-        return best
+            mids = []
+            for p in range(4):
+                if p == view.me:
+                    continue
+                buys, sells = order_history(view, p, s)
+                if len(buys) >= K_PREY and len(sells) >= K_PREY:
+                    mids.append((sum(buys[-K_PREY:]) / K_PREY + sum(sells[-K_PREY:]) / K_PREY) / 2)
+            out[s] = (sum(mids) / len(mids),) * 2 if mids else None
+        return out
 
 
-class Chartist(Agent):
-    """Momentum trader: buys suits whose trade prices are rising, sells falling ones."""
+def order_history(view: View, player: int, suit: str) -> tuple[list[int], list[int]]:
+    """Prices of the buy and sell orders `player` sent in `suit`, oldest first: quotes plus orders that traded."""
+    events: list[tuple[float, str, int]] = []
+    for o in view.orders:
+        if o.player == player and o.suit == suit:
+            events.append((o.t, o.side, o.price))
+    for t in view.trades:
+        if t.suit == suit and t.aggressor == player:
+            events.append((t.t, "bid" if t.buyer == player else "ask", t.price))
+    events.sort(key=lambda e: e[0])
+    return [p for _, side, p in events if side == "bid"], [p for _, side, p in events if side == "ask"]
+
+
+class Chartist(PaperAgent):
+    """Chiarella, Iori & Perello (2009) as used in the paper: value = p_t * exp(mean log return * tau)."""
 
     name = "chartist"
 
-    def __init__(self, lookback: int = 3, **kw):
-        super().__init__(**kw)
-        self.lookback = lookback
+    def values(self, view):
+        out = {}
+        for s in SUITS:
+            p = trade_prices(view, s)
+            # r = (1/tau) ln(p[t-1] / p[t-tau-1]); value = p[t] * exp(r * tau) = p[t] * p[t-1] / p[t-tau-1]
+            out[s] = (p[-1] * p[-2] / p[-TAU - 2],) * 2 if len(p) >= TAU + 2 else None
+        return out
+
+
+class Noise(PaperAgent):
+    """Value = highest bid * e^Z with Z ~ N(0, sigma^2), sigma = 1."""
+
+    name = "noise"
+    sigma = 1.0
+
+    def values(self, view):
+        out = {}
+        for s in SUITS:
+            bid = view.bids[s]
+            out[s] = (bid.price * math.exp(self.rng.gauss(0, self.sigma)),) * 2 if bid is not None else None
+        return out
+
+
+# --- Extensions -------------------------------------------------------------
+
+
+class MarketMaker(Agent):
+    """Quotes around a reference price (last trade, else the mid of the book), shifted against inventory; never takes."""
+
+    name = "market_maker"
+
+    def decide(self, view: View) -> Action:
+        refs = {}
+        for s in SUITS:
+            prices, bid, ask = trade_prices(view, s), view.bids[s], view.asks[s]
+            if prices:
+                refs[s] = prices[-1]
+            elif bid is not None and ask is not None:
+                refs[s] = round((bid.price + ask.price) / 2)
+        if not refs:
+            return PASS
+        s = self.rng.choice(sorted(refs))
+        ref = refs[s]
+        skew = view.hand[s] - self.counter.initial[s]
+        bid_p, ask_p = ref - MM_HALF_SPREAD - skew, ref + MM_HALF_SPREAD - skew
+        ask, bid = view.asks[s], view.bids[s]
+        options = []
+        if 1 <= bid_p <= view.chips and (ask is None or bid_p < ask.price):
+            options.append(Action("bid", s, bid_p))
+        if view.hand[s] > 0 and ask_p >= 1 and (bid is None or ask_p > bid.price):
+            options.append(Action("ask", s, ask_p))
+        return self.rng.choice(options) if options else PASS
+
+
+class Herder(Agent):
+    """Copies the most recent trade's initiating side in that suit."""
+
+    name = "herder"
+
+    def decide(self, view: View) -> Action:
+        if not view.trades:
+            return PASS
+        t = view.trades[-1]
+        if t.aggressor == t.buyer:
+            return buy_at(view, t.suit, t.price)
+        return sell_at(view, t.suit, t.price)
+
+
+class Contrarian(Agent):
+    """Sells a suit whose price rose over the last TAU trades, buys one whose price fell."""
+
+    name = "contrarian"
 
     def decide(self, view: View) -> Action:
         for s in self.rng.sample(SUITS, len(SUITS)):
-            prices = [t.price for t in view.trades if t.suit == s][-self.lookback - 1 :]
-            if len(prices) < 2:
+            p = trade_prices(view, s)
+            if len(p) < TAU + 1 or p[-1] == p[-TAU - 1]:
                 continue
-            trend = prices[-1] - prices[0]
-            ask, bid = view.asks[s], view.bids[s]
-            if trend > 0:
-                if ask is not None and ask.player != view.me and ask.price <= view.chips:
-                    return Action("buy", s)
-                return Action("bid", s, prices[-1] + 1)
-            if trend < 0 and view.hand[s] > 0:
-                if bid is not None and bid.player != view.me:
-                    return Action("sell", s)
-                return Action("ask", s, max(1, prices[-1] - 1))
+            if p[-1] > p[-TAU - 1]:
+                a = sell_at(view, s, p[-1])
+            else:
+                a = buy_at(view, s, p[-1])
+            if a != PASS:
+                return a
         return PASS
 
 
-class Noise(Agent):
-    """Random quotes and takes. A liquidity source and a sanity baseline."""
+class Sniper(Agent):
+    """Never quotes; takes the standing quote most mispriced against the fundamentalist's values."""
 
-    name = "noise"
+    name = "sniper"
+
+    def decide(self, view: View) -> Action:
+        edges = take_edges(view, card_values(self.counter.known(), view.hand))
+        if not edges:
+            return PASS
+        best, gain = max(edges.items(), key=lambda kv: kv[1])
+        return best if gain > 0 else PASS
+
+
+class ZeroIntelligence(Agent):
+    """ZI-C: random suit, side and price, but never buys above or sells below its (fundamentalist) value."""
+
+    name = "zero_intelligence"
 
     def decide(self, view: View) -> Action:
         s = self.rng.choice(SUITS)
-        r = self.rng.random()
-        if r < 0.25:
-            return Action("buy", s)
-        if r < 0.5 and view.hand[s] > 0:
-            return Action("sell", s)
-        if r < 0.75:
-            return Action("bid", s, self.rng.randint(1, 12))
-        if view.hand[s] > 0:
-            return Action("ask", s, self.rng.randint(3, 20))
-        return PASS
+        pb, ps = card_values(self.counter.known(), view.hand)[s]
+        if self.rng.random() < 0.5:
+            return buy_at(view, s, self.rng.randint(1, math.floor(pb))) if pb >= 1 else PASS
+        lo = max(1, math.ceil(ps))
+        return sell_at(view, s, self.rng.randint(lo, max(lo, MAX_PRICE)))
+
+
+class Disposition(Fundamentalist):
+    """The fundamentalist's rule, but never sells a suit below the average price it paid for it."""
+
+    name = "disposition"
+
+    def decide(self, view: View) -> Action:
+        action = super().decide(view)
+        if action.kind not in ("sell", "ask"):
+            return action
+        paid = [t.price for t in view.trades if t.suit == action.suit and t.buyer == view.me]
+        if not paid:
+            return action
+        floor = sum(paid) / len(paid)
+        if action.kind == "sell":
+            return action if view.bids[action.suit].price >= floor else PASS
+        return action if action.price >= floor else Action("ask", action.suit, math.ceil(floor))
+
+
+__all__ = [
+    "Fundamentalist", "BottomFeeder", "Chartist", "Noise",
+    "MarketMaker", "Herder", "Contrarian", "Sniper", "ZeroIntelligence", "Disposition",
+    "EXTENSION_SOURCES", "take_edges",
+]

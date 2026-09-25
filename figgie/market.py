@@ -25,6 +25,7 @@ class Trade:
     price: int
     buyer: int
     seller: int
+    aggressor: int | None = None  # the player whose order took the standing quote
 
 
 @dataclass(frozen=True)
@@ -73,12 +74,12 @@ class Market:
             ask = self.asks[s]
             if ask is None or ask.player == player:
                 return None
-            return self._trade(t, s, ask.price, buyer=player, seller=ask.player)
+            return self._trade(t, s, ask.price, buyer=player, seller=ask.player, aggressor=player)
         if action.kind == "sell":
             bid = self.bids[s]
             if bid is None or bid.player == player:
                 return None
-            return self._trade(t, s, bid.price, buyer=bid.player, seller=player)
+            return self._trade(t, s, bid.price, buyer=bid.player, seller=player, aggressor=player)
         p = action.price
         if p is None or p < 1:
             return None
@@ -87,7 +88,7 @@ class Market:
                 return None
             ask = self.asks[s]
             if ask is not None and p >= ask.price and ask.player != player:
-                return self._trade(t, s, ask.price, buyer=player, seller=ask.player)
+                return self._trade(t, s, ask.price, buyer=player, seller=ask.player, aggressor=player)
             if (self.bids[s] is not None and p <= self.bids[s].price) or (ask is not None and p >= ask.price):
                 return None
             self.bids[s] = Quote(p, player)
@@ -96,7 +97,7 @@ class Market:
                 return None
             bid = self.bids[s]
             if bid is not None and p <= bid.price and bid.player != player:
-                return self._trade(t, s, bid.price, buyer=bid.player, seller=player)
+                return self._trade(t, s, bid.price, buyer=bid.player, seller=player, aggressor=player)
             if (self.asks[s] is not None and p >= self.asks[s].price) or (bid is not None and p <= bid.price):
                 return None
             self.asks[s] = Quote(p, player)
@@ -106,14 +107,14 @@ class Market:
         self.orders.append(order)
         return order
 
-    def _trade(self, t: float, suit: str, price: int, buyer: int, seller: int) -> Trade | None:
+    def _trade(self, t: float, suit: str, price: int, buyer: int, seller: int, aggressor: int | None = None) -> Trade | None:
         if self.hands[seller][suit] < 1 or self.chips[buyer] < price:
             return None
         self.hands[seller][suit] -= 1
         self.hands[buyer][suit] += 1
         self.chips[buyer] -= price
         self.chips[seller] += price
-        trade = Trade(t, suit, price, buyer, seller)
+        trade = Trade(t, suit, price, buyer, seller, aggressor)
         self.trades.append(trade)
         for s in SUITS:
             self.bids[s] = None

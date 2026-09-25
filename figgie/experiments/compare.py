@@ -28,6 +28,7 @@ import json
 import math
 import os
 import random
+from concurrent.futures import ThreadPoolExecutor
 
 from ..agents import Fundamentalist, make_agent
 from ..agents.classical import take_edges
@@ -69,44 +70,50 @@ def log_loss(probs: dict[str, float], goal: str) -> float:
 def run(args) -> dict:
     rng = random.Random(args.seed)
     client = make_client(args.backend, seed=args.seed, log_path=args.log, max_calls=args.max_calls, provider=args.provider)
-    rows = []
+    points = []
     for g in range(args.games):
         probe = Probe(p_snapshot=args.p_snapshot)
         opponents = [make_agent(s) for s in args.opponents.split(",")]
         result = play_game([probe] + opponents, rng, duration=args.duration)
-        goal = result.deck.goal
-        for snap in probe.snapshots[: args.per_game]:
-            view = snap["view"]
-            menu = action_menu(view)
-            parts = set(filter(None, args.context.split(",")))
-            state = add_context(view, snap["known"] if "known" in parts else None,
-                                snap["posterior"] if "assist" in parts or args.assist else None,
-                                log="log" in parts, summary="summary" in parts)
-            answers = client.ask(state, {
-                "goal": goal_question(),
-                "action": action_question(menu, args.personality),
-            })
-            jev_goal = answers["goal"]["probabilities"]
-            jev_label = answers["action"]["choice"]
-            jev_action = menu.get(jev_label, menu["pass"])[0]
-            edges = take_edges(view, snap["values"])
-            best_edge = max([0.0] + list(edges.values()))
-            jev_edge = edges.get(jev_action, 0.0)
-            rows.append({
-                "game": g, "t": round(view.t, 2), "true_goal": goal,
-                **{f"posterior_{s}": round(snap["posterior"][s], 4) for s in SUITS},
-                **{f"jev_{s}": round(jev_goal.get(s, 0.0), 4) for s in SUITS},
-                "brier_posterior": brier(snap["posterior"], goal),
-                "brier_jev": brier(jev_goal, goal),
-                "logloss_posterior": log_loss(snap["posterior"], goal),
-                "logloss_jev": log_loss(jev_goal, goal),
-                "tv_distance": 0.5 * sum(abs(jev_goal.get(s, 0.0) - snap["posterior"][s]) for s in SUITS),
-                "top1_agree": max(jev_goal, key=jev_goal.get) == max(snap["posterior"], key=snap["posterior"].get),
-                "classical_action": snap["classical_action"].label(),
-                "jev_action": jev_label,
-                "action_agree": jev_action == snap["classical_action"],
-                "regret": best_edge - jev_edge,
-            })
+        points += [(g, result.deck.goal, snap) for snap in probe.snapshots[: args.per_game]]
+    parts = set(filter(None, args.context.split(",")))
+
+    def question(point):
+        g, goal, snap = point
+        view = snap["view"]
+        menu = action_menu(view)
+        state = add_context(view, snap["known"] if "known" in parts else None,
+                            snap["posterior"] if "assist" in parts or args.assist else None,
+                            log="log" in parts, summary="summary" in parts)
+        answers = client.ask(state, {
+            "goal": goal_question(),
+            "action": action_question(menu, args.personality),
+        })
+        jev_goal = answers["goal"]["probabilities"]
+        jev_label = answers["action"]["choice"]
+        jev_action = menu.get(jev_label, menu["pass"])[0]
+        edges = take_edges(view, snap["values"])
+        best_edge = max([0.0] + list(edges.values()))
+        jev_edge = edges.get(jev_action, 0.0)
+        return {
+            "game": g, "t": round(view.t, 2), "true_goal": goal,
+            **{f"posterior_{s}": round(snap["posterior"][s], 4) for s in SUITS},
+            **{f"jev_{s}": round(jev_goal.get(s, 0.0), 4) for s in SUITS},
+            "brier_posterior": brier(snap["posterior"], goal),
+            "brier_jev": brier(jev_goal, goal),
+            "logloss_posterior": log_loss(snap["posterior"], goal),
+            "logloss_jev": log_loss(jev_goal, goal),
+            "tv_distance": 0.5 * sum(abs(jev_goal.get(s, 0.0) - snap["posterior"][s]) for s in SUITS),
+            "top1_agree": max(jev_goal, key=jev_goal.get) == max(snap["posterior"], key=snap["posterior"].get),
+            "classical_action": snap["classical_action"].label(),
+            "jev_action": jev_label,
+            "action_agree": jev_action == snap["classical_action"],
+            "regret": best_edge - jev_edge,
+        }
+
+    # The frozen states are independent, so ask about all of them at once (the client paces requests).
+    with ThreadPoolExecutor(max_workers=32) as pool:
+        rows = list(pool.map(question, points))
     summary = summarise(rows, client)
     if args.out:
         os.makedirs(args.out, exist_ok=True)

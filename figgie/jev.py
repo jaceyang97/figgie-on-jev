@@ -23,6 +23,7 @@ from __future__ import annotations
 import json
 import os
 import random
+import threading
 import time
 import urllib.error
 import urllib.request
@@ -32,6 +33,24 @@ ROUTES = {
     "typesafe": {"key": "TYPESAFE_API_KEY", "url": "https://api.typesafe.ai/v1/systemone", "model": "jev-latest"},
 }
 PRICE_PER_INPUT_TOKEN = 0.042 / 1_000_000  # USD; output tokens are free
+MAX_RPS = 18.0  # Jev allows 1200 requests/minute; stay a little under it
+
+
+class RateLimiter:
+    """Spaces request starts at least 1/rps seconds apart, across threads."""
+
+    def __init__(self, rps: float):
+        self.interval = 1.0 / rps if rps > 0 else 0.0
+        self.next_start = 0.0
+        self.lock = threading.Lock()
+
+    def wait(self) -> None:
+        with self.lock:
+            now = time.monotonic()
+            start = max(now, self.next_start)
+            self.next_start = start + self.interval
+        if start > now:
+            time.sleep(start - now)
 
 
 class JevError(RuntimeError):
@@ -72,13 +91,17 @@ def pick_route(provider: str | None = None) -> tuple[str, dict, str]:
 
 
 class JevClient:
-    """Calls the real Jev API. Every call is appended to `log_path` (JSONL) if given."""
+    """Calls the real Jev API. Every call is appended to `log_path` (JSONL) if given.
+
+    Safe to share between threads: requests are paced by one rate limiter, and
+    `last_latency` is per thread, so each game sees its own round-trip times.
+    """
 
     backend = "jev"
 
     def __init__(self, provider: str | None = None, model: str | None = None, log_path: str | None = None,
                  timeout: float = 20.0, max_calls: int | None = None, env_file: str = ".env.local",
-                 retries: int = 3):
+                 retries: int = 3, max_rps: float = MAX_RPS, limiter: RateLimiter | None = None):
         load_env_file(env_file)
         self.provider, route, self.api_key = pick_route(provider)
         self.url = route["url"]
@@ -90,21 +113,30 @@ class JevClient:
         self.max_calls = max_calls
         self.calls = 0
         self.input_tokens = 0
-        self.last_latency = 0.0
+        self.limiter = limiter or RateLimiter(max_rps)
+        self.lock = threading.Lock()
+        self.local = threading.local()
+
+    @property
+    def last_latency(self) -> float:
+        return getattr(self.local, "latency", 0.0)
 
     @property
     def cost_usd(self) -> float:
         return self.input_tokens * PRICE_PER_INPUT_TOKEN
 
     def ask(self, state, questions: dict) -> dict:
-        if self.max_calls is not None and self.calls >= self.max_calls:
-            raise JevError(f"max_calls={self.max_calls} reached")
+        with self.lock:
+            if self.max_calls is not None and self.calls >= self.max_calls:
+                raise JevError(f"max_calls={self.max_calls} reached")
+            self.calls += 1
         payload = {"model": self.model, "state": state, "questions": questions}
         headers = {"Content-Type": "application/json"}
         if self.api_key:
             headers["Authorization"] = f"Bearer {self.api_key}"
         req = urllib.request.Request(self.url, data=json.dumps(payload).encode(), method="POST", headers=headers)
         for attempt in range(self.retries + 1):
+            self.limiter.wait()
             start = time.perf_counter()
             try:
                 with urllib.request.urlopen(req, timeout=self.timeout) as resp:
@@ -117,12 +149,12 @@ class JevClient:
                 if attempt == self.retries:
                     raise JevError(f"Jev request failed: {getattr(e, 'reason', e)}") from None
             time.sleep(2 ** attempt)
-        self.last_latency = time.perf_counter() - start
-        self.calls += 1
-        self.input_tokens += int(data.get("usage", {}).get("input_tokens", 0))
-        if self.log_path:
-            with open(self.log_path, "a") as f:
-                f.write(json.dumps({"latency": self.last_latency, "request": payload, "response": data}) + "\n")
+        latency = self.local.latency = time.perf_counter() - start
+        with self.lock:
+            self.input_tokens += int(data.get("usage", {}).get("input_tokens", 0))
+            if self.log_path:
+                with open(self.log_path, "a") as f:
+                    f.write(json.dumps({"latency": latency, "request": payload, "response": data}) + "\n")
         return data["answers"]
 
 
@@ -137,13 +169,18 @@ class MockJev:
 
     def __init__(self, seed: int = 0, latency: float = 0.3, **_):
         self.rng = random.Random(seed)
+        self.lock = threading.Lock()
         self.calls = 0
         self.input_tokens = 0
         self.cost_usd = 0.0
         self.last_latency = latency
 
     def ask(self, state, questions: dict) -> dict:
-        self.calls += 1
+        with self.lock:
+            self.calls += 1
+            return self._answer(questions)
+
+    def _answer(self, questions: dict) -> dict:
         answers = {}
         for qid, q in questions.items():
             if q["type"] == "choice":
@@ -163,7 +200,7 @@ class MockJev:
 
 def make_client(backend: str, **kw):
     if backend == "jev":
-        return JevClient(**{k: v for k, v in kw.items() if k in ("provider", "log_path", "max_calls")})
+        return JevClient(**{k: v for k, v in kw.items() if k in ("provider", "log_path", "max_calls", "max_rps", "limiter")})
     if backend == "mock":
         return MockJev(**kw)
     raise ValueError(f"unknown backend {backend!r}")

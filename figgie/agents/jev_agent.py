@@ -24,7 +24,7 @@ RULES = (
     "Cards of other suits pay nothing."
 )
 
-PRICE_LADDER = (2, 4, 6, 8, 11, 14, 18, 24)
+PRICE_LADDER = tuple(range(1, 31))  # every whole-chip price 1-30; the menu stays under 255 options
 
 
 def describe_state(view: View, known: dict[str, int] | None = None, goal_probs: dict[str, float] | None = None,
@@ -47,6 +47,7 @@ def describe_state(view: View, known: dict[str, int] | None = None, goal_probs: 
     trades = [
         f"{t.suit} traded at {t.price} ("
         + ("you bought" if t.buyer == view.me else "you sold" if t.seller == view.me else f"P{t.buyer} bought from P{t.seller}")
+        + ("" if t.aggressor is None else ", buyer took the ask" if t.aggressor == t.buyer else ", seller hit the bid")
         + ")"
         for t in view.trades[-n_trades:]
     ]
@@ -69,7 +70,9 @@ def describe_log(view: View) -> list[str]:
     """Every public event so far, oldest first, one line each: trades and quotes accepted onto the book."""
     who = lambda p: "you" if p == view.me else f"P{p}"  # noqa: E731
     events = [(o.t, f"t={o.t:.1f}s {who(o.player)} {o.side} {o.suit} {o.price}") for o in view.orders]
-    events += [(t.t, f"t={t.t:.1f}s trade {t.suit} {t.price}: {who(t.buyer)} bought from {who(t.seller)}")
+    events += [(t.t, f"t={t.t:.1f}s trade {t.suit} {t.price}: {who(t.buyer)} bought from {who(t.seller)}"
+                + ("" if t.aggressor is None else f", {who(t.aggressor)} took the "
+                   + ("ask" if t.aggressor == t.buyer else "bid")))
                for t in view.trades]
     return [line for _, line in sorted(events, key=lambda e: e[0])]
 
@@ -134,17 +137,17 @@ def action_menu(view: View) -> dict[str, tuple[Action, str]]:
         bid, ask = view.bids[s], view.asks[s]
         if ask is not None and ask.player != view.me and ask.price <= view.chips:
             a = Action("buy", s)
-            menu[a.label()] = (a, f"Buy one {s} card now at the current ask of {ask.price} chips.")
+            menu[a.label()] = (a, f"Buy one {s} at the standing ask of {ask.price}.")
         if bid is not None and bid.player != view.me and view.hand[s] > 0:
             a = Action("sell", s)
-            menu[a.label()] = (a, f"Sell one of your {s} cards now at the current bid of {bid.price} chips.")
+            menu[a.label()] = (a, f"Sell one {s} at the standing bid of {bid.price}.")
         for p in PRICE_LADDER:
             if (bid is None or p > bid.price) and (ask is None or p < ask.price) and p <= view.chips:
                 a = Action("bid", s, p)
-                menu[a.label()] = (a, f"Post a bid to buy one {s} card for {p} chips.")
+                menu[a.label()] = (a, f"Bid {p} for one {s}.")
             if view.hand[s] > 0 and (ask is None or p < ask.price) and (bid is None or p > bid.price):
                 a = Action("ask", s, p)
-                menu[a.label()] = (a, f"Post an offer to sell one of your {s} cards for {p} chips.")
+                menu[a.label()] = (a, f"Offer one {s} at {p}.")
     return menu
 
 

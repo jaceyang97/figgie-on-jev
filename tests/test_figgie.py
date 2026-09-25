@@ -111,9 +111,9 @@ def test_jev_payload_shape_matches_api():
                 bids={s: None for s in SUITS}, asks={s: None for s in SUITS}, trades=(), orders=())
     menu = action_menu(view)
     assert "pass" in menu and len(menu) <= 255
-    q = action_question(menu, "hoarder")
+    q = action_question(menu, "chartist")
     assert q["type"] == "choice" and set(q["criteria"]) == set(menu)
-    assert PERSONALITIES["hoarder"] in q["instructions"]
+    assert PERSONALITIES["chartist"] in q["instructions"]
     state = describe_state(view, hands[0], {s: 0.25 for s in SUITS})
     assert state["my_hand"] == hands[0]
     assert "goal_suit_probability_derived" in state and "cards_known_to_exist_derived" in state
@@ -157,9 +157,9 @@ def test_jev_history_agent_runs():
 
 def test_make_agent_specs():
     client = MockJev()
-    a = make_agent("jev:value+assist", client)
-    assert a.personality == "value" and a.assist and not a.log
-    b = make_agent("jev:hoarder+summary+known+assist", client)
+    a = make_agent("jev:bottom_feeder+assist", client)
+    assert a.personality == "bottom_feeder" and a.assist and not a.log
+    b = make_agent("jev:chartist+summary+known+assist", client)
     assert b.summary and b.known and b.assist and not b.log
     with pytest.raises(ValueError):
         make_agent("jev:neutral+history", client)
@@ -211,3 +211,44 @@ def test_env_file_does_not_override_process_env(monkeypatch, tmp_path):
     import os
     assert os.environ["TYPESAFE_API_KEY"] == "from-env"
     monkeypatch.delenv("OPENROUTER_API_KEY")
+
+
+def test_every_rule_based_agent_plays_a_zero_sum_game():
+    from figgie.agents import CLASSICAL
+    names = list(CLASSICAL)
+    for i in range(0, len(names), 3):
+        lineup = (names[i:i + 3] + ["fundamentalist", "noise", "bottom_feeder"])[:4]
+        agents = [make_agent(n) for n in lineup]
+        res = play_game(agents, random.Random(i), duration=60)
+        assert sum(res.pnl) == pytest.approx(0.0)
+
+
+def test_card_counter_follows_algorithm_3():
+    from figgie.posterior import CardCounter
+    c = CardCounter(0, {"spades": 2, "clubs": 0, "hearts": 0, "diamonds": 0}, 4)
+    c.on_trade("spades", buyer=1, seller=2)  # P2 was not known to hold one: a new card is revealed
+    assert c.known()["spades"] == 3
+    c.on_trade("spades", buyer=3, seller=1)  # P1 is known to hold it: nothing new
+    assert c.known()["spades"] == 3
+    c.on_trade("spades", buyer=1, seller=0)  # I sell one of mine: nothing new
+    assert c.known()["spades"] == 3 and c.held["spades"] == [1, 1, 0, 1]
+
+
+def test_paper_majority_shares_sum_to_the_prize():
+    from figgie.cards import ALL_DECKS
+    from figgie.posterior import R_MAJORITY, buy_value, majority_needed
+    deck = ALL_DECKS[0]
+    post = {d: (1.0 if d == deck else 0.0) for d in ALL_DECKS}
+    x = majority_needed(deck)
+    shares = sum(buy_value(deck.goal, n, post) - 10 for n in range(x))
+    assert shares == pytest.approx(deck.bonus)
+    assert buy_value(deck.goal, x, post) == pytest.approx(10)
+    assert R_MAJORITY > 1
+
+
+def test_trades_record_the_aggressor():
+    from figgie.market import Market
+    m = Market(hands=[{s: 2 for s in SUITS} for _ in range(4)], chips=[300] * 4)
+    m.apply(1.0, 1, Action("ask", "spades", 9))
+    t = m.apply(2.0, 2, Action("buy", "spades"))
+    assert t.buyer == 2 and t.seller == 1 and t.aggressor == 2
