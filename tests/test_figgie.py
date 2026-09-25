@@ -126,3 +126,36 @@ def test_make_agent_specs():
     assert make_agent("fundamentalist").name == "fundamentalist"
     with pytest.raises(ValueError):
         make_agent("jev:nonexistent", client)
+
+
+def test_jev_route_prefers_openrouter(monkeypatch, tmp_path):
+    from figgie.jev import JevClient, JevError
+
+    monkeypatch.delenv("OPENROUTER_API_KEY", raising=False)
+    monkeypatch.delenv("TYPESAFE_API_KEY", raising=False)
+    monkeypatch.delenv("JEV_MODEL", raising=False)
+    missing = str(tmp_path / "none")
+    with pytest.raises(JevError):
+        JevClient(env_file=missing)
+    monkeypatch.setenv("TYPESAFE_API_KEY", "t")
+    c = JevClient(env_file=missing)
+    assert c.provider == "typesafe" and c.model == "jev-latest"
+    monkeypatch.setenv("OPENROUTER_API_KEY", "o")
+    c = JevClient(env_file=missing)
+    assert c.provider == "openrouter" and c.model == "typesafe/jev-1.13"
+    assert c.url == "https://openrouter.ai/api/alpha/decisions"
+    assert JevClient(provider="typesafe", env_file=missing).provider == "typesafe"
+
+
+def test_env_file_does_not_override_process_env(monkeypatch, tmp_path):
+    from figgie.jev import JevClient
+
+    monkeypatch.delenv("OPENROUTER_API_KEY", raising=False)
+    monkeypatch.setenv("TYPESAFE_API_KEY", "from-env")
+    env = tmp_path / ".env.local"
+    env.write_text("# keys\nOPENROUTER_API_KEY=from-file\nTYPESAFE_API_KEY=file-value\n")
+    c = JevClient(env_file=str(env))
+    assert c.provider == "openrouter" and c.api_key == "from-file"
+    import os
+    assert os.environ["TYPESAFE_API_KEY"] == "from-env"
+    monkeypatch.delenv("OPENROUTER_API_KEY")

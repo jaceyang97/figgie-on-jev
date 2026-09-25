@@ -68,7 +68,7 @@ def log_loss(probs: dict[str, float], goal: str) -> float:
 
 def run(args) -> dict:
     rng = random.Random(args.seed)
-    client = make_client(args.backend, seed=args.seed, log_path=args.log, max_calls=args.max_calls)
+    client = make_client(args.backend, seed=args.seed, log_path=args.log, max_calls=args.max_calls, provider=args.provider)
     rows = []
     for g in range(args.games):
         probe = Probe(p_snapshot=args.p_snapshot)
@@ -132,6 +132,8 @@ def summarise(rows, client) -> dict:
 def main(argv=None):
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--backend", choices=["mock", "jev"], default="mock")
+    ap.add_argument("--provider", choices=["openrouter", "typesafe"], default=None,
+                    help="Jev route (default: OpenRouter if OPENROUTER_API_KEY is set, else TypeSafe)")
     ap.add_argument("--games", type=int, default=20)
     ap.add_argument("--per-game", type=int, default=5, help="max decision points questioned per game")
     ap.add_argument("--p-snapshot", type=float, default=0.3)

@@ -23,6 +23,8 @@ from .tournament import run as run_tournament
 def main(argv=None):
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--backend", choices=["mock", "jev"], default="mock")
+    ap.add_argument("--provider", choices=["openrouter", "typesafe"], default=None,
+                    help="Jev route (default: OpenRouter if OPENROUTER_API_KEY is set, else TypeSafe)")
     ap.add_argument("--field", default="fundamentalist,bottom_feeder,noise", help="the three fixed opponents")
     ap.add_argument("--personalities", default=",".join(PERSONALITIES))
     ap.add_argument("--baselines", default="fundamentalist,noise",
@@ -44,7 +46,7 @@ def main(argv=None):
     seats = [(p, f"jev:{p}" + ("+assist" if args.assist else "")) for p in args.personalities.split(",")]
     seats += [(f"[{b}]", b) for b in args.baselines.split(",") if b]
     for p, spec in seats:
-        t = SimpleNamespace(backend=args.backend, lineup=",".join([spec] + field), games=args.games,
+        t = SimpleNamespace(backend=args.backend, provider=args.provider, lineup=",".join([spec] + field), games=args.games,
                             duration=args.duration, jev_latency=args.jev_latency, seed=args.seed,
                             max_calls=args.max_calls, log=args.log, out=None)
         s = run_tournament(t)

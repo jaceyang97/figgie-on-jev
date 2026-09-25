@@ -15,13 +15,23 @@ python -m figgie.experiments.tournament --games 40 \
     --lineup fundamentalist,bottom_feeder,chartist,noise   # classical only, no API key needed
 ```
 
-Every experiment runs offline with `--backend mock`, which is the default. The mock is **not Jev**: it answers at random so you can check the pipeline without an API key. To use the real model:
+Every experiment runs offline with `--backend mock`, which is the default. The mock is **not Jev**: it answers at random so you can check the pipeline without an API key.
+
+To use the real model, add a key to `.env.local` in the repo root. That file is gitignored, and variables already set in your shell take precedence over it:
+
+```dotenv
+OPENROUTER_API_KEY=sk-or-v1-...
+TYPESAFE_API_KEY=...
+```
+
+Then run:
 
 ```bash
-export TYPESAFE_API_KEY=...
 python -m figgie.experiments.compare --backend jev --games 20 --log jev.jsonl --out results/compare
 python -m figgie.experiments.sweep   --backend jev --games 20 --out results/sweep
 ```
+
+The client uses the same routing as Jace's other Jev code. If `OPENROUTER_API_KEY` is set, it calls OpenRouter (`POST https://openrouter.ai/api/alpha/decisions`, model `typesafe/jev-1.13`). Otherwise it calls TypeSafe directly (`POST https://api.typesafe.ai/v1/systemone`, model `jev-latest`). Use `--provider openrouter|typesafe` to force a route and `JEV_MODEL` to override the model.
 
 ## Experiments
 
@@ -41,7 +51,7 @@ Useful flags: `--jev-latency` sets the simulated delay in seconds. By default th
 - `figgie/market.py` has one best bid and one best ask per suit. Crossing orders trade, and every trade clears all quotes, as in the real game.
 - `figgie/engine.py` is the discrete-event game. An agent decides on what it sees now, and its order lands `latency` seconds later against the book as it is *then*, so slow agents lose races.
 - `figgie/agents/` has the paper's fundamentalist, bottom-feeder, chartist and a noise trader. `JevAgent` sends Jev the JSON state and one Choice question listing every legal action (at most 73, well under Jev's limit of 255).
-- `figgie/jev.py` is a stdlib HTTP client for `POST https://api.typesafe.ai/v1/systemone`, following the request shape used by [llm-typesafe](https://github.com/simonw/llm-typesafe), plus the mock. It tracks calls, tokens and cost ($0.042 per million input tokens).
+- `figgie/jev.py` is a stdlib HTTP client for Jev through OpenRouter or TypeSafe directly (the same request body on both routes), plus the mock. It tracks calls, tokens and cost ($0.042 per million input tokens).
 
 A Jev agent wakes about every 2 seconds, so a 4-minute game makes about 100 calls per Jev seat.
 

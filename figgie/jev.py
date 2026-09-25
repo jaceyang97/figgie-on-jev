@@ -1,11 +1,14 @@
 """Minimal client for TypeSafe AI's Jev decision model, plus an offline stand-in.
 
 Jev takes a JSON "state" and a set of typed questions and returns numeric
-answers. The request shape follows Simon Willison's llm-typesafe plugin:
+answers. Two routes speak the same request shape; OpenRouter is used when
+OPENROUTER_API_KEY is set, otherwise TypeSafe directly:
 
-    POST https://api.typesafe.ai/v1/systemone
-    Authorization: Bearer $TYPESAFE_API_KEY
-    {"model": "jev-latest", "state": {...},
+    POST https://openrouter.ai/api/alpha/decisions   model typesafe/jev-1.13  key $OPENROUTER_API_KEY
+    POST https://api.typesafe.ai/v1/systemone        model jev-latest         key $TYPESAFE_API_KEY
+
+    Authorization: Bearer <key>
+    {"model": "...", "state": {...},
      "questions": {"<id>": {"type": "choice"|"score"|"noul",
                             "instructions": "...", "criteria": ...}}}
 
@@ -23,8 +26,10 @@ import time
 import urllib.error
 import urllib.request
 
-API_URL = "https://api.typesafe.ai/v1/systemone"
-MODEL = "jev-latest"
+ROUTES = {
+    "openrouter": {"key": "OPENROUTER_API_KEY", "url": "https://openrouter.ai/api/alpha/decisions", "model": "typesafe/jev-1.13"},
+    "typesafe": {"key": "TYPESAFE_API_KEY", "url": "https://api.typesafe.ai/v1/systemone", "model": "jev-latest"},
+}
 PRICE_PER_INPUT_TOKEN = 0.042 / 1_000_000  # USD; output tokens are free
 
 
@@ -32,17 +37,44 @@ class JevError(RuntimeError):
     pass
 
 
+def load_env_file(path: str = ".env.local") -> None:
+    """Read NAME=VALUE lines into os.environ. Variables already set in the process win."""
+    if not os.path.exists(path):
+        return
+    with open(path, encoding="utf-8") as f:
+        for line in f:
+            line = line.strip()
+            if not line or line.startswith("#") or "=" not in line:
+                continue
+            name, _, value = line.partition("=")
+            os.environ.setdefault(name.strip(), value.strip())
+
+
+def pick_route(provider: str | None = None) -> tuple[str, dict, str]:
+    """(provider, route, key). With no provider, OpenRouter wins if its key is set."""
+    names = [provider] if provider else list(ROUTES)
+    for name in names:
+        if name not in ROUTES:
+            raise JevError(f"unknown provider {name!r}; choose from {sorted(ROUTES)}")
+        key = os.environ.get(ROUTES[name]["key"], "").strip()
+        if key:
+            return name, ROUTES[name], key
+    wanted = " or ".join(ROUTES[n]["key"] for n in names)
+    raise JevError(f"Set {wanted} (in the environment or .env.local), or pass --backend mock to run offline.")
+
+
 class JevClient:
     """Calls the real Jev API. Every call is appended to `log_path` (JSONL) if given."""
 
     backend = "jev"
 
-    def __init__(self, api_key: str | None = None, model: str = MODEL, log_path: str | None = None,
-                 timeout: float = 60.0, max_calls: int | None = None):
-        self.api_key = api_key or os.environ.get("TYPESAFE_API_KEY")
-        if not self.api_key:
-            raise JevError("Set TYPESAFE_API_KEY (or pass --backend mock to run offline).")
-        self.model = model
+    def __init__(self, provider: str | None = None, model: str | None = None, log_path: str | None = None,
+                 timeout: float = 20.0, max_calls: int | None = None, env_file: str = ".env.local"):
+        load_env_file(env_file)
+        self.provider, route, self.api_key = pick_route(provider)
+        self.url = route["url"]
+        self.model = model or os.environ.get("JEV_MODEL") or route["model"]
+        self.backend = f"jev ({self.provider}, {self.model})"
         self.log_path = log_path
         self.timeout = timeout
         self.max_calls = max_calls
@@ -59,7 +91,7 @@ class JevClient:
             raise JevError(f"max_calls={self.max_calls} reached")
         payload = {"model": self.model, "state": state, "questions": questions}
         req = urllib.request.Request(
-            API_URL, data=json.dumps(payload).encode(), method="POST",
+            self.url, data=json.dumps(payload).encode(), method="POST",
             headers={"Authorization": f"Bearer {self.api_key}", "Content-Type": "application/json"},
         )
         start = time.perf_counter()
@@ -116,7 +148,7 @@ class MockJev:
 
 def make_client(backend: str, **kw):
     if backend == "jev":
-        return JevClient(**{k: v for k, v in kw.items() if k in ("api_key", "log_path", "max_calls")})
+        return JevClient(**{k: v for k, v in kw.items() if k in ("provider", "log_path", "max_calls")})
     if backend == "mock":
         return MockJev(**kw)
     raise ValueError(f"unknown backend {backend!r}")

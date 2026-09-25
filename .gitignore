@@ -3,3 +3,5 @@ __pycache__/
 results/
 *.jsonl
 .venv/
+.env
+.env.local

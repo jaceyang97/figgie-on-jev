@@ -33,7 +33,7 @@ def run(args) -> dict:
     specs = args.lineup.split(",")
     if len(specs) != 4:
         raise SystemExit("--lineup needs exactly 4 agents")
-    client = make_client(args.backend, seed=args.seed, log_path=args.log, max_calls=args.max_calls) if any(s.startswith("jev") for s in specs) else None
+    client = make_client(args.backend, seed=args.seed, log_path=args.log, max_calls=args.max_calls, provider=args.provider) if any(s.startswith("jev") for s in specs) else None
     pnl = defaultdict(list)
     trades_by = defaultdict(list)
     rejected_by = defaultdict(list)
@@ -87,6 +87,8 @@ def run(args) -> dict:
 def main(argv=None):
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--backend", choices=["mock", "jev"], default="mock")
+    ap.add_argument("--provider", choices=["openrouter", "typesafe"], default=None,
+                    help="Jev route (default: OpenRouter if OPENROUTER_API_KEY is set, else TypeSafe)")
     ap.add_argument("--lineup", default="jev:neutral,fundamentalist,bottom_feeder,noise")
     ap.add_argument("--games", type=int, default=20)
     ap.add_argument("--duration", type=float, default=240.0)
