@@ -1,0 +1,23 @@
+{
+  "gambler": {
+    "jev": {
+      "mean_pnl": -219.45,
+      "ci95": [
+        -254.15,
+        -184.9
+      ],
+      "trades_per_game": 61.55,
+      "rejected_orders_per_game": 5.35
+    },
+    "field": {
+      "fundamentalist": 162.7,
+      "bottom_feeder": 82.6,
+      "noise": -25.85
+    },
+    "market": {
+      "trades_per_game": 95.2,
+      "mean_mispricing_chips": 9.68
+    },
+    "cost_usd": 0.2118
+  }
+}

@@ -1,0 +1,42 @@
+{
+  "[fundamentalist]": {
+    "jev": {
+      "mean_pnl": 83.38,
+      "ci95": [
+        61.83,
+        104.88
+      ],
+      "trades_per_game": 41.08,
+      "rejected_orders_per_game": 1.43
+    },
+    "field": {
+      "bottom_feeder": 61.1,
+      "noise": -227.85
+    },
+    "market": {
+      "trades_per_game": 85.75,
+      "mean_mispricing_chips": 7.13
+    },
+    "cost_usd": 0.0
+  },
+  "[noise]": {
+    "jev": {
+      "mean_pnl": -130.43,
+      "ci95": [
+        -149.78,
+        -110.12
+      ],
+      "trades_per_game": 54.62,
+      "rejected_orders_per_game": 106.4
+    },
+    "field": {
+      "fundamentalist": 157.35,
+      "bottom_feeder": 103.5
+    },
+    "market": {
+      "trades_per_game": 101.4,
+      "mean_mispricing_chips": 7.15
+    },
+    "cost_usd": 0.0
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "hoarder": {
+    "jev": {
+      "mean_pnl": -231.0,
+      "ci95": [
+        -265.7,
+        -195.25
+      ],
+      "trades_per_game": 47.5,
+      "rejected_orders_per_game": 3.95
+    },
+    "field": {
+      "fundamentalist": 186.85,
+      "bottom_feeder": 86.9,
+      "noise": -42.75
+    },
+    "market": {
+      "trades_per_game": 82.1,
+      "mean_mispricing_chips": 9.14
+    },
+    "cost_usd": 0.2051
+  }
+}

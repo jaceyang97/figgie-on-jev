@@ -33,6 +33,10 @@ python -m figgie.experiments.sweep   --backend jev --games 20 --out results/swee
 
 The client uses the same routing as Jace's other Jev code. If `OPENROUTER_API_KEY` is set, it calls OpenRouter (`POST https://openrouter.ai/api/alpha/decisions`, model `typesafe/jev-1.13`). Otherwise it calls TypeSafe directly (`POST https://api.typesafe.ai/v1/systemone`, model `jev-latest`). Use `--provider openrouter|typesafe` to force a route and `JEV_MODEL` to override the model. With `--provider openrouter` and no `OPENROUTER_API_KEY`, requests go out without an `Authorization` header, for environments whose network proxy injects the key (such as a Claude cloud sandbox with an openrouter.ai credential).
 
+## Results
+
+The first real Jev run (20 games per condition, 15,947 calls, $1.63) is written up in [`paper/paper.pdf`](paper/paper.pdf); its summary files are in `results/compare/` and `results/sweep/`, and `python paper/make_figures.py` redraws the figures.
+
 ## Experiments
 
 | Command | Question | Output |

@@ -1,0 +1,340 @@
+{
+  "compare": {
+    "n": 100,
+    "calls": 100,
+    "cost_usd": 0.0111,
+    "top1_acc_posterior": 0.32,
+    "top1_acc_jev": 0.32,
+    "mean_maxp_posterior": 0.39383099999999993,
+    "mean_maxp_jev": 0.5954,
+    "top1_agree": 0.2,
+    "action_agree": 0.03,
+    "tv": 0.3572,
+    "regret": {
+      "mean": 0.9777,
+      "ci95": [
+        0.6109,
+        1.387
+      ]
+    },
+    "brier_posterior": {
+      "mean": 0.6851,
+      "ci95": [
+        0.6385,
+        0.7286
+      ]
+    },
+    "brier_jev": {
+      "mean": 0.8108,
+      "ci95": [
+        0.7187,
+        0.9063
+      ]
+    },
+    "logloss_posterior": {
+      "mean": 1.2649,
+      "ci95": [
+        1.179,
+        1.3504
+      ]
+    },
+    "logloss_jev": {
+      "mean": 1.5617,
+      "ci95": [
+        1.3463,
+        1.7909
+      ]
+    },
+    "mix_jev": {
+      "pass": 0.47,
+      "buy": 0.25,
+      "sell": 0.08,
+      "bid": 0.2,
+      "ask": 0.0
+    },
+    "mix_classical": {
+      "pass": 0.04,
+      "buy": 0.04,
+      "sell": 0.02,
+      "bid": 0.47,
+      "ask": 0.43
+    }
+  },
+  "sweep": {
+    "rows": {
+      "gambler": {
+        "jev": {
+          "mean_pnl": -219.45,
+          "ci95": [
+            -254.15,
+            -184.9
+          ],
+          "trades_per_game": 61.55,
+          "rejected_orders_per_game": 5.35
+        },
+        "field": {
+          "fundamentalist": 162.7,
+          "bottom_feeder": 82.6,
+          "noise": -25.85
+        },
+        "market": {
+          "trades_per_game": 95.2,
+          "mean_mispricing_chips": 9.68
+        },
+        "cost_usd": 0.2118
+      },
+      "value": {
+        "jev": {
+          "mean_pnl": -27.9,
+          "ci95": [
+            -41.55,
+            -8.7
+          ],
+          "trades_per_game": 0.5,
+          "rejected_orders_per_game": 0.15
+        },
+        "field": {
+          "fundamentalist": 115.3,
+          "bottom_feeder": 37.65,
+          "noise": -125.05
+        },
+        "market": {
+          "trades_per_game": 57.4,
+          "mean_mispricing_chips": 6.77
+        },
+        "cost_usd": 0.2124
+      },
+      "market_maker": {
+        "jev": {
+          "mean_pnl": -51.85,
+          "ci95": [
+            -83.4,
+            -20.55
+          ],
+          "trades_per_game": 20.1,
+          "rejected_orders_per_game": 1.65
+        },
+        "field": {
+          "fundamentalist": 96.4,
+          "bottom_feeder": 64.35,
+          "noise": -108.9
+        },
+        "market": {
+          "trades_per_game": 67.35,
+          "mean_mispricing_chips": 7.22
+        },
+        "cost_usd": 0.2061
+      },
+      "timid": {
+        "jev": {
+          "mean_pnl": -10.65,
+          "ci95": [
+            -25.65,
+            8.35
+          ],
+          "trades_per_game": 0.05,
+          "rejected_orders_per_game": 0.05
+        },
+        "field": {
+          "fundamentalist": 119.7,
+          "bottom_feeder": 38.75,
+          "noise": -147.8
+        },
+        "market": {
+          "trades_per_game": 62.05,
+          "mean_mispricing_chips": 6.52
+        },
+        "cost_usd": 0.2142
+      },
+      "[fundamentalist]": {
+        "jev": {
+          "mean_pnl": 83.38,
+          "ci95": [
+            61.83,
+            104.88
+          ],
+          "trades_per_game": 41.08,
+          "rejected_orders_per_game": 1.43
+        },
+        "field": {
+          "bottom_feeder": 61.1,
+          "noise": -227.85
+        },
+        "market": {
+          "trades_per_game": 85.75,
+          "mean_mispricing_chips": 7.13
+        },
+        "cost_usd": 0.0
+      },
+      "[noise]": {
+        "jev": {
+          "mean_pnl": -130.43,
+          "ci95": [
+            -149.78,
+            -110.12
+          ],
+          "trades_per_game": 54.62,
+          "rejected_orders_per_game": 106.4
+        },
+        "field": {
+          "fundamentalist": 157.35,
+          "bottom_feeder": 103.5
+        },
+        "market": {
+          "trades_per_game": 101.4,
+          "mean_mispricing_chips": 7.15
+        },
+        "cost_usd": 0.0
+      },
+      "neutral": {
+        "jev": {
+          "mean_pnl": -143.1,
+          "ci95": [
+            -179.35,
+            -108.2
+          ],
+          "trades_per_game": 39.6,
+          "rejected_orders_per_game": 3.3
+        },
+        "field": {
+          "fundamentalist": 150.65,
+          "bottom_feeder": 58.65,
+          "noise": -66.2
+        },
+        "market": {
+          "trades_per_game": 81.75,
+          "mean_mispricing_chips": 9.07
+        },
+        "cost_usd": 0.2132
+      },
+      "hoarder": {
+        "jev": {
+          "mean_pnl": -231.0,
+          "ci95": [
+            -265.7,
+            -195.25
+          ],
+          "trades_per_game": 47.5,
+          "rejected_orders_per_game": 3.95
+        },
+        "field": {
+          "fundamentalist": 186.85,
+          "bottom_feeder": 86.9,
+          "noise": -42.75
+        },
+        "market": {
+          "trades_per_game": 82.1,
+          "mean_mispricing_chips": 9.14
+        },
+        "cost_usd": 0.2051
+      },
+      "momentum": {
+        "jev": {
+          "mean_pnl": -253.25,
+          "ci95": [
+            -283.05,
+            -218.75
+          ],
+          "trades_per_game": 47.7,
+          "rejected_orders_per_game": 3.15
+        },
+        "field": {
+          "fundamentalist": 200.3,
+          "bottom_feeder": 106.45,
+          "noise": -53.5
+        },
+        "market": {
+          "trades_per_game": 86.7,
+          "mean_mispricing_chips": 9.26
+        },
+        "cost_usd": 0.2058
+      }
+    },
+    "mix": {
+      "neutral": {
+        "calls": 2025,
+        "mix": {
+          "pass": 0.43358024691358027,
+          "buy": 0.21925925925925926,
+          "sell": 0.1348148148148148,
+          "bid": 0.21185185185185185,
+          "ask": 0.0004938271604938272
+        },
+        "mean_confidence": 0.15946666666666734,
+        "median_latency": 0.32157033099997534
+      },
+      "value": {
+        "calls": 2035,
+        "mix": {
+          "pass": 0.9936117936117936,
+          "buy": 0.005896805896805897,
+          "sell": 0.0004914004914004914,
+          "bid": 0.0,
+          "ask": 0.0
+        },
+        "mean_confidence": 0.33280589680589634,
+        "median_latency": 0.32206381700007114
+      },
+      "market_maker": {
+        "calls": 2043,
+        "mix": {
+          "pass": 0.3602545276554087,
+          "buy": 0.02594224180127264,
+          "sell": 0.032794909446891826,
+          "bid": 0.47626040137053355,
+          "ask": 0.1047479197258933
+        },
+        "mean_confidence": 0.12918257464512972,
+        "median_latency": 0.3214030909999792
+      },
+      "momentum": {
+        "calls": 2060,
+        "mix": {
+          "pass": 0.18932038834951456,
+          "buy": 0.17378640776699028,
+          "sell": 0.15679611650485437,
+          "bid": 0.43980582524271844,
+          "ask": 0.04029126213592233
+        },
+        "mean_confidence": 0.2117087378640776,
+        "median_latency": 0.32007335699995565
+      },
+      "hoarder": {
+        "calls": 2096,
+        "mix": {
+          "pass": 0.050095419847328244,
+          "buy": 0.16173664122137404,
+          "sell": 0.17891221374045801,
+          "bid": 0.6020992366412213,
+          "ask": 0.00715648854961832
+        },
+        "mean_confidence": 0.18158396946564928,
+        "median_latency": 0.32101835100002063
+      },
+      "timid": {
+        "calls": 2030,
+        "mix": {
+          "pass": 0.9990147783251232,
+          "buy": 0.0009852216748768472,
+          "sell": 0.0,
+          "bid": 0.0,
+          "ask": 0.0
+        },
+        "mean_confidence": 0.47240394088669985,
+        "median_latency": 0.32303596200000584
+      },
+      "gambler": {
+        "calls": 2065,
+        "mix": {
+          "pass": 0.06440677966101695,
+          "buy": 0.27554479418886196,
+          "sell": 0.2343825665859564,
+          "bid": 0.3917675544794189,
+          "ask": 0.03389830508474576
+        },
+        "mean_confidence": 0.2716029055690076,
+        "median_latency": 0.3227128289998973
+      }
+    }
+  }
+}

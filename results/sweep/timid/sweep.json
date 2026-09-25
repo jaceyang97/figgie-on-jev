@@ -1,0 +1,23 @@
+{
+  "timid": {
+    "jev": {
+      "mean_pnl": -10.65,
+      "ci95": [
+        -25.65,
+        8.35
+      ],
+      "trades_per_game": 0.05,
+      "rejected_orders_per_game": 0.05
+    },
+    "field": {
+      "fundamentalist": 119.7,
+      "bottom_feeder": 38.75,
+      "noise": -147.8
+    },
+    "market": {
+      "trades_per_game": 62.05,
+      "mean_mispricing_chips": 6.52
+    },
+    "cost_usd": 0.2142
+  }
+}

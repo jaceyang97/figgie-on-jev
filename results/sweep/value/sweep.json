@@ -1,0 +1,23 @@
+{
+  "value": {
+    "jev": {
+      "mean_pnl": -27.9,
+      "ci95": [
+        -41.55,
+        -8.7
+      ],
+      "trades_per_game": 0.5,
+      "rejected_orders_per_game": 0.15
+    },
+    "field": {
+      "fundamentalist": 115.3,
+      "bottom_feeder": 37.65,
+      "noise": -125.05
+    },
+    "market": {
+      "trades_per_game": 57.4,
+      "mean_mispricing_chips": 6.77
+    },
+    "cost_usd": 0.2124
+  }
+}

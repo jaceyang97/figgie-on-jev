@@ -1,0 +1,23 @@
+{
+  "momentum": {
+    "jev": {
+      "mean_pnl": -253.25,
+      "ci95": [
+        -283.05,
+        -218.75
+      ],
+      "trades_per_game": 47.7,
+      "rejected_orders_per_game": 3.15
+    },
+    "field": {
+      "fundamentalist": 200.3,
+      "bottom_feeder": 106.45,
+      "noise": -53.5
+    },
+    "market": {
+      "trades_per_game": 86.7,
+      "mean_mispricing_chips": 9.26
+    },
+    "cost_usd": 0.2058
+  }
+}
