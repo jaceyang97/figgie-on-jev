@@ -9,12 +9,19 @@ from ..personalities import PERSONALITIES
 from .base import Agent
 
 RULES = (
-    "Figgie: 4 players, 40 cards in 4 suits. One suit has 12 cards, one has 8 and two have 10. The goal suit is "
-    "the suit of the same colour as the 12-card suit (spades/clubs are black, hearts/diamonds are red), so it has "
-    "8 or 10 cards. At the end each goal-suit card pays 10 chips and whoever holds the most goal-suit cards wins "
-    "the rest of the 200-chip pot (120 chips if the goal suit has 8 cards, 100 if it has 10). Cards of other suits "
-    "are worth nothing. Seeing many cards of a suit means it is likely the 12-card suit, which makes the "
-    "same-colour suit likely the goal suit. Every trade clears all bids and asks."
+    "Figgie rules. There are 4 players and a 40-card deck in four suits: spades, clubs, hearts and diamonds. "
+    "Spades and clubs are black; hearts and diamonds are red. One suit has 12 cards, one suit has 8 cards and the "
+    "other two suits have 10 cards each. Which suit has how many cards is secret and random. The goal suit is the "
+    "other suit of the same colour as the 12-card suit. Each player starts with 350 chips, puts 50 chips into a "
+    "200-chip pot, and is dealt 10 random cards. "
+    "Trading lasts 240 seconds. Each suit has at most one standing bid and one standing ask. A new bid must be "
+    "higher than the standing bid and a new ask must be lower than the standing ask. Buying takes the standing "
+    "ask; selling takes the standing bid. You can only sell cards you hold and only bid or buy with chips you have. "
+    "After any trade, all bids and asks in every suit are cancelled. Orders reach the market after a short delay, "
+    "so an order can fail if the book has changed. "
+    "When trading ends, the goal suit is revealed. The pot pays 10 chips for each goal-suit card a player holds, "
+    "and the rest of the pot goes to the player holding the most goal-suit cards, split equally if tied. "
+    "Cards of other suits pay nothing."
 )
 
 PRICE_LADDER = (2, 4, 6, 8, 11, 14, 18, 24)
