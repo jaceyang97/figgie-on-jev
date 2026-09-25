@@ -60,6 +60,7 @@ def describe_history(view: View, my_decisions: list[str] | None = None, n_prices
 
     Every trade and every quote accepted onto the book is public in Figgie, so
     this adds no hidden information; it only spares Jev from reading a raw log.
+    Only counts, sums and prices taken from the log: no labels or guesses.
     """
     suits = {}
     for s in SUITS:
@@ -70,10 +71,6 @@ def describe_history(view: View, my_decisions: list[str] | None = None, n_prices
         if prices:
             info["avg_price"] = round(sum(prices) / len(prices), 1)
             info["last_prices_oldest_first"] = prices[-n_prices:]
-            if len(prices) >= 4:
-                half = len(prices) // 2
-                early, late = sum(prices[:half]) / half, sum(prices[half:]) / (len(prices) - half)
-                info["price_trend"] = "rising" if late > early + 1 else "falling" if late < early - 1 else "flat"
         if bids:
             info["highest_bid_ever"] = max(bids)
         if asks:
@@ -199,8 +196,8 @@ class JevAgent(Agent):
             traded = any(t0 <= tr.t < t1 and view.me in (tr.buyer, tr.seller) for tr in view.trades)
             posted = any(t0 <= o.t < t1 and o.player == view.me for o in view.orders)
             if label.startswith(("buy", "sell")):
-                result = "filled" if traded else "missed, the price was gone"
+                result = "filled" if traded else "not filled"
             else:
-                result = "posted, then filled" if traded else "posted" if posted else "rejected, the book had moved"
+                result = "posted, then filled" if traded else "posted" if posted else "not accepted"
             out.append(f"t={round(t0)}s {label}: {result}")
         return out
