@@ -43,7 +43,7 @@ def main(argv=None):
     if len(field) != 3:
         raise SystemExit("--field needs exactly 3 agents")
     rows = {}
-    seats = [(p, f"jev:{p}" + ("+assist" if args.assist else "")) for p in args.personalities.split(",")]
+    seats = [(p, f"jev:{p}" + ("+assist" if args.assist else "")) for p in args.personalities.split(",") if p]
     seats += [(f"[{b}]", b) for b in args.baselines.split(",") if b]
     for p, spec in seats:
         t = SimpleNamespace(backend=args.backend, provider=args.provider, lineup=",".join([spec] + field), games=args.games,

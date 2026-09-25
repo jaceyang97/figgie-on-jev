@@ -17,7 +17,7 @@ Metrics
 
 Usage:
   python -m figgie.experiments.compare --backend mock --games 20
-  TYPESAFE_API_KEY=... python -m figgie.experiments.compare --backend jev --games 20 --out results/compare
+  python -m figgie.experiments.compare --backend jev --games 20 --out results/compare
 """
 
 from __future__ import annotations

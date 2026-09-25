@@ -147,6 +147,18 @@ def test_jev_route_prefers_openrouter(monkeypatch, tmp_path):
     assert JevClient(provider="typesafe", env_file=missing).provider == "typesafe"
 
 
+def test_openrouter_without_key_relies_on_gateway(monkeypatch, tmp_path):
+    from figgie.jev import JevClient, JevError
+
+    monkeypatch.delenv("OPENROUTER_API_KEY", raising=False)
+    monkeypatch.delenv("TYPESAFE_API_KEY", raising=False)
+    missing = str(tmp_path / "none")
+    with pytest.raises(JevError):
+        JevClient(provider="typesafe", env_file=missing)
+    c = JevClient(provider="openrouter", env_file=missing)
+    assert c.provider == "openrouter" and c.api_key == ""
+
+
 def test_env_file_does_not_override_process_env(monkeypatch, tmp_path):
     from figgie.jev import JevClient
 

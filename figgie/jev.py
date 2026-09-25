@@ -2,7 +2,8 @@
 
 Jev takes a JSON "state" and a set of typed questions and returns numeric
 answers. Two routes speak the same request shape; OpenRouter is used when
-OPENROUTER_API_KEY is set, otherwise TypeSafe directly:
+OPENROUTER_API_KEY is set, otherwise TypeSafe directly (--provider openrouter
+with no key sends no Authorization header, for a proxy that injects it):
 
     POST https://openrouter.ai/api/alpha/decisions   model typesafe/jev-1.13  key $OPENROUTER_API_KEY
     POST https://api.typesafe.ai/v1/systemone        model jev-latest         key $TYPESAFE_API_KEY
@@ -51,7 +52,12 @@ def load_env_file(path: str = ".env.local") -> None:
 
 
 def pick_route(provider: str | None = None) -> tuple[str, dict, str]:
-    """(provider, route, key). With no provider, OpenRouter wins if its key is set."""
+    """(provider, route, key). With no provider, OpenRouter wins if its key is set.
+
+    Naming provider="openrouter" explicitly works without a local key: the
+    request then goes out with no Authorization header, for setups where a
+    proxy adds the credential (e.g. a cloud sandbox's egress gateway).
+    """
     names = [provider] if provider else list(ROUTES)
     for name in names:
         if name not in ROUTES:
@@ -59,6 +65,8 @@ def pick_route(provider: str | None = None) -> tuple[str, dict, str]:
         key = os.environ.get(ROUTES[name]["key"], "").strip()
         if key:
             return name, ROUTES[name], key
+    if provider == "openrouter":
+        return provider, ROUTES[provider], ""
     wanted = " or ".join(ROUTES[n]["key"] for n in names)
     raise JevError(f"Set {wanted} (in the environment or .env.local), or pass --backend mock to run offline.")
 
@@ -90,10 +98,10 @@ class JevClient:
         if self.max_calls is not None and self.calls >= self.max_calls:
             raise JevError(f"max_calls={self.max_calls} reached")
         payload = {"model": self.model, "state": state, "questions": questions}
-        req = urllib.request.Request(
-            self.url, data=json.dumps(payload).encode(), method="POST",
-            headers={"Authorization": f"Bearer {self.api_key}", "Content-Type": "application/json"},
-        )
+        headers = {"Content-Type": "application/json"}
+        if self.api_key:
+            headers["Authorization"] = f"Bearer {self.api_key}"
+        req = urllib.request.Request(self.url, data=json.dumps(payload).encode(), method="POST", headers=headers)
         start = time.perf_counter()
         try:
             with urllib.request.urlopen(req, timeout=self.timeout) as resp:
