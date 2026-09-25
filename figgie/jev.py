@@ -77,7 +77,8 @@ class JevClient:
     backend = "jev"
 
     def __init__(self, provider: str | None = None, model: str | None = None, log_path: str | None = None,
-                 timeout: float = 20.0, max_calls: int | None = None, env_file: str = ".env.local"):
+                 timeout: float = 20.0, max_calls: int | None = None, env_file: str = ".env.local",
+                 retries: int = 3):
         load_env_file(env_file)
         self.provider, route, self.api_key = pick_route(provider)
         self.url = route["url"]
@@ -85,6 +86,7 @@ class JevClient:
         self.backend = f"jev ({self.provider}, {self.model})"
         self.log_path = log_path
         self.timeout = timeout
+        self.retries = retries  # for timeouts, connection errors, 429 and 5xx
         self.max_calls = max_calls
         self.calls = 0
         self.input_tokens = 0
@@ -102,14 +104,19 @@ class JevClient:
         if self.api_key:
             headers["Authorization"] = f"Bearer {self.api_key}"
         req = urllib.request.Request(self.url, data=json.dumps(payload).encode(), method="POST", headers=headers)
-        start = time.perf_counter()
-        try:
-            with urllib.request.urlopen(req, timeout=self.timeout) as resp:
-                data = json.loads(resp.read())
-        except urllib.error.HTTPError as e:
-            raise JevError(f"Jev HTTP {e.code}: {e.read()[:500]!r}") from None
-        except urllib.error.URLError as e:
-            raise JevError(f"Jev request failed: {e.reason}") from None
+        for attempt in range(self.retries + 1):
+            start = time.perf_counter()
+            try:
+                with urllib.request.urlopen(req, timeout=self.timeout) as resp:
+                    data = json.loads(resp.read())
+                break
+            except urllib.error.HTTPError as e:
+                if e.code < 500 and e.code != 429 or attempt == self.retries:
+                    raise JevError(f"Jev HTTP {e.code}: {e.read()[:500]!r}") from None
+            except (urllib.error.URLError, TimeoutError, ConnectionError) as e:
+                if attempt == self.retries:
+                    raise JevError(f"Jev request failed: {getattr(e, 'reason', e)}") from None
+            time.sleep(2 ** attempt)
         self.last_latency = time.perf_counter() - start
         self.calls += 1
         self.input_tokens += int(data.get("usage", {}).get("input_tokens", 0))
