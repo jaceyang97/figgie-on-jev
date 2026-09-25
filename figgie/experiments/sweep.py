@@ -43,7 +43,8 @@ def main(argv=None):
     ap.add_argument("--max-calls", type=int, default=5000, help="hard cap on Jev API calls per personality")
     ap.add_argument("--max-rps", type=float, default=MAX_RPS, help="Jev requests per second, shared by all seats")
     ap.add_argument("--log-dir", help="write each Jev seat's requests and responses to <dir>/<personality>.jsonl")
-    ap.add_argument("--out", help="write sweep.json here")
+    ap.add_argument("--out", help="write sweep.json here; finished games are checkpointed in <out>/games/ and a "
+                    "rerun with the same arguments resumes from them")
     args = ap.parse_args(argv)
 
     field = args.field.split(",")
@@ -56,6 +57,8 @@ def main(argv=None):
     limiter = RateLimiter(args.max_rps)
     if args.log_dir:
         os.makedirs(args.log_dir, exist_ok=True)
+    if args.out:
+        os.makedirs(os.path.join(args.out, "games"), exist_ok=True)
 
     def play(seat):
         p, spec = seat
@@ -66,22 +69,27 @@ def main(argv=None):
                                  provider=args.provider, limiter=limiter)
         t = SimpleNamespace(backend=args.backend, provider=args.provider, lineup=",".join([spec] + field),
                             games=args.games, duration=args.duration, jev_latency=args.jev_latency, seed=args.seed,
-                            max_calls=args.max_calls, log=None, out=None, workers=None)
-        s = run_tournament(t, client)
+                            max_calls=args.max_calls, log=None, out=None, workers=None,
+                            checkpoint=os.path.join(args.out, "games", f"{p}.jsonl") if args.out else None)
+        try:
+            s = run_tournament(t, client)
+        except RuntimeError as e:
+            print(f"WARNING {p}: {e}")
+            return p, None
         key = spec if spec in s["agents"] else f"{spec}#0"
-        return p, {"jev": s["agents"][key], "field": {k: v["mean_pnl"] for k, v in s["agents"].items() if k != key},
+        return p, {"games": s["games"], "jev": s["agents"][key], "field": {k: v["mean_pnl"] for k, v in s["agents"].items() if k != key},
                    "market": s["market"], "calls": s.get("jev_calls", 0), "cost_usd": s.get("cost_usd", 0.0)}
 
     # Every seat and every game runs at once; the shared limiter paces the Jev calls.
     with ThreadPoolExecutor(max_workers=len(seats)) as pool:
-        rows = dict(pool.map(play, seats))
+        rows = {p: r for p, r in pool.map(play, seats) if r is not None}
 
     if args.backend == "mock":
         print("NOTE: the mock backend answers at random and ignores personalities; Jev rows say nothing about Jev.\n")
-    print(f"{'agent in seat':<18}{'P&L':>9}{'95% CI':>20}{'trades':>9}{'mkt trades':>12}{'mispricing':>12}")
+    print(f"{'agent in seat':<18}{'games':>6}{'P&L':>9}{'95% CI':>20}{'trades':>9}{'mkt trades':>12}{'mispricing':>12}")
     for p, r in rows.items():
         lo, hi = r["jev"]["ci95"]
-        print(f"{p:<18}{r['jev']['mean_pnl']:>9.1f}{f'[{lo:.0f}, {hi:.0f}]':>20}{r['jev']['trades_per_game']:>9.1f}"
+        print(f"{p:<18}{r['games']:>6}{r['jev']['mean_pnl']:>9.1f}{f'[{lo:.0f}, {hi:.0f}]':>20}{r['jev']['trades_per_game']:>9.1f}"
               f"{r['market']['trades_per_game']:>12.1f}{r['market']['mean_mispricing_chips']:>12.2f}")
     if args.out:
         os.makedirs(args.out, exist_ok=True)

@@ -20,6 +20,8 @@ import argparse
 import json
 import os
 import random
+import sys
+import threading
 from collections import defaultdict
 from concurrent.futures import ThreadPoolExecutor
 
@@ -42,36 +44,68 @@ def run(args, client=None) -> dict:
         client = make_client(args.backend, seed=args.seed, log_path=args.log, max_calls=args.max_calls,
                              provider=args.provider)
 
+    done = {}
+    checkpoint = getattr(args, "checkpoint", None)
+    if checkpoint and os.path.exists(checkpoint):
+        with open(checkpoint) as f:
+            for line in f:
+                rec = json.loads(line)
+                if rec["game"] < args.games and rec["seats"] == specs[rec["game"] % 4 :] + specs[: rec["game"] % 4]:
+                    done[rec["game"]] = rec
+    lock = threading.Lock()
+    errors = []
+
     def play(g: int):
         order = specs[g % 4 :] + specs[: g % 4]
         agents = [make_agent(s, client, jev_latency=args.jev_latency) for s in order]
-        return g, order, play_game(agents, game_rng(args.seed, g), duration=args.duration)
+        try:
+            res = play_game(agents, game_rng(args.seed, g), duration=args.duration)
+        except Exception as e:  # e.g. the API refused a call; keep the games that finished
+            with lock:
+                errors.append(f"game {g}: {e}")
+            return None
+        rec = {
+            "game": g, "seats": order, "goal": res.deck.goal, "pnl": res.pnl,
+            "seat_trades": [sum(1 for t in res.trades if seat in (t.buyer, t.seller)) for seat in range(4)],
+            "rejected": res.rejected, "trade_prices": [[t.suit, t.price] for t in res.trades],
+        }
+        if checkpoint:
+            with lock, open(checkpoint, "a") as f:
+                f.write(json.dumps(rec) + "\n")
+        return rec
 
     # Jev games spend their time waiting on the API, so run them side by side;
     # the client's rate limiter keeps the total under Jev's request limit.
-    workers = getattr(args, "workers", None) or (args.games if client else 1)
+    todo = [g for g in range(args.games) if g not in done]
+    workers = getattr(args, "workers", None) or (max(1, len(todo)) if client else 1)
     with ThreadPoolExecutor(max_workers=workers) as pool:
-        results = sorted(pool.map(play, range(args.games)), key=lambda r: r[0])
+        records = list(done.values()) + [r for r in pool.map(play, todo) if r is not None]
+    records.sort(key=lambda r: r["game"])
+    for e in errors:
+        print(f"WARNING {args.lineup}: {e}", file=sys.stderr)
 
     pnl = defaultdict(list)
     trades_by = defaultdict(list)
     rejected_by = defaultdict(list)
     n_trades, mispricing = [], []
     games = []
-    for g, order, res in results:
-        goal = res.deck.goal
+    for rec in records:
+        order, goal = rec["seats"], rec["goal"]
         for seat, spec in enumerate(order):
             key = f"{spec}#{specs.index(spec)}" if specs.count(spec) > 1 else spec
-            pnl[key].append(res.pnl[seat])
-            trades_by[key].append(sum(1 for t in res.trades if seat in (t.buyer, t.seller)))
-            rejected_by[key].append(res.rejected[seat])
-        n_trades.append(len(res.trades))
-        mispricing.extend(abs(t.price - (10 if t.suit == goal else 0)) for t in res.trades)
-        games.append({"game": g, "seats": order, "goal": goal, "pnl": res.pnl, "trades": len(res.trades)})
+            pnl[key].append(rec["pnl"][seat])
+            trades_by[key].append(rec["seat_trades"][seat])
+            rejected_by[key].append(rec["rejected"][seat])
+        n_trades.append(len(rec["trade_prices"]))
+        mispricing.extend(abs(price - (10 if suit == goal else 0)) for suit, price in rec["trade_prices"])
+        games.append({"game": rec["game"], "seats": order, "goal": goal, "pnl": rec["pnl"], "trades": len(rec["trade_prices"])})
+    if not records:
+        raise RuntimeError(f"no games finished for {args.lineup}: {errors[:1]}")
 
     summary = {
         "backend": client.backend if client else "none",
-        "games": args.games,
+        "games": len(records),
+        "games_failed": len(errors),
         "lineup": specs,
         "agents": {
             k: {
