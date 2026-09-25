@@ -1,0 +1,12 @@
+[project]
+name = "figgie-on-jev"
+version = "0.1.0"
+description = "Figgie market simulator comparing Jev decision-model agents with classical strategies"
+requires-python = ">=3.10"
+dependencies = []
+
+[project.optional-dependencies]
+dev = ["pytest"]
+
+[tool.setuptools]
+packages = ["figgie", "figgie.agents", "figgie.experiments"]
