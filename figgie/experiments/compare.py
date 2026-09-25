@@ -31,7 +31,7 @@ import random
 
 from ..agents import Fundamentalist, make_agent
 from ..agents.classical import take_edges
-from ..agents.jev_agent import action_menu, action_question, describe_state, goal_question
+from ..agents.jev_agent import action_menu, action_question, describe_history, describe_state, goal_question
 from ..cards import SUITS
 from ..engine import View, play_game
 from ..jev import make_client
@@ -79,6 +79,8 @@ def run(args) -> dict:
             view = snap["view"]
             menu = action_menu(view)
             state = describe_state(view, snap["known"], snap["posterior"] if args.assist else None)
+            if args.history:
+                state["game_so_far"] = describe_history(view)
             answers = client.ask(state, {
                 "goal": goal_question(),
                 "action": action_question(menu, args.personality),
@@ -140,6 +142,7 @@ def main(argv=None):
     ap.add_argument("--opponents", default="fundamentalist,bottom_feeder,noise")
     ap.add_argument("--personality", default="neutral")
     ap.add_argument("--assist", action="store_true", help="give Jev the exact goal probabilities in the state")
+    ap.add_argument("--history", action="store_true", help="add a compressed summary of the whole game log to the state")
     ap.add_argument("--duration", type=float, default=240.0)
     ap.add_argument("--seed", type=int, default=0)
     ap.add_argument("--max-calls", type=int, default=500, help="hard cap on Jev API calls")

@@ -119,10 +119,41 @@ def test_jev_payload_shape_matches_api():
     assert "goal_suit_probability_from_card_counting" in state
 
 
+def test_history_summarises_public_log():
+    from figgie.agents.jev_agent import describe_history
+    from figgie.market import Order, Trade
+
+    hand = {"spades": 3, "clubs": 2, "hearts": 4, "diamonds": 1}
+    trades = (Trade(5, "spades", 7, buyer=0, seller=2), Trade(9, "spades", 9, buyer=1, seller=0),
+              Trade(12, "clubs", 4, buyer=0, seller=3))
+    orders = (Order(3, 2, "ask", "spades", 7), Order(8, 1, "bid", "spades", 9))
+    view = View(t=20, t_end=240, me=0, hand=hand, chips=300,
+                bids={s: None for s in SUITS}, asks={s: None for s in SUITS}, trades=trades, orders=orders)
+    h = describe_history(view, ["t=12s buy_clubs: filled"])
+    assert h["suits"]["spades"]["trades"] == 2 and h["suits"]["spades"]["avg_price"] == 8.0
+    assert h["suits"]["spades"]["highest_bid_ever"] == 9
+    me = h["players"]["me"]
+    assert me["net_cards_bought"] == {"clubs": 1}
+    assert me["chips_from_trading"] == -7 + 9 - 4
+    assert me["starting_hand"] == {"spades": 3, "clubs": 1, "hearts": 4, "diamonds": 1}
+    assert h["players"]["P2"]["net_cards_bought"] == {"spades": -1}
+    assert me["my_recent_decisions"] == ["t=12s buy_clubs: filled"]
+
+
+def test_jev_history_agent_runs():
+    client = MockJev(seed=3)
+    agents = [make_agent("jev:neutral+history", client), Fundamentalist(), BottomFeeder(), Noise()]
+    res = play_game(agents, random.Random(4), duration=40)
+    assert sum(res.pnl) == pytest.approx(0.0)
+    assert agents[0].name == "jev:neutral+history"
+
+
 def test_make_agent_specs():
     client = MockJev()
     a = make_agent("jev:value+assist", client)
-    assert a.personality == "value" and a.assist
+    assert a.personality == "value" and a.assist and not a.history
+    b = make_agent("jev:hoarder+history+assist", client)
+    assert b.history and b.assist
     assert make_agent("fundamentalist").name == "fundamentalist"
     with pytest.raises(ValueError):
         make_agent("jev:nonexistent", client)

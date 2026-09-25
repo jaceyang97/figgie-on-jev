@@ -51,6 +51,64 @@ def describe_state(view: View, known: dict[str, int], goal_probs: dict[str, floa
     return state
 
 
+def _signed(counts: dict[str, int]) -> dict[str, int]:
+    return {s: n for s, n in counts.items() if n}
+
+
+def describe_history(view: View, my_decisions: list[str] | None = None, n_prices: int = 6) -> dict:
+    """The whole public game log so far, compressed to per-suit and per-player summaries.
+
+    Every trade and every quote accepted onto the book is public in Figgie, so
+    this adds no hidden information; it only spares Jev from reading a raw log.
+    """
+    suits = {}
+    for s in SUITS:
+        prices = [t.price for t in view.trades if t.suit == s]
+        bids = [o.price for o in view.orders if o.suit == s and o.side == "bid"]
+        asks = [o.price for o in view.orders if o.suit == s and o.side == "ask"]
+        info = {"trades": len(prices), "bids_posted": len(bids), "asks_posted": len(asks)}
+        if prices:
+            info["avg_price"] = round(sum(prices) / len(prices), 1)
+            info["last_prices_oldest_first"] = prices[-n_prices:]
+            if len(prices) >= 4:
+                half = len(prices) // 2
+                early, late = sum(prices[:half]) / half, sum(prices[half:]) / (len(prices) - half)
+                info["price_trend"] = "rising" if late > early + 1 else "falling" if late < early - 1 else "flat"
+        if bids:
+            info["highest_bid_ever"] = max(bids)
+        if asks:
+            info["lowest_ask_ever"] = min(asks)
+        suits[s] = info
+
+    players = {}
+    for p in range(4):
+        net = {s: 0 for s in SUITS}
+        cash = 0
+        for t in view.trades:
+            if t.buyer == p:
+                net[t.suit] += 1
+                cash -= t.price
+            elif t.seller == p:
+                net[t.suit] -= 1
+                cash += t.price
+        bid_counts = {s: sum(1 for o in view.orders if o.player == p and o.side == "bid" and o.suit == s) for s in SUITS}
+        ask_counts = {s: sum(1 for o in view.orders if o.player == p and o.side == "ask" and o.suit == s) for s in SUITS}
+        info = {
+            "net_cards_bought": _signed(net),
+            "chips_from_trading": cash,
+            "bids_posted_by_suit": _signed(bid_counts),
+            "asks_posted_by_suit": _signed(ask_counts),
+        }
+        if p == view.me:
+            info["starting_hand"] = {s: view.hand[s] - net[s] for s in SUITS}
+            if my_decisions:
+                info["my_recent_decisions"] = my_decisions
+            players["me"] = info
+        else:
+            players[f"P{p}"] = info
+    return {"elapsed_seconds": round(view.t), "total_trades": len(view.trades), "suits": suits, "players": players}
+
+
 def action_menu(view: View) -> dict[str, tuple[Action, str]]:
     """Every legal action as label -> (action, description). Jev picks one label."""
     menu = {"pass": (PASS, "Do nothing this turn.")}
@@ -94,7 +152,7 @@ class JevAgent(Agent):
     round-trip time when `use_measured_latency` is set.
     """
 
-    def __init__(self, client, personality: str = "neutral", assist: bool = False,
+    def __init__(self, client, personality: str = "neutral", assist: bool = False, history: bool = False,
                  greedy: bool = True, use_measured_latency: bool = False, **kw):
         kw.setdefault("wake_rate", 0.5)
         kw.setdefault("latency", 0.3)
@@ -104,9 +162,11 @@ class JevAgent(Agent):
         self.client = client
         self.personality = personality
         self.assist = assist
+        self.history = history
+        self.decisions: list[tuple[float, str]] = []  # (time, label) of this seat's non-pass choices
         self.greedy = greedy
         self.use_measured_latency = use_measured_latency
-        self.name = f"jev:{personality}" + ("+assist" if assist else "")
+        self.name = f"jev:{personality}" + ("+history" if history else "") + ("+assist" if assist else "")
         self.last_answer = None
 
     def latency(self) -> float:
@@ -116,6 +176,8 @@ class JevAgent(Agent):
         menu = action_menu(view)
         goal = self.counter.goal_probabilities() if self.assist else None
         state = describe_state(view, self.counter.known(), goal)
+        if self.history:
+            state["game_so_far"] = describe_history(view, self.recent_decisions(view))
         answer = self.client.ask(state, {"action": action_question(menu, self.personality)})["action"]
         self.last_answer = answer
         if self.greedy:
@@ -123,4 +185,22 @@ class JevAgent(Agent):
         else:
             probs = answer["probabilities"]
             label = self.rng.choices(list(probs), weights=list(probs.values()))[0]
-        return menu.get(label, (PASS, ""))[0]
+        action = menu.get(label, (PASS, ""))[0]
+        if action != PASS:
+            self.decisions.append((view.t, action.label()))
+        return action
+
+    def recent_decisions(self, view: View, n: int = 6) -> list[str]:
+        """This seat's last non-pass choices and what became of them before its next one."""
+        out = []
+        recent = self.decisions[-n:]
+        for i, (t0, label) in enumerate(recent):
+            t1 = recent[i + 1][0] if i + 1 < len(recent) else view.t
+            traded = any(t0 <= tr.t < t1 and view.me in (tr.buyer, tr.seller) for tr in view.trades)
+            posted = any(t0 <= o.t < t1 and o.player == view.me for o in view.orders)
+            if label.startswith(("buy", "sell")):
+                result = "filled" if traded else "missed, the price was gone"
+            else:
+                result = "posted, then filled" if traded else "posted" if posted else "rejected, the book had moved"
+            out.append(f"t={round(t0)}s {label}: {result}")
+        return out
