@@ -1,69 +1,43 @@
-wave 1: every condition has at least 1 games; Jev calls so far 3076
-wave 2: every condition has at least 2 games; Jev calls so far 5834
-wave 3: every condition has at least 3 games; Jev calls so far 9086
-wave 4: every condition has at least 4 games; Jev calls so far 11997
-wave 5: every condition has at least 5 games; Jev calls so far 15223
-wave 6: every condition has at least 6 games; Jev calls so far 17976
-wave 7: every condition has at least 7 games; Jev calls so far 20904
-wave 8: every condition has at least 8 games; Jev calls so far 23681
-wave 9: every condition has at least 9 games; Jev calls so far 26397
-wave 10: every condition has at least 10 games; Jev calls so far 29227
-wave 11: every condition has at least 11 games; Jev calls so far 32324
-wave 12: every condition has at least 12 games; Jev calls so far 35001
-wave 13: every condition has at least 13 games; Jev calls so far 37979
-wave 14: every condition has at least 14 games; Jev calls so far 40440
-wave 15: every condition has at least 15 games; Jev calls so far 43032
-wave 16: every condition has at least 16 games; Jev calls so far 46051
-wave 17: every condition has at least 17 games; Jev calls so far 49314
-wave 18: every condition has at least 18 games; Jev calls so far 52238
-wave 19: every condition has at least 19 games; Jev calls so far 55257
-wave 20: every condition has at least 20 games; Jev calls so far 58061
-wave 21: every condition has at least 21 games; Jev calls so far 60934
-wave 22: every condition has at least 22 games; Jev calls so far 63744
-wave 23: every condition has at least 23 games; Jev calls so far 66797
-wave 24: every condition has at least 24 games; Jev calls so far 69387
-wave 25: every condition has at least 25 games; Jev calls so far 72489
-wave 26: every condition has at least 26 games; Jev calls so far 75333
-wave 27: every condition has at least 27 games; Jev calls so far 78589
-wave 28: every condition has at least 28 games; Jev calls so far 81582
-wave 29: every condition has at least 29 games; Jev calls so far 84637
-wave 30: every condition has at least 30 games; Jev calls so far 87547
-wave 31: every condition has at least 31 games; Jev calls so far 90147
-wave 32: every condition has at least 32 games; Jev calls so far 92826
-wave 33: every condition has at least 33 games; Jev calls so far 95587
-wave 34: every condition has at least 34 games; Jev calls so far 98549
-wave 35: every condition has at least 35 games; Jev calls so far 101175
-wave 36: every condition has at least 36 games; Jev calls so far 104074
-wave 37: every condition has at least 37 games; Jev calls so far 106571
-wave 38: every condition has at least 38 games; Jev calls so far 109595
-WARNING jev:chartist-desc+summary,fundamentalist,bottom_feeder,noise: game 38: Jev HTTP 403: b'{"error":{"message":"Key limit exceeded (total limit). Manage it using https://openrouter.ai/workspaces/default/keys/450b798ff99ddf1f07646c5090bf447e7c7ab0b26d321428b7d392a3bb17211a","code":403}}'
-WARNING jev:bottom_feeder+summary,fundamentalist,bottom_feeder,noise: game 38: Jev HTTP 403: b'{"error":{"message":"Key limit exceeded (total limit). Manage it using https://openrouter.ai/workspaces/default/keys/450b798ff99ddf1f07646c5090bf447e7c7ab0b26d321428b7d392a3bb17211a","code":403}}'
-WARNING jev:market_maker_gm+summary,fundamentalist,bottom_feeder,noise: game 38: Jev HTTP 403: b'{"error":{"message":"Key limit exceeded (total limit). Manage it using https://openrouter.ai/workspaces/default/keys/450b798ff99ddf1f07646c5090bf447e7c7ab0b26d321428b7d392a3bb17211a","code":403}}'
-WARNING jev:chartist+summary,fundamentalist,bottom_feeder,noise: game 38: Jev HTTP 403: b'{"error":{"message":"Key limit exceeded (total limit). Manage it using https://openrouter.ai/workspaces/default/keys/450b798ff99ddf1f07646c5090bf447e7c7ab0b26d321428b7d392a3bb17211a","code":403}}'
-WARNING jev:market_maker_gm-desc+summary,fundamentalist,bottom_feeder,noise: game 38: Jev HTTP 403: b'{"error":{"message":"Key limit exceeded (total limit). Manage it using https://openrouter.ai/workspaces/default/keys/450b798ff99ddf1f07646c5090bf447e7c7ab0b26d321428b7d392a3bb17211a","code":403}}'
-WARNING jev:chartist+summary,fundamentalist,bottom_feeder,noise: game 38: Jev HTTP 403: b'{"error":{"message":"Key limit exceeded (total limit). Manage it using https://openrouter.ai/workspaces/default/keys/450b798ff99ddf1f07646c5090bf447e7c7ab0b26d321428b7d392a3bb17211a","code":403}}'
-WARNING jev:neutral+summary,fundamentalist,bottom_feeder,noise: game 38: Jev HTTP 403: b'{"error":{"message":"Key limit exceeded (total limit). Manage it using https://openrouter.ai/workspaces/default/keys/450b798ff99ddf1f07646c5090bf447e7c7ab0b26d321428b7d392a3bb17211a","code":403}}'
-WARNING jev:market_maker_as-desc+summary,fundamentalist,bottom_feeder,noise: game 38: Jev HTTP 403: b'{"error":{"message":"Key limit exceeded (total limit). Manage it using https://openrouter.ai/workspaces/default/keys/450b798ff99ddf1f07646c5090bf447e7c7ab0b26d321428b7d392a3bb17211a","code":403}}'
-WARNING jev:bottom_feeder-desc+summary,fundamentalist,bottom_feeder,noise: game 38: Jev HTTP 403: b'{"error":{"message":"Key limit exceeded (total limit). Manage it using https://openrouter.ai/workspaces/default/keys/450b798ff99ddf1f07646c5090bf447e7c7ab0b26d321428b7d392a3bb17211a","code":403}}'
-WARNING jev:fundamentalist-desc+summary,fundamentalist,bottom_feeder,noise: game 38: Jev HTTP 403: b'{"error":{"message":"Key limit exceeded (total limit). Manage it using https://openrouter.ai/workspaces/default/keys/450b798ff99ddf1f07646c5090bf447e7c7ab0b26d321428b7d392a3bb17211a","code":403}}'
-WARNING jev:noise-desc+summary,fundamentalist,bottom_feeder,noise: game 38: Jev HTTP 403: b'{"error":{"message":"Key limit exceeded (total limit). Manage it using https://openrouter.ai/workspaces/default/keys/450b798ff99ddf1f07646c5090bf447e7c7ab0b26d321428b7d392a3bb17211a","code":403}}'
-WARNING jev:noise+summary,fundamentalist,bottom_feeder,noise: game 38: Jev HTTP 403: b'{"error":{"message":"Key limit exceeded (total limit). Manage it using https://openrouter.ai/workspaces/default/keys/450b798ff99ddf1f07646c5090bf447e7c7ab0b26d321428b7d392a3bb17211a","code":403}}'
-WARNING jev:chartist-desc+summary,fundamentalist,bottom_feeder,noise: game 38: Jev HTTP 403: b'{"error":{"message":"Key limit exceeded (total limit). Manage it using https://openrouter.ai/workspaces/default/keys/450b798ff99ddf1f07646c5090bf447e7c7ab0b26d321428b7d392a3bb17211a","code":403}}'
-WARNING jev:market_maker_as+summary,fundamentalist,bottom_feeder,noise: game 38: Jev HTTP 403: b'{"error":{"message":"Key limit exceeded (total limit). Manage it using https://openrouter.ai/workspaces/default/keys/450b798ff99ddf1f07646c5090bf447e7c7ab0b26d321428b7d392a3bb17211a","code":403}}'
-WARNING jev:bottom_feeder-desc+summary,fundamentalist,bottom_feeder,noise: game 38: Jev HTTP 403: b'{"error":{"message":"Key limit exceeded (total limit). Manage it using https://openrouter.ai/workspaces/default/keys/450b798ff99ddf1f07646c5090bf447e7c7ab0b26d321428b7d392a3bb17211a","code":403}}'
-WARNING jev:market_maker_as+summary,fundamentalist,bottom_feeder,noise: game 38: Jev HTTP 403: b'{"error":{"message":"Key limit exceeded (total limit). Manage it using https://openrouter.ai/workspaces/default/keys/450b798ff99ddf1f07646c5090bf447e7c7ab0b26d321428b7d392a3bb17211a","code":403}}'
-WARNING jev:fundamentalist+summary,fundamentalist,bottom_feeder,noise: game 38: Jev HTTP 403: b'{"error":{"message":"Key limit exceeded (total limit). Manage it using https://openrouter.ai/workspaces/default/keys/450b798ff99ddf1f07646c5090bf447e7c7ab0b26d321428b7d392a3bb17211a","code":403}}'
-WARNING jev:noise-desc+summary,fundamentalist,bottom_feeder,noise: game 38: Jev HTTP 403: b'{"error":{"message":"Key limit exceeded (total limit). Manage it using https://openrouter.ai/workspaces/default/keys/450b798ff99ddf1f07646c5090bf447e7c7ab0b26d321428b7d392a3bb17211a","code":403}}'
-WARNING jev:noise+summary,fundamentalist,bottom_feeder,noise: game 38: Jev HTTP 403: b'{"error":{"message":"Key limit exceeded (total limit). Manage it using https://openrouter.ai/workspaces/default/keys/450b798ff99ddf1f07646c5090bf447e7c7ab0b26d321428b7d392a3bb17211a","code":403}}'
-WARNING jev:market_maker_gm+summary,fundamentalist,bottom_feeder,noise: game 38: Jev HTTP 403: b'{"error":{"message":"Key limit exceeded (total limit). Manage it using https://openrouter.ai/workspaces/default/keys/450b798ff99ddf1f07646c5090bf447e7c7ab0b26d321428b7d392a3bb17211a","code":403}}'
-WARNING jev:fundamentalist-desc+summary,fundamentalist,bottom_feeder,noise: game 38: Jev HTTP 403: b'{"error":{"message":"Key limit exceeded (total limit). Manage it using https://openrouter.ai/workspaces/default/keys/450b798ff99ddf1f07646c5090bf447e7c7ab0b26d321428b7d392a3bb17211a","code":403}}'WARNING jev:neutral+summary,fundamentalist,bottom_feeder,noise: game 38: Jev HTTP 403: b'{"error":{"message":"Key limit exceeded (total limit). Manage it using https://openrouter.ai/workspaces/default/keys/450b798ff99ddf1f07646c5090bf447e7c7ab0b26d321428b7d392a3bb17211a","code":403}}'
-
-WARNING jev:fundamentalist+summary,fundamentalist,bottom_feeder,noise: game 38: Jev HTTP 403: b'{"error":{"message":"Key limit exceeded (total limit). Manage it using https://openrouter.ai/workspaces/default/keys/450b798ff99ddf1f07646c5090bf447e7c7ab0b26d321428b7d392a3bb17211a","code":403}}'
-WARNING jev:bottom_feeder+summary,fundamentalist,bottom_feeder,noise: game 38: Jev HTTP 403: b'{"error":{"message":"Key limit exceeded (total limit). Manage it using https://openrouter.ai/workspaces/default/keys/450b798ff99ddf1f07646c5090bf447e7c7ab0b26d321428b7d392a3bb17211a","code":403}}'
-WARNING jev:market_maker_gm-desc+summary,fundamentalist,bottom_feeder,noise: game 38: Jev HTTP 403: b'{"error":{"message":"Key limit exceeded (total limit). Manage it using https://openrouter.ai/workspaces/default/keys/450b798ff99ddf1f07646c5090bf447e7c7ab0b26d321428b7d392a3bb17211a","code":403}}'
-WARNING jev:market_maker_as-desc+summary,fundamentalist,bottom_feeder,noise: game 38: Jev HTTP 403: b'{"error":{"message":"Key limit exceeded (total limit). Manage it using https://openrouter.ai/workspaces/default/keys/450b798ff99ddf1f07646c5090bf447e7c7ab0b26d321428b7d392a3bb17211a","code":403}}'
-wave 39: every condition has at least 38 games; Jev calls so far 112032
-STOP after wave 39: games failed in [('A', 'bottom_feeder'), ('A', 'bottom_feeder-desc'), ('A', 'chartist'), ('A', 'chartist-desc'), ('A', 'fundamentalist')]... Fix the cause and rerun the same command to continue.
+wave 1: every condition has at least 1 games; Jev calls so far 0
+wave 2: every condition has at least 2 games; Jev calls so far 0
+wave 3: every condition has at least 3 games; Jev calls so far 0
+wave 4: every condition has at least 4 games; Jev calls so far 0
+wave 5: every condition has at least 5 games; Jev calls so far 0
+wave 6: every condition has at least 6 games; Jev calls so far 0
+wave 7: every condition has at least 7 games; Jev calls so far 0
+wave 8: every condition has at least 8 games; Jev calls so far 0
+wave 9: every condition has at least 9 games; Jev calls so far 0
+wave 10: every condition has at least 10 games; Jev calls so far 0
+wave 11: every condition has at least 11 games; Jev calls so far 0
+wave 12: every condition has at least 12 games; Jev calls so far 0
+wave 13: every condition has at least 13 games; Jev calls so far 0
+wave 14: every condition has at least 14 games; Jev calls so far 0
+wave 15: every condition has at least 15 games; Jev calls so far 0
+wave 16: every condition has at least 16 games; Jev calls so far 0
+wave 17: every condition has at least 17 games; Jev calls so far 0
+wave 18: every condition has at least 18 games; Jev calls so far 0
+wave 19: every condition has at least 19 games; Jev calls so far 0
+wave 20: every condition has at least 20 games; Jev calls so far 0
+wave 21: every condition has at least 21 games; Jev calls so far 0
+wave 22: every condition has at least 22 games; Jev calls so far 0
+wave 23: every condition has at least 23 games; Jev calls so far 0
+wave 24: every condition has at least 24 games; Jev calls so far 0
+wave 25: every condition has at least 25 games; Jev calls so far 0
+wave 26: every condition has at least 26 games; Jev calls so far 0
+wave 27: every condition has at least 27 games; Jev calls so far 0
+wave 28: every condition has at least 28 games; Jev calls so far 0
+wave 29: every condition has at least 29 games; Jev calls so far 0
+wave 30: every condition has at least 30 games; Jev calls so far 0
+wave 31: every condition has at least 31 games; Jev calls so far 0
+wave 32: every condition has at least 32 games; Jev calls so far 0
+wave 33: every condition has at least 33 games; Jev calls so far 0
+wave 34: every condition has at least 34 games; Jev calls so far 0
+wave 35: every condition has at least 35 games; Jev calls so far 0
+wave 36: every condition has at least 36 games; Jev calls so far 0
+wave 37: every condition has at least 37 games; Jev calls so far 0
+wave 38: every condition has at least 38 games; Jev calls so far 0
+wave 39: every condition has at least 39 games; Jev calls so far 3103
+wave 40: every condition has at least 40 games; Jev calls so far 5757
 condition                    games      P&L            95% CI  trades   calls     US$
 A/[bottom_feeder]               40     -8.7          [-22, 6]     6.2       0   0.000
 A/[chartist]                    40    -33.7        [-50, -16]     6.0       0   0.000
@@ -71,37 +45,37 @@ A/[fundamentalist]              40     24.6          [-4, 54]    16.0       0   
 A/[market_maker_as]             40    -11.4          [-26, 5]     9.7       0   0.000
 A/[market_maker_gm]             40     -7.0          [-17, 3]     8.1       0   0.000
 A/[noise]                       40    -32.3        [-41, -21]    24.3       0   0.000
-A/bottom_feeder                 38    -52.1        [-70, -32]    19.0    4464   1.184
-A/bottom_feeder-desc            38      1.0         [-26, 28]    22.9    4325   1.101
-A/chartist                      38    -41.1        [-63, -20]    19.6    4381   1.138
-A/chartist-desc                 38    -59.8        [-87, -30]    24.7    4345   1.115
-A/fundamentalist                38    -77.4       [-111, -42]    33.4    4234   1.164
-A/fundamentalist-desc           38    -62.5        [-84, -40]    29.9    4332   1.102
-A/market_maker_as               38     -7.3         [-23, 11]    20.0    4279   1.101
-A/market_maker_as-desc          38     -2.3         [-16, 13]    21.8    4303   1.047
-A/market_maker_gm               38    -14.1         [-26, -1]    20.2    4305   1.097
-A/market_maker_gm-desc          38    -20.8         [-40, -3]    22.8    4302   1.054
-A/neutral                       38    -93.6       [-121, -66]    34.9    4299   1.113
-A/noise                         38    -47.0        [-73, -21]    32.8    4213   1.111
-A/noise-desc                    38    -59.4        [-89, -29]    37.0    4198   1.121
+A/bottom_feeder                 40    -49.4        [-66, -30]    18.9     230   0.061
+A/bottom_feeder-desc            40     -0.6         [-26, 27]    23.0     222   0.061
+A/chartist                      40    -42.5        [-63, -22]    19.7     225   0.061
+A/chartist-desc                 40    -60.8        [-87, -33]    24.8     222   0.057
+A/fundamentalist                40    -81.4       [-116, -46]    33.6     218   0.060
+A/fundamentalist-desc           40    -64.0        [-86, -43]    30.1     219   0.055
+A/market_maker_as               40     -7.3         [-22, 10]    20.1     220   0.059
+A/market_maker_as-desc          40     -3.0         [-16, 13]    21.9     221   0.056
+A/market_maker_gm               40    -16.9         [-29, -3]    20.2     220   0.058
+A/market_maker_gm-desc          40    -20.4         [-38, -4]    23.1     220   0.056
+A/neutral                       40    -94.7       [-122, -68]    34.8     221   0.061
+A/noise                         40    -45.2        [-69, -20]    32.8     217   0.059
+A/noise-desc                    40    -60.4        [-90, -33]    36.9     217   0.058
 B/[bottom_feeder]               40     -8.5          [-22, 6]     3.2       0   0.000
 B/[chartist]                    40    -23.4         [-41, -8]     1.9       0   0.000
 B/[fundamentalist]              40     15.4          [-5, 37]    11.0       0   0.000
 B/[market_maker_as]             40    -38.7        [-57, -18]    11.1       0   0.000
 B/[market_maker_gm]             40     -7.2          [-18, 6]    12.9       0   0.000
 B/[noise]                       40    -35.0        [-45, -26]    11.4       0   0.000
-B/bottom_feeder                 38    -67.0        [-95, -38]    11.6    4513   1.131
-B/bottom_feeder-desc            38    -58.5        [-85, -35]    16.5    4343   1.066
-B/chartist                      38    -72.8        [-99, -45]    12.9    4461   1.104
-B/chartist-desc                 38    -85.7       [-120, -52]    17.4    4379   1.098
-B/fundamentalist                38    -90.2       [-130, -48]    24.9    4207   1.129
-B/fundamentalist-desc           38    -69.6       [-102, -37]    20.6    4287   1.075
-B/market_maker_as               38    -43.9        [-67, -21]    13.5    4263   1.003
-B/market_maker_as-desc          38    -39.6        [-65, -15]    18.4    4216   0.988
-B/market_maker_gm               38    -56.8        [-83, -30]    15.2    4277   1.067
-B/market_maker_gm-desc          38    -55.3        [-78, -31]    17.3    4210   0.985
-B/neutral                       38    -60.3        [-95, -24]    22.7    4272   1.089
-B/noise                         38   -116.6       [-147, -77]    25.6    4367   1.177
-B/noise-desc                    38   -118.8       [-146, -91]    26.5    4257   1.137
+B/bottom_feeder                 40    -69.8        [-96, -43]    11.8     233   0.062
+B/bottom_feeder-desc            40    -59.4        [-86, -37]    16.5     222   0.056
+B/chartist                      40    -75.5       [-103, -49]    12.9     231   0.055
+B/chartist-desc                 40    -80.8       [-113, -48]    17.3     225   0.053
+B/fundamentalist                40    -87.9       [-129, -49]    24.8     216   0.054
+B/fundamentalist-desc           40    -70.5       [-102, -38]    20.6     222   0.055
+B/market_maker_as               40    -45.5        [-68, -23]    13.5     220   0.052
+B/market_maker_as-desc          40    -38.6        [-62, -15]    18.6     216   0.051
+B/market_maker_gm               40    -57.9        [-84, -32]    15.2     219   0.050
+B/market_maker_gm-desc          40    -57.9        [-79, -34]    17.5     218   0.053
+B/neutral                       40    -65.5       [-100, -29]    22.8     219   0.057
+B/noise                         40   -111.1       [-143, -73]    25.5     225   0.062
+B/noise-desc                    40   -112.4       [-140, -84]    26.5     219   0.061
 
-total Jev calls 112032, estimated cost US$28.50
+total Jev calls 5757, estimated cost US$1.48

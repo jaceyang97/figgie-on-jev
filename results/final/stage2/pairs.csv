@@ -37,6 +37,8 @@ A,neutral,neutral,none,34,2,-23.0,-64.0,-41.0,1
 A,neutral,neutral,none,35,1,-72.0,-123.0,-51.0,1
 A,neutral,neutral,none,36,0,-186.0,-89.0,97.0,3
 A,neutral,neutral,none,37,3,-169.0,-84.0,85.0,2
+A,neutral,neutral,none,38,2,-128.0,-138.0,-10.0,2
+A,neutral,neutral,none,39,1,-33.0,-93.0,-60.0,3
 A,fundamentalist,fundamentalist,algorithm,0,0,-121.0,-163.0,-42.0,1
 A,fundamentalist,fundamentalist,algorithm,1,3,-13.0,-78.0,-65.0,2
 A,fundamentalist,fundamentalist,algorithm,2,2,-30.0,-101.0,-71.0,3
@@ -75,6 +77,8 @@ A,fundamentalist,fundamentalist,algorithm,34,2,-43.0,-84.0,-41.0,1
 A,fundamentalist,fundamentalist,algorithm,35,1,-36.0,-87.0,-51.0,1
 A,fundamentalist,fundamentalist,algorithm,36,0,-58.0,39.0,97.0,3
 A,fundamentalist,fundamentalist,algorithm,37,3,-253.0,-168.0,85.0,2
+A,fundamentalist,fundamentalist,algorithm,38,2,-286.0,-296.0,-10.0,2
+A,fundamentalist,fundamentalist,algorithm,39,1,39.0,-21.0,-60.0,3
 A,fundamentalist-desc,fundamentalist,behaviour,0,0,-91.0,-133.0,-42.0,1
 A,fundamentalist-desc,fundamentalist,behaviour,1,3,-70.0,-135.0,-65.0,2
 A,fundamentalist-desc,fundamentalist,behaviour,2,2,-2.0,-73.0,-71.0,3
@@ -113,6 +117,8 @@ A,fundamentalist-desc,fundamentalist,behaviour,34,2,-1.0,-42.0,-41.0,1
 A,fundamentalist-desc,fundamentalist,behaviour,35,1,105.0,54.0,-51.0,1
 A,fundamentalist-desc,fundamentalist,behaviour,36,0,-205.0,-108.0,97.0,3
 A,fundamentalist-desc,fundamentalist,behaviour,37,3,-159.0,-74.0,85.0,2
+A,fundamentalist-desc,fundamentalist,behaviour,38,2,-139.0,-149.0,-10.0,2
+A,fundamentalist-desc,fundamentalist,behaviour,39,1,21.0,-39.0,-60.0,3
 A,bottom_feeder,bottom_feeder,algorithm,0,0,-47.0,-76.0,-29.0,1
 A,bottom_feeder,bottom_feeder,algorithm,1,3,42.0,9.0,-33.0,2
 A,bottom_feeder,bottom_feeder,algorithm,2,2,-35.0,-60.0,-25.0,3
@@ -151,6 +157,8 @@ A,bottom_feeder,bottom_feeder,algorithm,34,2,11.0,-46.0,-57.0,1
 A,bottom_feeder,bottom_feeder,algorithm,35,1,-89.0,-65.0,24.0,1
 A,bottom_feeder,bottom_feeder,algorithm,36,0,-133.0,-46.0,87.0,3
 A,bottom_feeder,bottom_feeder,algorithm,37,3,-22.0,-41.0,-19.0,2
+A,bottom_feeder,bottom_feeder,algorithm,38,2,44.0,2.0,-42.0,2
+A,bottom_feeder,bottom_feeder,algorithm,39,1,-51.0,1.0,52.0,3
 A,bottom_feeder-desc,bottom_feeder,behaviour,0,0,-9.0,-38.0,-29.0,1
 A,bottom_feeder-desc,bottom_feeder,behaviour,1,3,9.0,-24.0,-33.0,2
 A,bottom_feeder-desc,bottom_feeder,behaviour,2,2,17.0,-8.0,-25.0,3
@@ -189,6 +197,8 @@ A,bottom_feeder-desc,bottom_feeder,behaviour,34,2,1.0,-56.0,-57.0,1
 A,bottom_feeder-desc,bottom_feeder,behaviour,35,1,235.0,259.0,24.0,1
 A,bottom_feeder-desc,bottom_feeder,behaviour,36,0,-17.0,70.0,87.0,3
 A,bottom_feeder-desc,bottom_feeder,behaviour,37,3,-41.0,-60.0,-19.0,2
+A,bottom_feeder-desc,bottom_feeder,behaviour,38,2,-76.0,-118.0,-42.0,2
+A,bottom_feeder-desc,bottom_feeder,behaviour,39,1,4.0,56.0,52.0,3
 A,chartist,chartist,algorithm,0,0,9.0,-56.0,-65.0,1
 A,chartist,chartist,algorithm,1,3,88.0,52.0,-36.0,2
 A,chartist,chartist,algorithm,2,2,-131.0,-31.0,100.0,3
@@ -227,6 +237,8 @@ A,chartist,chartist,algorithm,34,2,34.0,-24.0,-58.0,1
 A,chartist,chartist,algorithm,35,1,27.0,-21.0,-48.0,1
 A,chartist,chartist,algorithm,36,0,10.0,116.0,106.0,3
 A,chartist,chartist,algorithm,37,3,26.0,-18.0,-44.0,2
+A,chartist,chartist,algorithm,38,2,-76.0,-130.0,-54.0,2
+A,chartist,chartist,algorithm,39,1,142.0,-7.0,-149.0,3
 A,chartist-desc,chartist,behaviour,0,0,48.0,-17.0,-65.0,1
 A,chartist-desc,chartist,behaviour,1,3,49.0,13.0,-36.0,2
 A,chartist-desc,chartist,behaviour,2,2,-22.0,78.0,100.0,3
@@ -265,6 +277,8 @@ A,chartist-desc,chartist,behaviour,34,2,-27.0,-85.0,-58.0,1
 A,chartist-desc,chartist,behaviour,35,1,-51.0,-99.0,-48.0,1
 A,chartist-desc,chartist,behaviour,36,0,-79.0,27.0,106.0,3
 A,chartist-desc,chartist,behaviour,37,3,-121.0,-165.0,-44.0,2
+A,chartist-desc,chartist,behaviour,38,2,-124.0,-178.0,-54.0,2
+A,chartist-desc,chartist,behaviour,39,1,169.0,20.0,-149.0,3
 A,noise,noise,algorithm,0,0,-170.0,-228.0,-58.0,1
 A,noise,noise,algorithm,1,3,-29.0,-64.0,-35.0,2
 A,noise,noise,algorithm,2,2,-11.0,-41.0,-30.0,3
@@ -303,6 +317,8 @@ A,noise,noise,algorithm,34,2,-85.0,-98.0,-13.0,1
 A,noise,noise,algorithm,35,1,-58.0,-57.0,1.0,1
 A,noise,noise,algorithm,36,0,71.0,35.0,-36.0,3
 A,noise,noise,algorithm,37,3,-50.0,-90.0,-40.0,2
+A,noise,noise,algorithm,38,2,36.0,1.0,-35.0,2
+A,noise,noise,algorithm,39,1,27.0,-24.0,-51.0,3
 A,noise-desc,noise,behaviour,0,0,-149.0,-207.0,-58.0,1
 A,noise-desc,noise,behaviour,1,3,-138.0,-173.0,-35.0,2
 A,noise-desc,noise,behaviour,2,2,-80.0,-110.0,-30.0,3
@@ -341,6 +357,8 @@ A,noise-desc,noise,behaviour,34,2,-119.0,-132.0,-13.0,1
 A,noise-desc,noise,behaviour,35,1,104.0,105.0,1.0,1
 A,noise-desc,noise,behaviour,36,0,-26.0,-62.0,-36.0,3
 A,noise-desc,noise,behaviour,37,3,81.0,41.0,-40.0,2
+A,noise-desc,noise,behaviour,38,2,-79.0,-114.0,-35.0,2
+A,noise-desc,noise,behaviour,39,1,8.0,-43.0,-51.0,3
 A,market_maker_gm,market_maker_gm,algorithm,0,0,2.0,-29.0,-31.0,1
 A,market_maker_gm,market_maker_gm,algorithm,1,3,-1.0,-34.0,-33.0,2
 A,market_maker_gm,market_maker_gm,algorithm,2,2,-80.0,-20.0,60.0,3
@@ -379,6 +397,8 @@ A,market_maker_gm,market_maker_gm,algorithm,34,2,7.0,-40.0,-47.0,1
 A,market_maker_gm,market_maker_gm,algorithm,35,1,17.0,-15.0,-32.0,1
 A,market_maker_gm,market_maker_gm,algorithm,36,0,-23.0,-46.0,-23.0,3
 A,market_maker_gm,market_maker_gm,algorithm,37,3,-7.0,-19.0,-12.0,2
+A,market_maker_gm,market_maker_gm,algorithm,38,2,-111.0,-120.0,-9.0,2
+A,market_maker_gm,market_maker_gm,algorithm,39,1,7.0,-18.0,-25.0,3
 A,market_maker_gm-desc,market_maker_gm,behaviour,0,0,10.0,-21.0,-31.0,1
 A,market_maker_gm-desc,market_maker_gm,behaviour,1,3,-100.0,-133.0,-33.0,2
 A,market_maker_gm-desc,market_maker_gm,behaviour,2,2,-113.0,-53.0,60.0,3
@@ -417,6 +437,8 @@ A,market_maker_gm-desc,market_maker_gm,behaviour,34,2,2.0,-45.0,-47.0,1
 A,market_maker_gm-desc,market_maker_gm,behaviour,35,1,22.0,-10.0,-32.0,1
 A,market_maker_gm-desc,market_maker_gm,behaviour,36,0,-16.0,-39.0,-23.0,3
 A,market_maker_gm-desc,market_maker_gm,behaviour,37,3,-49.0,-61.0,-12.0,2
+A,market_maker_gm-desc,market_maker_gm,behaviour,38,2,-1.0,-10.0,-9.0,2
+A,market_maker_gm-desc,market_maker_gm,behaviour,39,1,13.0,-12.0,-25.0,3
 A,market_maker_as,market_maker_as,algorithm,0,0,2.0,-34.0,-36.0,1
 A,market_maker_as,market_maker_as,algorithm,1,3,-16.0,-50.0,-34.0,2
 A,market_maker_as,market_maker_as,algorithm,2,2,-14.0,113.0,127.0,3
@@ -455,6 +477,8 @@ A,market_maker_as,market_maker_as,algorithm,34,2,24.0,-50.0,-74.0,1
 A,market_maker_as,market_maker_as,algorithm,35,1,53.0,1.0,-52.0,1
 A,market_maker_as,market_maker_as,algorithm,36,0,-102.0,-10.0,92.0,3
 A,market_maker_as,market_maker_as,algorithm,37,3,-26.0,-45.0,-19.0,2
+A,market_maker_as,market_maker_as,algorithm,38,2,40.0,-12.0,-52.0,2
+A,market_maker_as,market_maker_as,algorithm,39,1,22.0,-4.0,-26.0,3
 A,market_maker_as-desc,market_maker_as,behaviour,0,0,12.0,-24.0,-36.0,1
 A,market_maker_as-desc,market_maker_as,behaviour,1,3,1.0,-33.0,-34.0,2
 A,market_maker_as-desc,market_maker_as,behaviour,2,2,-128.0,-1.0,127.0,3
@@ -493,6 +517,8 @@ A,market_maker_as-desc,market_maker_as,behaviour,34,2,61.0,-13.0,-74.0,1
 A,market_maker_as-desc,market_maker_as,behaviour,35,1,37.0,-15.0,-52.0,1
 A,market_maker_as-desc,market_maker_as,behaviour,36,0,0.0,92.0,92.0,3
 A,market_maker_as-desc,market_maker_as,behaviour,37,3,64.0,45.0,-19.0,2
+A,market_maker_as-desc,market_maker_as,behaviour,38,2,18.0,-34.0,-52.0,2
+A,market_maker_as-desc,market_maker_as,behaviour,39,1,27.0,1.0,-26.0,3
 B,neutral,neutral,none,0,0,-51.0,-95.0,-44.0,1
 B,neutral,neutral,none,1,3,-103.0,-148.0,-45.0,2
 B,neutral,neutral,none,2,2,-32.0,-95.0,-63.0,3
@@ -531,6 +557,8 @@ B,neutral,neutral,none,34,2,4.0,-56.0,-60.0,1
 B,neutral,neutral,none,35,1,-215.0,-236.0,-21.0,1
 B,neutral,neutral,none,36,0,4.0,83.0,79.0,3
 B,neutral,neutral,none,37,3,-219.0,-151.0,68.0,2
+B,neutral,neutral,none,38,2,-137.0,-16.0,121.0,2
+B,neutral,neutral,none,39,1,-262.0,-311.0,-49.0,3
 B,fundamentalist,fundamentalist,algorithm,0,0,-74.66666666666666,-118.66666666666666,-44.0,1
 B,fundamentalist,fundamentalist,algorithm,1,3,6.0,-39.0,-45.0,2
 B,fundamentalist,fundamentalist,algorithm,2,2,16.0,-47.0,-63.0,3
@@ -569,6 +597,8 @@ B,fundamentalist,fundamentalist,algorithm,34,2,-91.0,-151.0,-60.0,1
 B,fundamentalist,fundamentalist,algorithm,35,1,83.0,62.0,-21.0,1
 B,fundamentalist,fundamentalist,algorithm,36,0,-157.0,-78.0,79.0,3
 B,fundamentalist,fundamentalist,algorithm,37,3,-125.0,-57.0,68.0,2
+B,fundamentalist,fundamentalist,algorithm,38,2,-312.0,-191.0,121.0,2
+B,fundamentalist,fundamentalist,algorithm,39,1,152.0,103.0,-49.0,3
 B,fundamentalist-desc,fundamentalist,behaviour,0,0,92.0,48.0,-44.0,1
 B,fundamentalist-desc,fundamentalist,behaviour,1,3,-70.0,-115.0,-45.0,2
 B,fundamentalist-desc,fundamentalist,behaviour,2,2,19.0,-44.0,-63.0,3
@@ -607,6 +637,8 @@ B,fundamentalist-desc,fundamentalist,behaviour,34,2,-99.0,-159.0,-60.0,1
 B,fundamentalist-desc,fundamentalist,behaviour,35,1,-77.0,-98.0,-21.0,1
 B,fundamentalist-desc,fundamentalist,behaviour,36,0,146.0,225.0,79.0,3
 B,fundamentalist-desc,fundamentalist,behaviour,37,3,-207.0,-139.0,68.0,2
+B,fundamentalist-desc,fundamentalist,behaviour,38,2,-174.0,-53.0,121.0,2
+B,fundamentalist-desc,fundamentalist,behaviour,39,1,-72.0,-121.0,-49.0,3
 B,bottom_feeder,bottom_feeder,algorithm,0,0,-137.0,-163.0,-26.0,1
 B,bottom_feeder,bottom_feeder,algorithm,1,3,-280.0,-196.0,84.0,2
 B,bottom_feeder,bottom_feeder,algorithm,2,2,139.0,176.0,37.0,3
@@ -645,6 +677,8 @@ B,bottom_feeder,bottom_feeder,algorithm,34,2,-13.0,-36.0,-23.0,1
 B,bottom_feeder,bottom_feeder,algorithm,35,1,-47.0,-60.0,-13.0,1
 B,bottom_feeder,bottom_feeder,algorithm,36,0,-4.0,-26.0,-22.0,3
 B,bottom_feeder,bottom_feeder,algorithm,37,3,-50.0,-68.0,-18.0,2
+B,bottom_feeder,bottom_feeder,algorithm,38,2,-164.0,-190.0,-26.0,2
+B,bottom_feeder,bottom_feeder,algorithm,39,1,-159.0,-56.0,103.0,3
 B,bottom_feeder-desc,bottom_feeder,behaviour,0,0,-56.0,-82.0,-26.0,1
 B,bottom_feeder-desc,bottom_feeder,behaviour,1,3,-174.0,-90.0,84.0,2
 B,bottom_feeder-desc,bottom_feeder,behaviour,2,2,2.0,39.0,37.0,3
@@ -683,6 +717,8 @@ B,bottom_feeder-desc,bottom_feeder,behaviour,34,2,-34.0,-57.0,-23.0,1
 B,bottom_feeder-desc,bottom_feeder,behaviour,35,1,-3.0,-16.0,-13.0,1
 B,bottom_feeder-desc,bottom_feeder,behaviour,36,0,-88.0,-110.0,-22.0,3
 B,bottom_feeder-desc,bottom_feeder,behaviour,37,3,-28.0,-46.0,-18.0,2
+B,bottom_feeder-desc,bottom_feeder,behaviour,38,2,-76.0,-102.0,-26.0,2
+B,bottom_feeder-desc,bottom_feeder,behaviour,39,1,-153.0,-50.0,103.0,3
 B,chartist,chartist,algorithm,0,0,56.0,3.0,-53.0,1
 B,chartist,chartist,algorithm,1,3,156.0,45.0,-111.0,2
 B,chartist,chartist,algorithm,2,2,-93.0,-53.0,40.0,3
@@ -721,6 +757,8 @@ B,chartist,chartist,algorithm,34,2,-108.0,-150.0,-42.0,1
 B,chartist,chartist,algorithm,35,1,-91.0,-113.0,-22.0,1
 B,chartist,chartist,algorithm,36,0,121.0,102.0,-19.0,3
 B,chartist,chartist,algorithm,37,3,-282.0,-312.0,-30.0,2
+B,chartist,chartist,algorithm,38,2,-155.0,-191.0,-36.0,2
+B,chartist,chartist,algorithm,39,1,-106.0,-64.0,42.0,3
 B,chartist-desc,chartist,behaviour,0,0,-30.0,-83.0,-53.0,1
 B,chartist-desc,chartist,behaviour,1,3,85.0,-26.0,-111.0,2
 B,chartist-desc,chartist,behaviour,2,2,-14.0,26.0,40.0,3
@@ -759,6 +797,8 @@ B,chartist-desc,chartist,behaviour,34,2,-105.0,-147.0,-42.0,1
 B,chartist-desc,chartist,behaviour,35,1,57.0,35.0,-22.0,1
 B,chartist-desc,chartist,behaviour,36,0,133.0,114.0,-19.0,3
 B,chartist-desc,chartist,behaviour,37,3,-167.0,-197.0,-30.0,2
+B,chartist-desc,chartist,behaviour,38,2,25.0,-11.0,-36.0,2
+B,chartist-desc,chartist,behaviour,39,1,-8.0,34.0,42.0,3
 B,noise,noise,algorithm,0,0,-135.0,-187.0,-52.0,1
 B,noise,noise,algorithm,1,3,-160.0,-204.0,-44.0,2
 B,noise,noise,algorithm,2,2,-192.0,-209.0,-17.0,3
@@ -797,6 +837,8 @@ B,noise,noise,algorithm,34,2,-101.0,-117.0,-16.0,1
 B,noise,noise,algorithm,35,1,-232.0,-255.0,-23.0,1
 B,noise,noise,algorithm,36,0,28.0,-23.0,-51.0,3
 B,noise,noise,algorithm,37,3,-176.0,-233.0,-57.0,2
+B,noise,noise,algorithm,38,2,-29.0,-117.0,-88.0,2
+B,noise,noise,algorithm,39,1,137.0,106.0,-31.0,3
 B,noise-desc,noise,behaviour,0,0,5.0,-47.0,-52.0,1
 B,noise-desc,noise,behaviour,1,3,-24.0,-68.0,-44.0,2
 B,noise-desc,noise,behaviour,2,2,-236.0,-253.0,-17.0,3
@@ -835,6 +877,8 @@ B,noise-desc,noise,behaviour,34,2,-145.0,-161.0,-16.0,1
 B,noise-desc,noise,behaviour,35,1,-124.0,-147.0,-23.0,1
 B,noise-desc,noise,behaviour,36,0,33.0,-18.0,-51.0,3
 B,noise-desc,noise,behaviour,37,3,-109.0,-166.0,-57.0,2
+B,noise-desc,noise,behaviour,38,2,44.0,-44.0,-88.0,2
+B,noise-desc,noise,behaviour,39,1,96.0,65.0,-31.0,3
 B,market_maker_gm,market_maker_gm,algorithm,0,0,-97.0,-111.0,-14.0,1
 B,market_maker_gm,market_maker_gm,algorithm,1,3,8.0,-21.0,-29.0,2
 B,market_maker_gm,market_maker_gm,algorithm,2,2,-69.0,-91.0,-22.0,3
@@ -873,6 +917,8 @@ B,market_maker_gm,market_maker_gm,algorithm,34,2,-123.0,-174.0,-51.0,1
 B,market_maker_gm,market_maker_gm,algorithm,35,1,-142.0,-173.0,-31.0,1
 B,market_maker_gm,market_maker_gm,algorithm,36,0,-88.0,-116.0,-28.0,3
 B,market_maker_gm,market_maker_gm,algorithm,37,3,-112.0,-126.0,-14.0,2
+B,market_maker_gm,market_maker_gm,algorithm,38,2,-62.0,-72.0,-10.0,2
+B,market_maker_gm,market_maker_gm,algorithm,39,1,-61.0,-84.0,-23.0,3
 B,market_maker_gm-desc,market_maker_gm,behaviour,0,0,108.0,94.0,-14.0,1
 B,market_maker_gm-desc,market_maker_gm,behaviour,1,3,-74.0,-103.0,-29.0,2
 B,market_maker_gm-desc,market_maker_gm,behaviour,2,2,-83.0,-105.0,-22.0,3
@@ -911,6 +957,8 @@ B,market_maker_gm-desc,market_maker_gm,behaviour,34,2,-44.0,-95.0,-51.0,1
 B,market_maker_gm-desc,market_maker_gm,behaviour,35,1,-3.0,-34.0,-31.0,1
 B,market_maker_gm-desc,market_maker_gm,behaviour,36,0,-51.0,-79.0,-28.0,3
 B,market_maker_gm-desc,market_maker_gm,behaviour,37,3,-92.0,-106.0,-14.0,2
+B,market_maker_gm-desc,market_maker_gm,behaviour,38,2,-103.0,-113.0,-10.0,2
+B,market_maker_gm-desc,market_maker_gm,behaviour,39,1,-78.0,-101.0,-23.0,3
 B,market_maker_as,market_maker_as,algorithm,0,0,-15.0,-82.0,-67.0,1
 B,market_maker_as,market_maker_as,algorithm,1,3,-42.0,-81.0,-39.0,2
 B,market_maker_as,market_maker_as,algorithm,2,2,-172.0,-65.0,107.0,3
@@ -949,6 +997,8 @@ B,market_maker_as,market_maker_as,algorithm,34,2,4.0,-101.0,-105.0,1
 B,market_maker_as,market_maker_as,algorithm,35,1,-56.0,-109.0,-53.0,1
 B,market_maker_as,market_maker_as,algorithm,36,0,-91.0,-101.0,-10.0,3
 B,market_maker_as,market_maker_as,algorithm,37,3,-75.0,-118.0,-43.0,2
+B,market_maker_as,market_maker_as,algorithm,38,2,-53.0,-126.0,-73.0,2
+B,market_maker_as,market_maker_as,algorithm,39,1,76.0,-28.0,-104.0,3
 B,market_maker_as-desc,market_maker_as,behaviour,0,0,-91.0,-158.0,-67.0,1
 B,market_maker_as-desc,market_maker_as,behaviour,1,3,-41.0,-80.0,-39.0,2
 B,market_maker_as-desc,market_maker_as,behaviour,2,2,-255.0,-148.0,107.0,3
@@ -987,3 +1037,5 @@ B,market_maker_as-desc,market_maker_as,behaviour,34,2,-27.0,-132.0,-105.0,1
 B,market_maker_as-desc,market_maker_as,behaviour,35,1,-49.0,-102.0,-53.0,1
 B,market_maker_as-desc,market_maker_as,behaviour,36,0,-31.0,-41.0,-10.0,3
 B,market_maker_as-desc,market_maker_as,behaviour,37,3,130.0,87.0,-43.0,2
+B,market_maker_as-desc,market_maker_as,behaviour,38,2,44.0,-29.0,-73.0,2
+B,market_maker_as-desc,market_maker_as,behaviour,39,1,94.0,-10.0,-104.0,3

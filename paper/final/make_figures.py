@@ -301,7 +301,7 @@ def stage2():
         bins = defaultdict(lambda: {"jev": [], "cc": []})
         games_dir = os.path.join(RES, "stage2", mech, "games")
         for fn in os.listdir(games_dir):
-            if fn.startswith("["):
+            if fn.startswith("[") or not fn.endswith(".jsonl"):
                 continue
             for line in open(os.path.join(games_dir, fn)):
                 rec = json.loads(line)
