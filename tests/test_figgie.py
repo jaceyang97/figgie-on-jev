@@ -252,3 +252,11 @@ def test_trades_record_the_aggressor():
     m.apply(1.0, 1, Action("ask", "spades", 9))
     t = m.apply(2.0, 2, Action("buy", "spades"))
     assert t.buyer == 2 and t.seller == 1 and t.aggressor == 2
+
+
+def test_hierarchical_choice_sums_before_picking():
+    from figgie.agents.jev_agent import hierarchical_choice
+    probs = {"pass": 0.3, "bid_spades_5": 0.1, "bid_spades_6": 0.25, "bid_clubs_4": 0.2, "buy_hearts": 0.15}
+    assert max(probs, key=probs.get) == "pass"
+    assert hierarchical_choice(probs) == "bid_spades_6"
+    assert hierarchical_choice({"pass": 0.6, "bid_spades_5": 0.4}) == "pass"

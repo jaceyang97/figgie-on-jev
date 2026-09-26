@@ -32,7 +32,7 @@ from concurrent.futures import ThreadPoolExecutor
 
 from ..agents import Fundamentalist, make_agent
 from ..agents.classical import take_edges
-from ..agents.jev_agent import action_menu, action_question, add_context, goal_question
+from ..agents.jev_agent import action_menu, action_question, add_context, goal_question, hierarchical_choice
 from ..cards import SUITS
 from ..engine import View, play_game
 from ..jev import make_client
@@ -90,7 +90,7 @@ def run(args) -> dict:
             "action": action_question(menu, args.personality),
         })
         jev_goal = answers["goal"]["probabilities"]
-        jev_label = answers["action"]["choice"]
+        jev_label = hierarchical_choice(answers["action"].get("probabilities") or {answers["action"]["choice"]: 1.0})
         jev_action = menu.get(jev_label, menu["pass"])[0]
         edges = take_edges(view, snap["values"])
         best_edge = max([0.0] + list(edges.values()))

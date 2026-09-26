@@ -179,6 +179,29 @@ def add_context(view: View, known=None, goal_probs=None, log: bool = False, summ
     return state
 
 
+def hierarchical_choice(probs: dict[str, float]) -> str:
+    """Pick the action type with the most total probability, then the suit, then the single best label.
+
+    A plain argmax over the whole menu favours 'pass': it is one option, while
+    the probability of bidding is split over up to 120 (suit, price) options.
+    Summing within type and then suit first compares like with like.
+    """
+    def best(groups: dict[str, float]) -> str:
+        return max(groups, key=groups.get)
+
+    by_kind: dict[str, float] = {}
+    for label, p in probs.items():
+        by_kind[label.split("_")[0]] = by_kind.get(label.split("_")[0], 0.0) + p
+    kind = best(by_kind)
+    labels = {k: p for k, p in probs.items() if k.split("_")[0] == kind}
+    by_suit: dict[str, float] = {}
+    for label, p in labels.items():
+        suit = label.split("_")[1] if "_" in label else ""
+        by_suit[suit] = by_suit.get(suit, 0.0) + p
+    suit = best(by_suit)
+    return best({k: p for k, p in labels.items() if (k.split("_")[1] if "_" in k else "") == suit})
+
+
 class JevAgent(Agent):
     """Asks Jev which action to take, optionally with the classical posterior as a hint.
 
@@ -188,7 +211,8 @@ class JevAgent(Agent):
     """
 
     def __init__(self, client, personality: str = "neutral", assist: bool = False, known: bool = False,
-                 log: bool = False, summary: bool = False, greedy: bool = True, use_measured_latency: bool = False, **kw):
+                 log: bool = False, summary: bool = False, decode: str = "hierarchical",
+                 use_measured_latency: bool = False, **kw):
         kw.setdefault("wake_rate", 0.5)
         kw.setdefault("latency", 0.3)
         super().__init__(**kw)
@@ -201,7 +225,9 @@ class JevAgent(Agent):
         self.log = log
         self.summary = summary
         self.decisions: list[tuple[float, str]] = []  # (time, label) of this seat's non-pass choices
-        self.greedy = greedy
+        if decode not in ("hierarchical", "argmax", "sample"):
+            raise ValueError(f"unknown decode {decode!r}")
+        self.decode = decode
         self.use_measured_latency = use_measured_latency
         flags = [f for f, on in (("log", log), ("summary", summary), ("known", known), ("assist", assist)) if on]
         self.name = f"jev:{personality}" + "".join(f"+{f}" for f in flags)
@@ -217,11 +243,13 @@ class JevAgent(Agent):
                             self.recent_decisions(view) if (self.log or self.summary) else None)
         answer = self.client.ask(state, {"action": action_question(menu, self.personality)})["action"]
         self.last_answer = answer
-        if self.greedy:
+        probs = answer.get("probabilities") or {answer["choice"]: 1.0}
+        if self.decode == "argmax":
             label = answer["choice"]
-        else:
-            probs = answer["probabilities"]
+        elif self.decode == "sample":
             label = self.rng.choices(list(probs), weights=list(probs.values()))[0]
+        else:
+            label = hierarchical_choice(probs)
         action = menu.get(label, (PASS, ""))[0]
         if action != PASS:
             self.decisions.append((view.t, action.label()))
