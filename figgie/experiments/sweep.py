@@ -85,14 +85,14 @@ def main(argv=None):
         seats += [(mech, f"[{t}]", t) for t in twins]
     limiter, budget = RateLimiter(args.max_rps), CallBudget(args.max_calls)
 
-    def play(seat):
+    def play(seat, games):
         mech, name, spec = seat
         client = None
         if spec.startswith("jev"):
             client = make_client(args.backend, seed=args.seed, provider=args.provider, limiter=limiter, budget=budget,
                                  log_path=os.path.join(args.out, mech, "logs", f"{name}.jsonl"))
         t = SimpleNamespace(backend=args.backend, provider=args.provider, lineup=",".join([spec] + field),
-                            games=args.games, duration=args.duration, max_events=args.max_events, speed=args.speed,
+                            games=games, duration=args.duration, max_events=args.max_events, speed=args.speed,
                             decode=args.decode, seed=args.seed, mechanism=mech, tested=0, condition=f"{mech}/{name}",
                             run_id=run_id, max_calls=None, log=None, out=None, workers=None,
                             checkpoint=os.path.join(args.out, mech, "games", f"{name}.jsonl"))
@@ -105,8 +105,29 @@ def main(argv=None):
         return (mech, name), {"games": s["games"], "failed": s["games_failed"], "seat": s["agents"][key],
                               "market": s["market"], "calls": s.get("jev_calls", 0), "cost_usd": s.get("cost_usd", 0.0)}
 
-    with ThreadPoolExecutor(max_workers=len(seats)) as pool:
-        rows = {k: r for k, r in pool.map(play, seats) if r is not None}
+    # The twins cost nothing: play all their games at once. The Jev arms play in waves, one game number
+    # at a time for every condition, so the finished games stay balanced across conditions and a stop
+    # (spending limit, API error) loses at most one game per condition.
+    jev_seats = [x for x in seats if x[2].startswith("jev")]
+    twin_seats = [x for x in seats if not x[2].startswith("jev")]
+    rows, spent = {}, {}
+    with ThreadPoolExecutor(max_workers=max(1, len(twin_seats))) as pool:
+        rows.update({k: r for k, r in pool.map(lambda x: play(x, args.games), twin_seats) if r is not None})
+    for wave in range(1, args.games + 1):
+        with ThreadPoolExecutor(max_workers=max(1, len(jev_seats))) as pool:
+            got = dict(pool.map(lambda x: play(x, wave), jev_seats))
+        for k, r in got.items():
+            if r is not None:
+                c, u = spent.get(k, (0, 0.0))
+                spent[k] = (c + r["calls"], u + r["cost_usd"])
+                rows[k] = {**r, "calls": spent[k][0], "cost_usd": round(spent[k][1], 4)}
+        failed = [k for k, r in got.items() if r is None or r["failed"]]
+        done = min((r["games"] for r in got.values() if r is not None), default=0)
+        print(f"wave {wave}: every condition has at least {done} games; Jev calls so far {budget.calls}", flush=True)
+        if failed:
+            print(f"STOP after wave {wave}: games failed in {sorted(failed)[:5]}... Fix the cause and rerun the "
+                  "same command to continue.", flush=True)
+            break
 
     if args.backend == "mock":
         print("NOTE: the mock backend answers at random and ignores personas; Jev rows say nothing about Jev.\n")
