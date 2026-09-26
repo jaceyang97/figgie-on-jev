@@ -125,13 +125,25 @@ class BottomFeeder(PaperAgent):
     def prey(self) -> list[int]:
         return [p for p, lab in enumerate(self.labels) if lab == self.prey_kind and p != self.me]
 
+    def _history(self, view: View, player: int, suit: str) -> tuple[list[int], list[int]]:
+        """order_history(view, player, suit), kept up to date incrementally (the same result, much faster)."""
+        cache = self.__dict__.setdefault("_hist", {"n_orders": 0, "n_trades": 0, "h": {}})
+        new = [(o.t, o.player, o.suit, o.side, o.price) for o in view.orders[cache["n_orders"]:]]
+        new += [(t.t, t.aggressor, t.suit, "bid" if t.buyer == t.aggressor else "ask", t.price)
+                for t in view.trades[cache["n_trades"]:] if t.aggressor is not None]
+        new.sort(key=lambda e: e[0])
+        for _, p, s, side, price in new:
+            cache["h"].setdefault((p, s), ([], []))[0 if side == "bid" else 1].append(price)
+        cache["n_orders"], cache["n_trades"] = len(view.orders), len(view.trades)
+        return cache["h"].get((player, suit), ([], []))
+
     def values(self, view):
         out = {}
         prey = self.prey()
         for s in SUITS:
             mids = []
             for p in prey:
-                buys, sells = order_history(view, p, s)
+                buys, sells = self._history(view, p, s)
                 if len(buys) >= K_PREY and len(sells) >= K_PREY:
                     mids.append((sum(buys[-K_PREY:]) / K_PREY + sum(sells[-K_PREY:]) / K_PREY) / 2)
             out[s] = (sum(mids) / len(mids),) * 2 if mids else None

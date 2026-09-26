@@ -49,7 +49,10 @@ def load_checkpoint(path: str | None, games: int, rotate) -> dict[int, dict]:
     if path and os.path.exists(path):
         with open(path) as f:
             for line in f:
-                rec = json.loads(line)
+                try:
+                    rec = json.loads(line)
+                except json.JSONDecodeError:  # a line cut off when a run was stopped
+                    continue
                 if rec["game"] < games and rec["seats"] == rotate(rec["game"]):
                     done[rec["game"]] = rec
     return done

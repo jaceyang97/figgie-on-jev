@@ -16,7 +16,7 @@ Three steps, each a subcommand:
   ask      Ask Jev about the moments. 1a: each type's moments with the algorithm
            persona, the behaviour persona and no persona. 1b: the fundamentalist
            seat's moments, no persona, five state versions, action and goal suit.
-           1c: 50 moments asked twice. Every row keeps Jev's full probabilities;
+           1c: 50 fundamentalist moments (half from each rule set) asked twice. Every row keeps Jev's full probabilities;
            the client log keeps every request. Reruns skip rows already done.
   analyse  Similarity to the twin (overlap, all actions and actions only), buy /
            sell / take / pass shares, paired persona-minus-neutral differences with
@@ -193,7 +193,9 @@ def plan_jobs(moments: list[dict], study: str, context: str, n_repeat: int) -> l
                 jobs.append({"moment": m["id"], "persona": "neutral", "wording": "none", "context": version,
                              "repeat": 0, "goal": True})
     elif study == "1c":
-        chosen = [m for m in moments if m["type"] == "fundamentalist"][:n_repeat]
+        fund = [m for m in moments if m["type"] == "fundamentalist"]
+        mechs = sorted({m["mechanism"] for m in fund})
+        chosen = [m for mech in mechs for m in [x for x in fund if x["mechanism"] == mech][: n_repeat // len(mechs)]]
         for m in chosen:
             for r in (0, 1):
                 jobs.append({"moment": m["id"], "persona": "neutral", "wording": "none", "context": context, "repeat": r,

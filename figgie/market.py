@@ -200,8 +200,9 @@ class BookMarket:
 
     def _sorted(self, suit: str, side: str) -> list[Order]:
         heap = self._bids[suit] if side == "bid" else self._asks[suit]
-        self._clean(heap)
-        return [self.live[oid] for _, _, oid in sorted(e for e in heap if e[2] in self.live)]
+        heap[:] = [e for e in heap if e[2] in self.live]  # drop removed orders, so the heap stays small
+        heapq.heapify(heap)
+        return [self.live[oid] for _, _, oid in sorted(heap)]
 
     def _best(self, suit: str, side: str) -> Order | None:
         heap = self._bids[suit] if side == "bid" else self._asks[suit]
