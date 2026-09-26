@@ -1,0 +1,13 @@
+A fundamentalist: 100 moments from 34 games
+A bottom_feeder: 100 moments from 34 games
+A chartist: 100 moments from 41 games
+A noise: 100 moments from 34 games
+A market_maker_gm: 100 moments from 37 games
+A market_maker_as: 100 moments from 34 games
+B fundamentalist: 100 moments from 34 games
+B bottom_feeder: 100 moments from 34 games
+B chartist: 100 moments from 93 games
+B noise: 100 moments from 34 games
+B market_maker_gm: 100 moments from 35 games
+B market_maker_as: 100 moments from 34 games
+wrote 1200 moments to results/final/stage1/moments.jsonl

@@ -1,0 +1,5385 @@
+{
+  "replication": {
+    "A-10k-paper": {
+      "fig3_f_3n": {
+        "games": 100,
+        "lineup": [
+          "fundamentalist",
+          "noise",
+          "noise",
+          "noise"
+        ],
+        "agents": {
+          "fundamentalist": {
+            "mean_pnl": 934.06,
+            "ci95": [
+              900.08,
+              965.2
+            ],
+            "sd_pnl": 167.92,
+            "sd_cash": 153.81,
+            "sd_payout": 42.58,
+            "trades_per_game": 213.48,
+            "decisions_per_game": 1655.41,
+            "passes_per_game": 682.44,
+            "rejected_orders_per_game": 1.93
+          },
+          "noise#1": {
+            "mean_pnl": -310.55,
+            "ci95": [
+              -322.26,
+              -297.35
+            ],
+            "sd_pnl": 63.7,
+            "sd_cash": 52.94,
+            "sd_payout": 26.76,
+            "trades_per_game": 267.63,
+            "decisions_per_game": 1656.99,
+            "passes_per_game": 839.83,
+            "rejected_orders_per_game": 0.68
+          },
+          "noise#2": {
+            "mean_pnl": -312.71,
+            "ci95": [
+              -325.02,
+              -299.29
+            ],
+            "sd_pnl": 66.32,
+            "sd_cash": 61.88,
+            "sd_payout": 16.22,
+            "trades_per_game": 264.53,
+            "decisions_per_game": 1661.65,
+            "passes_per_game": 862.04,
+            "rejected_orders_per_game": 0.86
+          },
+          "noise#3": {
+            "mean_pnl": -310.8,
+            "ci95": [
+              -322.26,
+              -297.83
+            ],
+            "sd_pnl": 62.95,
+            "sd_cash": 60.78,
+            "sd_payout": 20.13,
+            "trades_per_game": 259.48,
+            "decisions_per_game": 1648.5,
+            "passes_per_game": 860.49,
+            "rejected_orders_per_game": 0.68
+          }
+        },
+        "market": {
+          "trades_per_game": 502.56,
+          "mean_mispricing_chips": 6.4
+        },
+        "backend": "none",
+        "games_failed": 0,
+        "mechanism": "A",
+        "speed": [
+          1.0,
+          0.0
+        ]
+      },
+      "fig3_2f_2n": {
+        "games": 100,
+        "lineup": [
+          "fundamentalist",
+          "fundamentalist",
+          "noise",
+          "noise"
+        ],
+        "agents": {
+          "fundamentalist#0": {
+            "mean_pnl": 337.38,
+            "ci95": [
+              314.09,
+              359.69
+            ],
+            "sd_pnl": 115.09,
+            "sd_cash": 95.15,
+            "sd_payout": 82.81,
+            "trades_per_game": 116.92,
+            "decisions_per_game": 1698.12,
+            "passes_per_game": 902.38,
+            "rejected_orders_per_game": 1.04
+          },
+          "fundamentalist#1": {
+            "mean_pnl": 334.52,
+            "ci95": [
+              312.25,
+              358.35
+            ],
+            "sd_pnl": 115.39,
+            "sd_cash": 96.15,
+            "sd_payout": 82.29,
+            "trades_per_game": 120.87,
+            "decisions_per_game": 1699.89,
+            "passes_per_game": 877.14,
+            "rejected_orders_per_game": 1.04
+          },
+          "noise#2": {
+            "mean_pnl": -334.8,
+            "ci95": [
+              -338.2,
+              -330.9
+            ],
+            "sd_pnl": 19.1,
+            "sd_cash": 16.99,
+            "sd_payout": 3.26,
+            "trades_per_game": 206.46,
+            "decisions_per_game": 1704.39,
+            "passes_per_game": 911.28,
+            "rejected_orders_per_game": 0.39
+          },
+          "noise#3": {
+            "mean_pnl": -337.1,
+            "ci95": [
+              -339.86,
+              -334.02
+            ],
+            "sd_pnl": 14.82,
+            "sd_cash": 13.79,
+            "sd_payout": 2.78,
+            "trades_per_game": 206.71,
+            "decisions_per_game": 1691.45,
+            "passes_per_game": 896.58,
+            "rejected_orders_per_game": 0.36
+          }
+        },
+        "market": {
+          "trades_per_game": 325.48,
+          "mean_mispricing_chips": 6.25
+        },
+        "backend": "none",
+        "games_failed": 0,
+        "mechanism": "A",
+        "speed": [
+          1.0,
+          0.0
+        ]
+      },
+      "fig3_3f_n": {
+        "games": 100,
+        "lineup": [
+          "fundamentalist",
+          "fundamentalist",
+          "fundamentalist",
+          "noise"
+        ],
+        "agents": {
+          "fundamentalist#0": {
+            "mean_pnl": 129.5,
+            "ci95": [
+              114.01,
+              145.9
+            ],
+            "sd_pnl": 81.04,
+            "sd_cash": 74.43,
+            "sd_payout": 68.61,
+            "trades_per_game": 70.72,
+            "decisions_per_game": 1695.37,
+            "passes_per_game": 841.73,
+            "rejected_orders_per_game": 0.28
+          },
+          "fundamentalist#1": {
+            "mean_pnl": 104.84,
+            "ci95": [
+              89.65,
+              121.13
+            ],
+            "sd_pnl": 81.82,
+            "sd_cash": 71.87,
+            "sd_payout": 71.68,
+            "trades_per_game": 64.08,
+            "decisions_per_game": 1695.69,
+            "passes_per_game": 863.18,
+            "rejected_orders_per_game": 0.42
+          },
+          "fundamentalist#2": {
+            "mean_pnl": 107.99,
+            "ci95": [
+              93.26,
+              122.96
+            ],
+            "sd_pnl": 77.94,
+            "sd_cash": 84.1,
+            "sd_payout": 72.51,
+            "trades_per_game": 65.77,
+            "decisions_per_game": 1701.52,
+            "passes_per_game": 875.12,
+            "rejected_orders_per_game": 0.43
+          },
+          "noise": {
+            "mean_pnl": -342.33,
+            "ci95": [
+              -343.81,
+              -340.65
+            ],
+            "sd_pnl": 8.41,
+            "sd_cash": 8.41,
+            "sd_payout": 1.97,
+            "trades_per_game": 151.41,
+            "decisions_per_game": 1687.3,
+            "passes_per_game": 979.47,
+            "rejected_orders_per_game": 0.15
+          }
+        },
+        "market": {
+          "trades_per_game": 175.99,
+          "mean_mispricing_chips": 6.71
+        },
+        "backend": "none",
+        "games_failed": 0,
+        "mechanism": "A",
+        "speed": [
+          1.0,
+          0.0
+        ]
+      },
+      "fig4_f_b_2n": {
+        "games": 100,
+        "lineup": [
+          "fundamentalist",
+          "bottom_feeder",
+          "noise",
+          "noise"
+        ],
+        "agents": {
+          "fundamentalist": {
+            "mean_pnl": 305.86,
+            "ci95": [
+              289.64,
+              322.87
+            ],
+            "sd_pnl": 84.92,
+            "sd_cash": 85.85,
+            "sd_payout": 71.11,
+            "trades_per_game": 118.53,
+            "decisions_per_game": 1565.6,
+            "passes_per_game": 719.92,
+            "rejected_orders_per_game": 0.07
+          },
+          "bottom_feeder": {
+            "mean_pnl": 360.13,
+            "ci95": [
+              342.55,
+              376.93
+            ],
+            "sd_pnl": 88.17,
+            "sd_cash": 90.55,
+            "sd_payout": 68.42,
+            "trades_per_game": 237.99,
+            "decisions_per_game": 1567.52,
+            "passes_per_game": 240.17,
+            "rejected_orders_per_game": 0.89
+          },
+          "noise#2": {
+            "mean_pnl": -332.7,
+            "ci95": [
+              -336.92,
+              -327.82
+            ],
+            "sd_pnl": 24.05,
+            "sd_cash": 16.71,
+            "sd_payout": 17.49,
+            "trades_per_game": 267.65,
+            "decisions_per_game": 1570.17,
+            "passes_per_game": 790.76,
+            "rejected_orders_per_game": 0.16
+          },
+          "noise#3": {
+            "mean_pnl": -333.29,
+            "ci95": [
+              -337.0,
+              -329.09
+            ],
+            "sd_pnl": 20.06,
+            "sd_cash": 18.07,
+            "sd_payout": 5.62,
+            "trades_per_game": 270.29,
+            "decisions_per_game": 1558.12,
+            "passes_per_game": 771.62,
+            "rejected_orders_per_game": 0.12
+          }
+        },
+        "market": {
+          "trades_per_game": 447.23,
+          "mean_mispricing_chips": 6.69
+        },
+        "backend": "none",
+        "games_failed": 0,
+        "mechanism": "A",
+        "speed": [
+          1.0,
+          0.0
+        ]
+      },
+      "fig4_2f_b_n": {
+        "games": 100,
+        "lineup": [
+          "fundamentalist",
+          "fundamentalist",
+          "bottom_feeder",
+          "noise"
+        ],
+        "agents": {
+          "fundamentalist#0": {
+            "mean_pnl": 103.46,
+            "ci95": [
+              89.1,
+              117.68
+            ],
+            "sd_pnl": 75.1,
+            "sd_cash": 79.92,
+            "sd_payout": 79.82,
+            "trades_per_game": 44.6,
+            "decisions_per_game": 1619.92,
+            "passes_per_game": 939.89,
+            "rejected_orders_per_game": 0.09
+          },
+          "fundamentalist#1": {
+            "mean_pnl": 89.24,
+            "ci95": [
+              75.62,
+              103.31
+            ],
+            "sd_pnl": 70.38,
+            "sd_cash": 65.39,
+            "sd_payout": 79.94,
+            "trades_per_game": 44.12,
+            "decisions_per_game": 1622.81,
+            "passes_per_game": 946.97,
+            "rejected_orders_per_game": 0.06
+          },
+          "bottom_feeder": {
+            "mean_pnl": 152.0,
+            "ci95": [
+              139.81,
+              164.06
+            ],
+            "sd_pnl": 64.9,
+            "sd_cash": 68.39,
+            "sd_payout": 49.19,
+            "trades_per_game": 166.33,
+            "decisions_per_game": 1626.3,
+            "passes_per_game": 221.0,
+            "rejected_orders_per_game": 1.17
+          },
+          "noise": {
+            "mean_pnl": -344.7,
+            "ci95": [
+              -345.8,
+              -343.42
+            ],
+            "sd_pnl": 6.12,
+            "sd_cash": 5.68,
+            "sd_payout": 1.97,
+            "trades_per_game": 197.37,
+            "decisions_per_game": 1613.11,
+            "passes_per_game": 856.17,
+            "rejected_orders_per_game": 0.14
+          }
+        },
+        "market": {
+          "trades_per_game": 226.21,
+          "mean_mispricing_chips": 6.9
+        },
+        "backend": "none",
+        "games_failed": 0,
+        "mechanism": "A",
+        "speed": [
+          1.0,
+          0.0
+        ]
+      },
+      "fig4_3f_b": {
+        "games": 100,
+        "lineup": [
+          "fundamentalist",
+          "fundamentalist",
+          "fundamentalist",
+          "bottom_feeder"
+        ],
+        "agents": {
+          "fundamentalist#0": {
+            "mean_pnl": 20.02,
+            "ci95": [
+              6.41,
+              34.16
+            ],
+            "sd_pnl": 70.26,
+            "sd_cash": 41.88,
+            "sd_payout": 77.98,
+            "trades_per_game": 16.68,
+            "decisions_per_game": 1609.07,
+            "passes_per_game": 871.09,
+            "rejected_orders_per_game": 0.02
+          },
+          "fundamentalist#1": {
+            "mean_pnl": 15.83,
+            "ci95": [
+              2.63,
+              28.94
+            ],
+            "sd_pnl": 68.15,
+            "sd_cash": 45.74,
+            "sd_payout": 73.84,
+            "trades_per_game": 17.02,
+            "decisions_per_game": 1610.76,
+            "passes_per_game": 860.2,
+            "rejected_orders_per_game": 0.04
+          },
+          "fundamentalist#2": {
+            "mean_pnl": 13.59,
+            "ci95": [
+              0.68,
+              26.2
+            ],
+            "sd_pnl": 66.15,
+            "sd_cash": 42.68,
+            "sd_payout": 69.68,
+            "trades_per_game": 17.2,
+            "decisions_per_game": 1612.83,
+            "passes_per_game": 874.61,
+            "rejected_orders_per_game": 0.02
+          },
+          "bottom_feeder": {
+            "mean_pnl": -49.44,
+            "ci95": [
+              -59.38,
+              -39.55
+            ],
+            "sd_pnl": 49.58,
+            "sd_cash": 46.48,
+            "sd_payout": 41.49,
+            "trades_per_game": 21.56,
+            "decisions_per_game": 1600.81,
+            "passes_per_game": 260.68,
+            "rejected_orders_per_game": 0.21
+          }
+        },
+        "market": {
+          "trades_per_game": 36.23,
+          "mean_mispricing_chips": 6.33
+        },
+        "backend": "none",
+        "games_failed": 0,
+        "mechanism": "A",
+        "speed": [
+          1.0,
+          0.0
+        ]
+      },
+      "fig5_f_2b_n": {
+        "games": 100,
+        "lineup": [
+          "fundamentalist",
+          "bottom_feeder",
+          "bottom_feeder",
+          "noise"
+        ],
+        "agents": {
+          "fundamentalist": {
+            "mean_pnl": 146.58,
+            "ci95": [
+              132.55,
+              159.76
+            ],
+            "sd_pnl": 71.97,
+            "sd_cash": 69.83,
+            "sd_payout": 74.28,
+            "trades_per_game": 64.66,
+            "decisions_per_game": 1491.21,
+            "passes_per_game": 736.11,
+            "rejected_orders_per_game": 0.27
+          },
+          "bottom_feeder#1": {
+            "mean_pnl": 93.52,
+            "ci95": [
+              80.72,
+              107.6
+            ],
+            "sd_pnl": 68.05,
+            "sd_cash": 57.55,
+            "sd_payout": 69.27,
+            "trades_per_game": 111.65,
+            "decisions_per_game": 1493.26,
+            "passes_per_game": 251.9,
+            "rejected_orders_per_game": 0.01
+          },
+          "bottom_feeder#2": {
+            "mean_pnl": 83.97,
+            "ci95": [
+              71.64,
+              96.92
+            ],
+            "sd_pnl": 65.19,
+            "sd_cash": 62.82,
+            "sd_payout": 66.03,
+            "trades_per_game": 112.83,
+            "decisions_per_game": 1495.3,
+            "passes_per_game": 253.36,
+            "rejected_orders_per_game": 0.01
+          },
+          "noise": {
+            "mean_pnl": -324.07,
+            "ci95": [
+              -329.46,
+              -318.37
+            ],
+            "sd_pnl": 29.14,
+            "sd_cash": 21.25,
+            "sd_payout": 19.95,
+            "trades_per_game": 228.04,
+            "decisions_per_game": 1484.67,
+            "passes_per_game": 687.31,
+            "rejected_orders_per_game": 0.04
+          }
+        },
+        "market": {
+          "trades_per_game": 258.59,
+          "mean_mispricing_chips": 7.01
+        },
+        "backend": "none",
+        "games_failed": 0,
+        "mechanism": "A",
+        "speed": [
+          1.0,
+          0.0
+        ]
+      },
+      "fig5_2f_2b": {
+        "games": 100,
+        "lineup": [
+          "fundamentalist",
+          "fundamentalist",
+          "bottom_feeder",
+          "bottom_feeder"
+        ],
+        "agents": {
+          "fundamentalist#0": {
+            "mean_pnl": 24.08,
+            "ci95": [
+              8.84,
+              38.46
+            ],
+            "sd_pnl": 75.33,
+            "sd_cash": 33.03,
+            "sd_payout": 81.26,
+            "trades_per_game": 14.09,
+            "decisions_per_game": 1473.56,
+            "passes_per_game": 661.63,
+            "rejected_orders_per_game": 0.17
+          },
+          "fundamentalist#1": {
+            "mean_pnl": 8.75,
+            "ci95": [
+              -5.79,
+              24.23
+            ],
+            "sd_pnl": 75.72,
+            "sd_cash": 32.18,
+            "sd_payout": 80.8,
+            "trades_per_game": 14.29,
+            "decisions_per_game": 1475.62,
+            "passes_per_game": 661.63,
+            "rejected_orders_per_game": 0.1
+          },
+          "bottom_feeder#2": {
+            "mean_pnl": -13.53,
+            "ci95": [
+              -21.27,
+              -5.58
+            ],
+            "sd_pnl": 40.5,
+            "sd_cash": 39.98,
+            "sd_payout": 37.39,
+            "trades_per_game": 14.81,
+            "decisions_per_game": 1477.98,
+            "passes_per_game": 239.77,
+            "rejected_orders_per_game": 0.0
+          },
+          "bottom_feeder#3": {
+            "mean_pnl": -19.3,
+            "ci95": [
+              -26.28,
+              -11.94
+            ],
+            "sd_pnl": 37.68,
+            "sd_cash": 32.04,
+            "sd_payout": 38.53,
+            "trades_per_game": 14.45,
+            "decisions_per_game": 1466.2,
+            "passes_per_game": 223.28,
+            "rejected_orders_per_game": 0.0
+          }
+        },
+        "market": {
+          "trades_per_game": 28.82,
+          "mean_mispricing_chips": 7.2
+        },
+        "backend": "none",
+        "games_failed": 0,
+        "mechanism": "A",
+        "speed": [
+          1.0,
+          0.0
+        ]
+      },
+      "tab2_4n": {
+        "games": 100,
+        "lineup": [
+          "noise",
+          "noise",
+          "noise",
+          "noise"
+        ],
+        "agents": {
+          "noise#0": {
+            "mean_pnl": -4.43,
+            "ci95": [
+              -13.8,
+              4.83
+            ],
+            "sd_pnl": 47.29,
+            "sd_cash": 0.0,
+            "sd_payout": 47.29,
+            "trades_per_game": 0.0,
+            "decisions_per_game": 2502.16,
+            "passes_per_game": 2502.16,
+            "rejected_orders_per_game": 0.0
+          },
+          "noise#1": {
+            "mean_pnl": -3.5,
+            "ci95": [
+              -12.83,
+              6.03
+            ],
+            "sd_pnl": 48.28,
+            "sd_cash": 0.0,
+            "sd_payout": 48.28,
+            "trades_per_game": 0.0,
+            "decisions_per_game": 2503.68,
+            "passes_per_game": 2503.68,
+            "rejected_orders_per_game": 0.0
+          },
+          "noise#2": {
+            "mean_pnl": 2.83,
+            "ci95": [
+              -6.53,
+              13.43
+            ],
+            "sd_pnl": 52.24,
+            "sd_cash": 0.0,
+            "sd_payout": 52.24,
+            "trades_per_game": 0.0,
+            "decisions_per_game": 2505.53,
+            "passes_per_game": 2505.53,
+            "rejected_orders_per_game": 0.0
+          },
+          "noise#3": {
+            "mean_pnl": 5.1,
+            "ci95": [
+              -4.6,
+              15.8
+            ],
+            "sd_pnl": 52.01,
+            "sd_cash": 0.0,
+            "sd_payout": 52.01,
+            "trades_per_game": 0.0,
+            "decisions_per_game": 2488.63,
+            "passes_per_game": 2488.63,
+            "rejected_orders_per_game": 0.0
+          }
+        },
+        "market": {
+          "trades_per_game": 0.0,
+          "mean_mispricing_chips": NaN
+        },
+        "backend": "none",
+        "games_failed": 0,
+        "mechanism": "A",
+        "speed": [
+          1.0,
+          0.0
+        ]
+      },
+      "tab2_4f": {
+        "games": 100,
+        "lineup": [
+          "fundamentalist",
+          "fundamentalist",
+          "fundamentalist",
+          "fundamentalist"
+        ],
+        "agents": {
+          "fundamentalist#0": {
+            "mean_pnl": 3.18,
+            "ci95": [
+              -8.12,
+              14.58
+            ],
+            "sd_pnl": 59.24,
+            "sd_cash": 29.62,
+            "sd_payout": 68.13,
+            "trades_per_game": 13.08,
+            "decisions_per_game": 1629.57,
+            "passes_per_game": 763.9,
+            "rejected_orders_per_game": 0.04
+          },
+          "fundamentalist#1": {
+            "mean_pnl": -8.36,
+            "ci95": [
+              -18.87,
+              2.62
+            ],
+            "sd_pnl": 57.63,
+            "sd_cash": 32.97,
+            "sd_payout": 65.18,
+            "trades_per_game": 13.34,
+            "decisions_per_game": 1631.32,
+            "passes_per_game": 743.9,
+            "rejected_orders_per_game": 0.04
+          },
+          "fundamentalist#2": {
+            "mean_pnl": -0.49,
+            "ci95": [
+              -10.64,
+              9.76
+            ],
+            "sd_pnl": 52.23,
+            "sd_cash": 29.49,
+            "sd_payout": 65.73,
+            "trades_per_game": 13.51,
+            "decisions_per_game": 1634.58,
+            "passes_per_game": 753.06,
+            "rejected_orders_per_game": 0.04
+          },
+          "fundamentalist#3": {
+            "mean_pnl": 5.67,
+            "ci95": [
+              -6.44,
+              18.1
+            ],
+            "sd_pnl": 62.1,
+            "sd_cash": 27.96,
+            "sd_payout": 72.13,
+            "trades_per_game": 12.57,
+            "decisions_per_game": 1622.47,
+            "passes_per_game": 774.59,
+            "rejected_orders_per_game": 0.02
+          }
+        },
+        "market": {
+          "trades_per_game": 26.25,
+          "mean_mispricing_chips": 6.26
+        },
+        "backend": "none",
+        "games_failed": 0,
+        "mechanism": "A",
+        "speed": [
+          1.0,
+          0.0
+        ]
+      },
+      "tab2_4b": {
+        "games": 100,
+        "lineup": [
+          "bottom_feeder",
+          "bottom_feeder",
+          "bottom_feeder",
+          "bottom_feeder"
+        ],
+        "agents": {
+          "bottom_feeder#0": {
+            "mean_pnl": -4.43,
+            "ci95": [
+              -13.8,
+              4.83
+            ],
+            "sd_pnl": 47.29,
+            "sd_cash": 0.0,
+            "sd_payout": 47.29,
+            "trades_per_game": 0.0,
+            "decisions_per_game": 2502.16,
+            "passes_per_game": 2502.16,
+            "rejected_orders_per_game": 0.0
+          },
+          "bottom_feeder#1": {
+            "mean_pnl": -3.5,
+            "ci95": [
+              -12.83,
+              6.03
+            ],
+            "sd_pnl": 48.28,
+            "sd_cash": 0.0,
+            "sd_payout": 48.28,
+            "trades_per_game": 0.0,
+            "decisions_per_game": 2503.68,
+            "passes_per_game": 2503.68,
+            "rejected_orders_per_game": 0.0
+          },
+          "bottom_feeder#2": {
+            "mean_pnl": 2.83,
+            "ci95": [
+              -6.53,
+              13.43
+            ],
+            "sd_pnl": 52.24,
+            "sd_cash": 0.0,
+            "sd_payout": 52.24,
+            "trades_per_game": 0.0,
+            "decisions_per_game": 2505.53,
+            "passes_per_game": 2505.53,
+            "rejected_orders_per_game": 0.0
+          },
+          "bottom_feeder#3": {
+            "mean_pnl": 5.1,
+            "ci95": [
+              -4.6,
+              15.8
+            ],
+            "sd_pnl": 52.01,
+            "sd_cash": 0.0,
+            "sd_payout": 52.01,
+            "trades_per_game": 0.0,
+            "decisions_per_game": 2488.63,
+            "passes_per_game": 2488.63,
+            "rejected_orders_per_game": 0.0
+          }
+        },
+        "market": {
+          "trades_per_game": 0.0,
+          "mean_mispricing_chips": NaN
+        },
+        "backend": "none",
+        "games_failed": 0,
+        "mechanism": "A",
+        "speed": [
+          1.0,
+          0.0
+        ]
+      }
+    },
+    "A-10k-equal": {
+      "fig3_f_3n": {
+        "games": 100,
+        "lineup": [
+          "fundamentalist",
+          "noise",
+          "noise",
+          "noise"
+        ],
+        "agents": {
+          "fundamentalist": {
+            "mean_pnl": 924.02,
+            "ci95": [
+              887.4,
+              956.88
+            ],
+            "sd_pnl": 176.98,
+            "sd_cash": 155.17,
+            "sd_payout": 58.09,
+            "trades_per_game": 217.29,
+            "decisions_per_game": 1642.18,
+            "passes_per_game": 686.95,
+            "rejected_orders_per_game": 1.9
+          },
+          "noise#1": {
+            "mean_pnl": -307.32,
+            "ci95": [
+              -319.81,
+              -292.83
+            ],
+            "sd_pnl": 67.65,
+            "sd_cash": 57.62,
+            "sd_payout": 31.4,
+            "trades_per_game": 272.25,
+            "decisions_per_game": 1665.21,
+            "passes_per_game": 865.67,
+            "rejected_orders_per_game": 2.02
+          },
+          "noise#2": {
+            "mean_pnl": -309.66,
+            "ci95": [
+              -322.07,
+              -294.51
+            ],
+            "sd_pnl": 70.38,
+            "sd_cash": 55.44,
+            "sd_payout": 28.95,
+            "trades_per_game": 269.46,
+            "decisions_per_game": 1669.79,
+            "passes_per_game": 871.9,
+            "rejected_orders_per_game": 1.71
+          },
+          "noise#3": {
+            "mean_pnl": -307.05,
+            "ci95": [
+              -319.43,
+              -293.74
+            ],
+            "sd_pnl": 64.8,
+            "sd_cash": 59.25,
+            "sd_payout": 27.53,
+            "trades_per_game": 275.74,
+            "decisions_per_game": 1654.91,
+            "passes_per_game": 839.22,
+            "rejected_orders_per_game": 1.97
+          }
+        },
+        "market": {
+          "trades_per_game": 517.37,
+          "mean_mispricing_chips": 6.61
+        },
+        "backend": "none",
+        "games_failed": 0,
+        "mechanism": "A",
+        "speed": [
+          0.5,
+          0.3
+        ]
+      },
+      "fig3_2f_2n": {
+        "games": 100,
+        "lineup": [
+          "fundamentalist",
+          "fundamentalist",
+          "noise",
+          "noise"
+        ],
+        "agents": {
+          "fundamentalist#0": {
+            "mean_pnl": 323.32,
+            "ci95": [
+              302.81,
+              345.96
+            ],
+            "sd_pnl": 108.45,
+            "sd_cash": 101.22,
+            "sd_payout": 82.06,
+            "trades_per_game": 109.12,
+            "decisions_per_game": 1701.56,
+            "passes_per_game": 902.04,
+            "rejected_orders_per_game": 0.94
+          },
+          "fundamentalist#1": {
+            "mean_pnl": 346.8,
+            "ci95": [
+              322.53,
+              368.23
+            ],
+            "sd_pnl": 114.46,
+            "sd_cash": 102.79,
+            "sd_payout": 81.66,
+            "trades_per_game": 120.21,
+            "decisions_per_game": 1698.62,
+            "passes_per_game": 874.01,
+            "rejected_orders_per_game": 1.16
+          },
+          "noise#2": {
+            "mean_pnl": -334.25,
+            "ci95": [
+              -338.42,
+              -329.01
+            ],
+            "sd_pnl": 23.99,
+            "sd_cash": 23.01,
+            "sd_payout": 2.93,
+            "trades_per_game": 197.89,
+            "decisions_per_game": 1709.81,
+            "passes_per_game": 930.97,
+            "rejected_orders_per_game": 0.93
+          },
+          "noise#3": {
+            "mean_pnl": -335.87,
+            "ci95": [
+              -338.62,
+              -332.73
+            ],
+            "sd_pnl": 15.02,
+            "sd_cash": 14.69,
+            "sd_payout": 1.41,
+            "trades_per_game": 198.78,
+            "decisions_per_game": 1695.16,
+            "passes_per_game": 902.83,
+            "rejected_orders_per_game": 0.9
+          }
+        },
+        "market": {
+          "trades_per_game": 313.0,
+          "mean_mispricing_chips": 6.45
+        },
+        "backend": "none",
+        "games_failed": 0,
+        "mechanism": "A",
+        "speed": [
+          0.5,
+          0.3
+        ]
+      },
+      "fig3_3f_n": {
+        "games": 100,
+        "lineup": [
+          "fundamentalist",
+          "fundamentalist",
+          "fundamentalist",
+          "noise"
+        ],
+        "agents": {
+          "fundamentalist#0": {
+            "mean_pnl": 124.68,
+            "ci95": [
+              107.78,
+              141.89
+            ],
+            "sd_pnl": 87.76,
+            "sd_cash": 73.29,
+            "sd_payout": 73.24,
+            "trades_per_game": 65.67,
+            "decisions_per_game": 1691.26,
+            "passes_per_game": 858.98,
+            "rejected_orders_per_game": 0.47
+          },
+          "fundamentalist#1": {
+            "mean_pnl": 100.54,
+            "ci95": [
+              84.03,
+              116.93
+            ],
+            "sd_pnl": 85.0,
+            "sd_cash": 80.99,
+            "sd_payout": 69.03,
+            "trades_per_game": 62.64,
+            "decisions_per_game": 1694.18,
+            "passes_per_game": 877.22,
+            "rejected_orders_per_game": 0.4
+          },
+          "fundamentalist#2": {
+            "mean_pnl": 115.66,
+            "ci95": [
+              98.36,
+              133.3
+            ],
+            "sd_pnl": 88.52,
+            "sd_cash": 77.42,
+            "sd_payout": 73.35,
+            "trades_per_game": 66.62,
+            "decisions_per_game": 1692.62,
+            "passes_per_game": 833.06,
+            "rejected_orders_per_game": 0.32
+          },
+          "noise": {
+            "mean_pnl": -340.88,
+            "ci95": [
+              -342.75,
+              -338.97
+            ],
+            "sd_pnl": 9.47,
+            "sd_cash": 9.3,
+            "sd_payout": 1.71,
+            "trades_per_game": 145.49,
+            "decisions_per_game": 1701.52,
+            "passes_per_game": 989.46,
+            "rejected_orders_per_game": 0.2
+          }
+        },
+        "market": {
+          "trades_per_game": 170.21,
+          "mean_mispricing_chips": 6.74
+        },
+        "backend": "none",
+        "games_failed": 0,
+        "mechanism": "A",
+        "speed": [
+          0.5,
+          0.3
+        ]
+      },
+      "fig4_f_b_2n": {
+        "games": 100,
+        "lineup": [
+          "fundamentalist",
+          "bottom_feeder",
+          "noise",
+          "noise"
+        ],
+        "agents": {
+          "fundamentalist": {
+            "mean_pnl": 312.34,
+            "ci95": [
+              296.54,
+              329.36
+            ],
+            "sd_pnl": 86.53,
+            "sd_cash": 79.24,
+            "sd_payout": 72.64,
+            "trades_per_game": 120.95,
+            "decisions_per_game": 1584.6,
+            "passes_per_game": 746.23,
+            "rejected_orders_per_game": 0.36
+          },
+          "bottom_feeder": {
+            "mean_pnl": 349.92,
+            "ci95": [
+              332.5,
+              366.14
+            ],
+            "sd_pnl": 89.64,
+            "sd_cash": 80.81,
+            "sd_payout": 70.59,
+            "trades_per_game": 243.0,
+            "decisions_per_game": 1520.0,
+            "passes_per_game": 237.27,
+            "rejected_orders_per_game": 0.97
+          },
+          "noise#2": {
+            "mean_pnl": -328.6,
+            "ci95": [
+              -335.11,
+              -319.96
+            ],
+            "sd_pnl": 38.76,
+            "sd_cash": 35.0,
+            "sd_payout": 16.63,
+            "trades_per_game": 273.99,
+            "decisions_per_game": 1595.73,
+            "passes_per_game": 795.76,
+            "rejected_orders_per_game": 0.44
+          },
+          "noise#3": {
+            "mean_pnl": -333.66,
+            "ci95": [
+              -337.7,
+              -329.17
+            ],
+            "sd_pnl": 21.91,
+            "sd_cash": 20.49,
+            "sd_payout": 4.5,
+            "trades_per_game": 275.56,
+            "decisions_per_game": 1584.22,
+            "passes_per_game": 789.41,
+            "rejected_orders_per_game": 0.38
+          }
+        },
+        "market": {
+          "trades_per_game": 456.75,
+          "mean_mispricing_chips": 6.55
+        },
+        "backend": "none",
+        "games_failed": 0,
+        "mechanism": "A",
+        "speed": [
+          0.5,
+          0.3
+        ]
+      },
+      "fig4_2f_b_n": {
+        "games": 100,
+        "lineup": [
+          "fundamentalist",
+          "fundamentalist",
+          "bottom_feeder",
+          "noise"
+        ],
+        "agents": {
+          "fundamentalist#0": {
+            "mean_pnl": 103.18,
+            "ci95": [
+              88.47,
+              119.08
+            ],
+            "sd_pnl": 75.67,
+            "sd_cash": 72.54,
+            "sd_payout": 81.69,
+            "trades_per_game": 46.03,
+            "decisions_per_game": 1656.07,
+            "passes_per_game": 965.88,
+            "rejected_orders_per_game": 0.14
+          },
+          "fundamentalist#1": {
+            "mean_pnl": 84.98,
+            "ci95": [
+              69.68,
+              100.03
+            ],
+            "sd_pnl": 79.16,
+            "sd_cash": 72.12,
+            "sd_payout": 79.49,
+            "trades_per_game": 43.35,
+            "decisions_per_game": 1659.92,
+            "passes_per_game": 976.43,
+            "rejected_orders_per_game": 0.11
+          },
+          "bottom_feeder": {
+            "mean_pnl": 156.56,
+            "ci95": [
+              143.53,
+              168.96
+            ],
+            "sd_pnl": 65.51,
+            "sd_cash": 60.75,
+            "sd_payout": 52.03,
+            "trades_per_game": 163.52,
+            "decisions_per_game": 1561.88,
+            "passes_per_game": 213.35,
+            "rejected_orders_per_game": 1.31
+          },
+          "noise": {
+            "mean_pnl": -344.72,
+            "ci95": [
+              -346.09,
+              -343.03
+            ],
+            "sd_pnl": 7.67,
+            "sd_cash": 5.79,
+            "sd_payout": 4.22,
+            "trades_per_game": 196.52,
+            "decisions_per_game": 1639.34,
+            "passes_per_game": 878.17,
+            "rejected_orders_per_game": 0.22
+          }
+        },
+        "market": {
+          "trades_per_game": 224.71,
+          "mean_mispricing_chips": 6.77
+        },
+        "backend": "none",
+        "games_failed": 0,
+        "mechanism": "A",
+        "speed": [
+          0.5,
+          0.3
+        ]
+      },
+      "fig4_3f_b": {
+        "games": 100,
+        "lineup": [
+          "fundamentalist",
+          "fundamentalist",
+          "fundamentalist",
+          "bottom_feeder"
+        ],
+        "agents": {
+          "fundamentalist#0": {
+            "mean_pnl": 18.88,
+            "ci95": [
+              5.76,
+              32.33
+            ],
+            "sd_pnl": 65.84,
+            "sd_cash": 42.29,
+            "sd_payout": 74.62,
+            "trades_per_game": 17.34,
+            "decisions_per_game": 1623.09,
+            "passes_per_game": 860.97,
+            "rejected_orders_per_game": 0.04
+          },
+          "fundamentalist#1": {
+            "mean_pnl": 13.67,
+            "ci95": [
+              0.71,
+              27.28
+            ],
+            "sd_pnl": 67.53,
+            "sd_cash": 43.62,
+            "sd_payout": 76.65,
+            "trades_per_game": 16.56,
+            "decisions_per_game": 1620.75,
+            "passes_per_game": 838.56,
+            "rejected_orders_per_game": 0.08
+          },
+          "fundamentalist#2": {
+            "mean_pnl": 16.96,
+            "ci95": [
+              4.87,
+              28.78
+            ],
+            "sd_pnl": 62.99,
+            "sd_cash": 42.62,
+            "sd_payout": 74.57,
+            "trades_per_game": 16.67,
+            "decisions_per_game": 1628.3,
+            "passes_per_game": 866.86,
+            "rejected_orders_per_game": 0.03
+          },
+          "bottom_feeder": {
+            "mean_pnl": -49.51,
+            "ci95": [
+              -57.61,
+              -41.04
+            ],
+            "sd_pnl": 40.97,
+            "sd_cash": 42.77,
+            "sd_payout": 35.43,
+            "trades_per_game": 21.65,
+            "decisions_per_game": 1535.96,
+            "passes_per_game": 249.27,
+            "rejected_orders_per_game": 0.26
+          }
+        },
+        "market": {
+          "trades_per_game": 36.11,
+          "mean_mispricing_chips": 6.18
+        },
+        "backend": "none",
+        "games_failed": 0,
+        "mechanism": "A",
+        "speed": [
+          0.5,
+          0.3
+        ]
+      },
+      "fig5_f_2b_n": {
+        "games": 100,
+        "lineup": [
+          "fundamentalist",
+          "bottom_feeder",
+          "bottom_feeder",
+          "noise"
+        ],
+        "agents": {
+          "fundamentalist": {
+            "mean_pnl": 131.27,
+            "ci95": [
+              114.21,
+              147.63
+            ],
+            "sd_pnl": 86.74,
+            "sd_cash": 71.12,
+            "sd_payout": 73.92,
+            "trades_per_game": 66.4,
+            "decisions_per_game": 1528.52,
+            "passes_per_game": 746.33,
+            "rejected_orders_per_game": 0.36
+          },
+          "bottom_feeder#1": {
+            "mean_pnl": 94.69,
+            "ci95": [
+              79.41,
+              108.58
+            ],
+            "sd_pnl": 76.0,
+            "sd_cash": 69.5,
+            "sd_payout": 71.58,
+            "trades_per_game": 112.04,
+            "decisions_per_game": 1466.37,
+            "passes_per_game": 254.87,
+            "rejected_orders_per_game": 0.13
+          },
+          "bottom_feeder#2": {
+            "mean_pnl": 97.92,
+            "ci95": [
+              83.79,
+              111.79
+            ],
+            "sd_pnl": 73.08,
+            "sd_cash": 57.73,
+            "sd_payout": 67.88,
+            "trades_per_game": 114.03,
+            "decisions_per_game": 1467.79,
+            "passes_per_game": 253.29,
+            "rejected_orders_per_game": 0.12
+          },
+          "noise": {
+            "mean_pnl": -323.88,
+            "ci95": [
+              -329.29,
+              -318.02
+            ],
+            "sd_pnl": 29.05,
+            "sd_cash": 22.7,
+            "sd_payout": 18.45,
+            "trades_per_game": 233.27,
+            "decisions_per_game": 1516.43,
+            "passes_per_game": 702.99,
+            "rejected_orders_per_game": 0.16
+          }
+        },
+        "market": {
+          "trades_per_game": 262.87,
+          "mean_mispricing_chips": 7.02
+        },
+        "backend": "none",
+        "games_failed": 0,
+        "mechanism": "A",
+        "speed": [
+          0.5,
+          0.3
+        ]
+      },
+      "fig5_2f_2b": {
+        "games": 100,
+        "lineup": [
+          "fundamentalist",
+          "fundamentalist",
+          "bottom_feeder",
+          "bottom_feeder"
+        ],
+        "agents": {
+          "fundamentalist#0": {
+            "mean_pnl": 30.39,
+            "ci95": [
+              15.74,
+              44.0
+            ],
+            "sd_pnl": 72.98,
+            "sd_cash": 40.59,
+            "sd_payout": 82.34,
+            "trades_per_game": 14.63,
+            "decisions_per_game": 1509.53,
+            "passes_per_game": 677.27,
+            "rejected_orders_per_game": 0.22
+          },
+          "fundamentalist#1": {
+            "mean_pnl": 10.49,
+            "ci95": [
+              -3.79,
+              25.51
+            ],
+            "sd_pnl": 73.44,
+            "sd_cash": 36.22,
+            "sd_payout": 80.14,
+            "trades_per_game": 15.14,
+            "decisions_per_game": 1513.0,
+            "passes_per_game": 698.15,
+            "rejected_orders_per_game": 0.17
+          },
+          "bottom_feeder#2": {
+            "mean_pnl": -19.5,
+            "ci95": [
+              -27.3,
+              -11.1
+            ],
+            "sd_pnl": 40.97,
+            "sd_cash": 33.6,
+            "sd_payout": 32.49,
+            "trades_per_game": 15.4,
+            "decisions_per_game": 1455.39,
+            "passes_per_game": 235.31,
+            "rejected_orders_per_game": 0.03
+          },
+          "bottom_feeder#3": {
+            "mean_pnl": -21.38,
+            "ci95": [
+              -29.0,
+              -13.0
+            ],
+            "sd_pnl": 40.58,
+            "sd_cash": 35.22,
+            "sd_payout": 39.57,
+            "trades_per_game": 15.67,
+            "decisions_per_game": 1443.68,
+            "passes_per_game": 231.68,
+            "rejected_orders_per_game": 0.01
+          }
+        },
+        "market": {
+          "trades_per_game": 30.42,
+          "mean_mispricing_chips": 7.06
+        },
+        "backend": "none",
+        "games_failed": 0,
+        "mechanism": "A",
+        "speed": [
+          0.5,
+          0.3
+        ]
+      },
+      "tab2_4n": {
+        "games": 100,
+        "lineup": [
+          "noise",
+          "noise",
+          "noise",
+          "noise"
+        ],
+        "agents": {
+          "noise#0": {
+            "mean_pnl": -4.43,
+            "ci95": [
+              -13.8,
+              4.83
+            ],
+            "sd_pnl": 47.29,
+            "sd_cash": 0.0,
+            "sd_payout": 47.29,
+            "trades_per_game": 0.0,
+            "decisions_per_game": 2502.16,
+            "passes_per_game": 2502.16,
+            "rejected_orders_per_game": 0.0
+          },
+          "noise#1": {
+            "mean_pnl": -3.5,
+            "ci95": [
+              -12.83,
+              6.03
+            ],
+            "sd_pnl": 48.28,
+            "sd_cash": 0.0,
+            "sd_payout": 48.28,
+            "trades_per_game": 0.0,
+            "decisions_per_game": 2503.68,
+            "passes_per_game": 2503.68,
+            "rejected_orders_per_game": 0.0
+          },
+          "noise#2": {
+            "mean_pnl": 2.83,
+            "ci95": [
+              -6.53,
+              13.43
+            ],
+            "sd_pnl": 52.24,
+            "sd_cash": 0.0,
+            "sd_payout": 52.24,
+            "trades_per_game": 0.0,
+            "decisions_per_game": 2505.53,
+            "passes_per_game": 2505.53,
+            "rejected_orders_per_game": 0.0
+          },
+          "noise#3": {
+            "mean_pnl": 5.1,
+            "ci95": [
+              -4.6,
+              15.8
+            ],
+            "sd_pnl": 52.01,
+            "sd_cash": 0.0,
+            "sd_payout": 52.01,
+            "trades_per_game": 0.0,
+            "decisions_per_game": 2488.63,
+            "passes_per_game": 2488.63,
+            "rejected_orders_per_game": 0.0
+          }
+        },
+        "market": {
+          "trades_per_game": 0.0,
+          "mean_mispricing_chips": NaN
+        },
+        "backend": "none",
+        "games_failed": 0,
+        "mechanism": "A",
+        "speed": [
+          0.5,
+          0.3
+        ]
+      },
+      "tab2_4f": {
+        "games": 100,
+        "lineup": [
+          "fundamentalist",
+          "fundamentalist",
+          "fundamentalist",
+          "fundamentalist"
+        ],
+        "agents": {
+          "fundamentalist#0": {
+            "mean_pnl": 2.41,
+            "ci95": [
+              -8.62,
+              14.24
+            ],
+            "sd_pnl": 59.73,
+            "sd_cash": 26.68,
+            "sd_payout": 69.26,
+            "trades_per_game": 13.52,
+            "decisions_per_game": 1628.95,
+            "passes_per_game": 754.15,
+            "rejected_orders_per_game": 0.05
+          },
+          "fundamentalist#1": {
+            "mean_pnl": -6.44,
+            "ci95": [
+              -17.11,
+              4.54
+            ],
+            "sd_pnl": 57.71,
+            "sd_cash": 26.65,
+            "sd_payout": 67.42,
+            "trades_per_game": 13.65,
+            "decisions_per_game": 1629.3,
+            "passes_per_game": 748.94,
+            "rejected_orders_per_game": 0.06
+          },
+          "fundamentalist#2": {
+            "mean_pnl": -0.06,
+            "ci95": [
+              -11.09,
+              10.2
+            ],
+            "sd_pnl": 53.26,
+            "sd_cash": 28.31,
+            "sd_payout": 65.59,
+            "trades_per_game": 13.47,
+            "decisions_per_game": 1632.78,
+            "passes_per_game": 751.98,
+            "rejected_orders_per_game": 0.04
+          },
+          "fundamentalist#3": {
+            "mean_pnl": 4.09,
+            "ci95": [
+              -7.62,
+              16.58
+            ],
+            "sd_pnl": 61.14,
+            "sd_cash": 27.03,
+            "sd_payout": 70.72,
+            "trades_per_game": 13.12,
+            "decisions_per_game": 1625.26,
+            "passes_per_game": 777.06,
+            "rejected_orders_per_game": 0.02
+          }
+        },
+        "market": {
+          "trades_per_game": 26.88,
+          "mean_mispricing_chips": 6.19
+        },
+        "backend": "none",
+        "games_failed": 0,
+        "mechanism": "A",
+        "speed": [
+          0.5,
+          0.3
+        ]
+      },
+      "tab2_4b": {
+        "games": 100,
+        "lineup": [
+          "bottom_feeder",
+          "bottom_feeder",
+          "bottom_feeder",
+          "bottom_feeder"
+        ],
+        "agents": {
+          "bottom_feeder#0": {
+            "mean_pnl": -4.43,
+            "ci95": [
+              -13.8,
+              4.83
+            ],
+            "sd_pnl": 47.29,
+            "sd_cash": 0.0,
+            "sd_payout": 47.29,
+            "trades_per_game": 0.0,
+            "decisions_per_game": 2502.16,
+            "passes_per_game": 2502.16,
+            "rejected_orders_per_game": 0.0
+          },
+          "bottom_feeder#1": {
+            "mean_pnl": -3.5,
+            "ci95": [
+              -12.83,
+              6.03
+            ],
+            "sd_pnl": 48.28,
+            "sd_cash": 0.0,
+            "sd_payout": 48.28,
+            "trades_per_game": 0.0,
+            "decisions_per_game": 2503.68,
+            "passes_per_game": 2503.68,
+            "rejected_orders_per_game": 0.0
+          },
+          "bottom_feeder#2": {
+            "mean_pnl": 2.83,
+            "ci95": [
+              -6.53,
+              13.43
+            ],
+            "sd_pnl": 52.24,
+            "sd_cash": 0.0,
+            "sd_payout": 52.24,
+            "trades_per_game": 0.0,
+            "decisions_per_game": 2505.53,
+            "passes_per_game": 2505.53,
+            "rejected_orders_per_game": 0.0
+          },
+          "bottom_feeder#3": {
+            "mean_pnl": 5.1,
+            "ci95": [
+              -4.6,
+              15.8
+            ],
+            "sd_pnl": 52.01,
+            "sd_cash": 0.0,
+            "sd_payout": 52.01,
+            "trades_per_game": 0.0,
+            "decisions_per_game": 2488.63,
+            "passes_per_game": 2488.63,
+            "rejected_orders_per_game": 0.0
+          }
+        },
+        "market": {
+          "trades_per_game": 0.0,
+          "mean_mispricing_chips": NaN
+        },
+        "backend": "none",
+        "games_failed": 0,
+        "mechanism": "A",
+        "speed": [
+          0.5,
+          0.3
+        ]
+      }
+    },
+    "A-240s-paper": {
+      "fig3_f_3n": {
+        "games": 100,
+        "lineup": [
+          "fundamentalist",
+          "noise",
+          "noise",
+          "noise"
+        ],
+        "agents": {
+          "fundamentalist": {
+            "mean_pnl": 221.72,
+            "ci95": [
+              198.75,
+              245.97
+            ],
+            "sd_pnl": 119.88,
+            "sd_cash": 123.44,
+            "sd_payout": 49.19,
+            "trades_per_game": 47.58,
+            "decisions_per_game": 240.67,
+            "passes_per_game": 77.22,
+            "rejected_orders_per_game": 0.43
+          },
+          "noise#1": {
+            "mean_pnl": -74.92,
+            "ci95": [
+              -89.28,
+              -60.29
+            ],
+            "sd_pnl": 72.66,
+            "sd_cash": 73.91,
+            "sd_payout": 33.07,
+            "trades_per_game": 59.82,
+            "decisions_per_game": 243.05,
+            "passes_per_game": 106.91,
+            "rejected_orders_per_game": 0.07
+          },
+          "noise#2": {
+            "mean_pnl": -69.36,
+            "ci95": [
+              -81.5,
+              -57.22
+            ],
+            "sd_pnl": 62.47,
+            "sd_cash": 62.72,
+            "sd_payout": 31.99,
+            "trades_per_game": 60.42,
+            "decisions_per_game": 241.22,
+            "passes_per_game": 104.71,
+            "rejected_orders_per_game": 0.08
+          },
+          "noise#3": {
+            "mean_pnl": -77.44,
+            "ci95": [
+              -90.88,
+              -64.84
+            ],
+            "sd_pnl": 66.61,
+            "sd_cash": 67.44,
+            "sd_payout": 22.11,
+            "trades_per_game": 60.38,
+            "decisions_per_game": 239.51,
+            "passes_per_game": 102.7,
+            "rejected_orders_per_game": 0.06
+          }
+        },
+        "market": {
+          "trades_per_game": 114.1,
+          "mean_mispricing_chips": 6.44
+        },
+        "backend": "none",
+        "games_failed": 0,
+        "mechanism": "A",
+        "speed": [
+          1.0,
+          0.0
+        ]
+      },
+      "fig3_2f_2n": {
+        "games": 100,
+        "lineup": [
+          "fundamentalist",
+          "fundamentalist",
+          "noise",
+          "noise"
+        ],
+        "agents": {
+          "fundamentalist#0": {
+            "mean_pnl": 90.71,
+            "ci95": [
+              71.27,
+              108.4
+            ],
+            "sd_pnl": 93.53,
+            "sd_cash": 63.65,
+            "sd_payout": 86.31,
+            "trades_per_game": 37.56,
+            "decisions_per_game": 240.67,
+            "passes_per_game": 94.82,
+            "rejected_orders_per_game": 0.33
+          },
+          "fundamentalist#1": {
+            "mean_pnl": 90.51,
+            "ci95": [
+              68.51,
+              115.04
+            ],
+            "sd_pnl": 119.65,
+            "sd_cash": 88.09,
+            "sd_payout": 83.12,
+            "trades_per_game": 38.66,
+            "decisions_per_game": 243.05,
+            "passes_per_game": 96.19,
+            "rejected_orders_per_game": 0.3
+          },
+          "noise#2": {
+            "mean_pnl": -96.9,
+            "ci95": [
+              -110.25,
+              -84.75
+            ],
+            "sd_pnl": 66.07,
+            "sd_cash": 68.33,
+            "sd_payout": 12.78,
+            "trades_per_game": 54.72,
+            "decisions_per_game": 241.22,
+            "passes_per_game": 101.43,
+            "rejected_orders_per_game": 0.04
+          },
+          "noise#3": {
+            "mean_pnl": -84.32,
+            "ci95": [
+              -97.19,
+              -72.38
+            ],
+            "sd_pnl": 62.09,
+            "sd_cash": 65.66,
+            "sd_payout": 28.23,
+            "trades_per_game": 54.9,
+            "decisions_per_game": 239.51,
+            "passes_per_game": 100.4,
+            "rejected_orders_per_game": 0.04
+          }
+        },
+        "market": {
+          "trades_per_game": 92.92,
+          "mean_mispricing_chips": 5.65
+        },
+        "backend": "none",
+        "games_failed": 0,
+        "mechanism": "A",
+        "speed": [
+          1.0,
+          0.0
+        ]
+      },
+      "fig3_3f_n": {
+        "games": 100,
+        "lineup": [
+          "fundamentalist",
+          "fundamentalist",
+          "fundamentalist",
+          "noise"
+        ],
+        "agents": {
+          "fundamentalist#0": {
+            "mean_pnl": 31.65,
+            "ci95": [
+              17.13,
+              45.61
+            ],
+            "sd_pnl": 72.74,
+            "sd_cash": 40.23,
+            "sd_payout": 72.22,
+            "trades_per_game": 25.26,
+            "decisions_per_game": 240.67,
+            "passes_per_game": 88.51,
+            "rejected_orders_per_game": 0.13
+          },
+          "fundamentalist#1": {
+            "mean_pnl": 29.96,
+            "ci95": [
+              15.38,
+              43.82
+            ],
+            "sd_pnl": 76.18,
+            "sd_cash": 34.65,
+            "sd_payout": 75.26,
+            "trades_per_game": 23.93,
+            "decisions_per_game": 243.05,
+            "passes_per_game": 95.24,
+            "rejected_orders_per_game": 0.14
+          },
+          "fundamentalist#2": {
+            "mean_pnl": 25.71,
+            "ci95": [
+              13.02,
+              39.19
+            ],
+            "sd_pnl": 68.41,
+            "sd_cash": 39.27,
+            "sd_payout": 71.96,
+            "trades_per_game": 24.97,
+            "decisions_per_game": 241.22,
+            "passes_per_game": 92.86,
+            "rejected_orders_per_game": 0.11
+          },
+          "noise": {
+            "mean_pnl": -87.32,
+            "ci95": [
+              -97.1,
+              -78.18
+            ],
+            "sd_pnl": 50.1,
+            "sd_cash": 54.93,
+            "sd_payout": 10.4,
+            "trades_per_game": 42.38,
+            "decisions_per_game": 239.51,
+            "passes_per_game": 103.61,
+            "rejected_orders_per_game": 0.04
+          }
+        },
+        "market": {
+          "trades_per_game": 58.27,
+          "mean_mispricing_chips": 5.89
+        },
+        "backend": "none",
+        "games_failed": 0,
+        "mechanism": "A",
+        "speed": [
+          1.0,
+          0.0
+        ]
+      },
+      "fig4_f_b_2n": {
+        "games": 100,
+        "lineup": [
+          "fundamentalist",
+          "bottom_feeder",
+          "noise",
+          "noise"
+        ],
+        "agents": {
+          "fundamentalist": {
+            "mean_pnl": 115.46,
+            "ci95": [
+              99.28,
+              132.29
+            ],
+            "sd_pnl": 82.32,
+            "sd_cash": 72.54,
+            "sd_payout": 70.12,
+            "trades_per_game": 35.33,
+            "decisions_per_game": 240.67,
+            "passes_per_game": 72.2,
+            "rejected_orders_per_game": 0.07
+          },
+          "bottom_feeder": {
+            "mean_pnl": 39.06,
+            "ci95": [
+              23.11,
+              55.89
+            ],
+            "sd_pnl": 84.66,
+            "sd_cash": 55.46,
+            "sd_payout": 69.42,
+            "trades_per_game": 40.82,
+            "decisions_per_game": 243.05,
+            "passes_per_game": 58.16,
+            "rejected_orders_per_game": 0.04
+          },
+          "noise#2": {
+            "mean_pnl": -74.7,
+            "ci95": [
+              -84.58,
+              -65.06
+            ],
+            "sd_pnl": 48.62,
+            "sd_cash": 50.05,
+            "sd_payout": 28.04,
+            "trades_per_game": 52.51,
+            "decisions_per_game": 241.22,
+            "passes_per_game": 99.14,
+            "rejected_orders_per_game": 0.02
+          },
+          "noise#3": {
+            "mean_pnl": -79.82,
+            "ci95": [
+              -92.48,
+              -68.23
+            ],
+            "sd_pnl": 61.04,
+            "sd_cash": 58.16,
+            "sd_payout": 27.73,
+            "trades_per_game": 53.04,
+            "decisions_per_game": 239.51,
+            "passes_per_game": 100.07,
+            "rejected_orders_per_game": 0.02
+          }
+        },
+        "market": {
+          "trades_per_game": 90.85,
+          "mean_mispricing_chips": 6.34
+        },
+        "backend": "none",
+        "games_failed": 0,
+        "mechanism": "A",
+        "speed": [
+          1.0,
+          0.0
+        ]
+      },
+      "fig4_2f_b_n": {
+        "games": 100,
+        "lineup": [
+          "fundamentalist",
+          "fundamentalist",
+          "bottom_feeder",
+          "noise"
+        ],
+        "agents": {
+          "fundamentalist#0": {
+            "mean_pnl": 55.76,
+            "ci95": [
+              41.41,
+              70.24
+            ],
+            "sd_pnl": 77.74,
+            "sd_cash": 36.51,
+            "sd_payout": 79.94,
+            "trades_per_game": 21.65,
+            "decisions_per_game": 240.67,
+            "passes_per_game": 91.98,
+            "rejected_orders_per_game": 0.08
+          },
+          "fundamentalist#1": {
+            "mean_pnl": 40.95,
+            "ci95": [
+              25.91,
+              55.73
+            ],
+            "sd_pnl": 75.54,
+            "sd_cash": 38.31,
+            "sd_payout": 81.15,
+            "trades_per_game": 21.4,
+            "decisions_per_game": 243.05,
+            "passes_per_game": 93.32,
+            "rejected_orders_per_game": 0.05
+          },
+          "bottom_feeder": {
+            "mean_pnl": -17.87,
+            "ci95": [
+              -26.54,
+              -9.46
+            ],
+            "sd_pnl": 42.73,
+            "sd_cash": 44.7,
+            "sd_payout": 38.75,
+            "trades_per_game": 31.51,
+            "decisions_per_game": 241.22,
+            "passes_per_game": 47.19,
+            "rejected_orders_per_game": 0.06
+          },
+          "noise": {
+            "mean_pnl": -78.84,
+            "ci95": [
+              -86.27,
+              -71.06
+            ],
+            "sd_pnl": 39.26,
+            "sd_cash": 41.15,
+            "sd_payout": 13.13,
+            "trades_per_game": 43.58,
+            "decisions_per_game": 239.51,
+            "passes_per_game": 99.29,
+            "rejected_orders_per_game": 0.01
+          }
+        },
+        "market": {
+          "trades_per_game": 59.07,
+          "mean_mispricing_chips": 6.33
+        },
+        "backend": "none",
+        "games_failed": 0,
+        "mechanism": "A",
+        "speed": [
+          1.0,
+          0.0
+        ]
+      },
+      "fig4_3f_b": {
+        "games": 100,
+        "lineup": [
+          "fundamentalist",
+          "fundamentalist",
+          "fundamentalist",
+          "bottom_feeder"
+        ],
+        "agents": {
+          "fundamentalist#0": {
+            "mean_pnl": 19.3,
+            "ci95": [
+              6.18,
+              32.54
+            ],
+            "sd_pnl": 68.66,
+            "sd_cash": 35.91,
+            "sd_payout": 76.44,
+            "trades_per_game": 12.19,
+            "decisions_per_game": 240.67,
+            "passes_per_game": 94.36,
+            "rejected_orders_per_game": 0.02
+          },
+          "fundamentalist#1": {
+            "mean_pnl": 11.6,
+            "ci95": [
+              -2.05,
+              24.6
+            ],
+            "sd_pnl": 67.27,
+            "sd_cash": 35.36,
+            "sd_payout": 75.06,
+            "trades_per_game": 12.53,
+            "decisions_per_game": 243.05,
+            "passes_per_game": 94.34,
+            "rejected_orders_per_game": 0.04
+          },
+          "fundamentalist#2": {
+            "mean_pnl": 9.36,
+            "ci95": [
+              -3.06,
+              21.77
+            ],
+            "sd_pnl": 64.42,
+            "sd_cash": 37.65,
+            "sd_payout": 70.01,
+            "trades_per_game": 12.89,
+            "decisions_per_game": 241.22,
+            "passes_per_game": 94.31,
+            "rejected_orders_per_game": 0.01
+          },
+          "bottom_feeder": {
+            "mean_pnl": -40.26,
+            "ci95": [
+              -47.38,
+              -33.28
+            ],
+            "sd_pnl": 35.13,
+            "sd_cash": 30.72,
+            "sd_payout": 27.42,
+            "trades_per_game": 11.73,
+            "decisions_per_game": 239.51,
+            "passes_per_game": 46.87,
+            "rejected_orders_per_game": 0.03
+          }
+        },
+        "market": {
+          "trades_per_game": 24.67,
+          "mean_mispricing_chips": 6.19
+        },
+        "backend": "none",
+        "games_failed": 0,
+        "mechanism": "A",
+        "speed": [
+          1.0,
+          0.0
+        ]
+      },
+      "fig5_f_2b_n": {
+        "games": 100,
+        "lineup": [
+          "fundamentalist",
+          "bottom_feeder",
+          "bottom_feeder",
+          "noise"
+        ],
+        "agents": {
+          "fundamentalist": {
+            "mean_pnl": 54.89,
+            "ci95": [
+              40.96,
+              69.81
+            ],
+            "sd_pnl": 73.15,
+            "sd_cash": 49.7,
+            "sd_payout": 73.77,
+            "trades_per_game": 24.81,
+            "decisions_per_game": 240.67,
+            "passes_per_game": 59.36,
+            "rejected_orders_per_game": 0.27
+          },
+          "bottom_feeder#1": {
+            "mean_pnl": 8.42,
+            "ci95": [
+              -2.82,
+              19.55
+            ],
+            "sd_pnl": 56.35,
+            "sd_cash": 35.43,
+            "sd_payout": 61.88,
+            "trades_per_game": 19.75,
+            "decisions_per_game": 243.05,
+            "passes_per_game": 58.1,
+            "rejected_orders_per_game": 0.0
+          },
+          "bottom_feeder#2": {
+            "mean_pnl": 3.26,
+            "ci95": [
+              -7.5,
+              14.28
+            ],
+            "sd_pnl": 55.25,
+            "sd_cash": 34.06,
+            "sd_payout": 57.96,
+            "trades_per_game": 19.33,
+            "decisions_per_game": 241.22,
+            "passes_per_game": 58.64,
+            "rejected_orders_per_game": 0.01
+          },
+          "noise": {
+            "mean_pnl": -66.57,
+            "ci95": [
+              -76.56,
+              -56.61
+            ],
+            "sd_pnl": 49.52,
+            "sd_cash": 44.57,
+            "sd_payout": 39.46,
+            "trades_per_game": 43.57,
+            "decisions_per_game": 239.51,
+            "passes_per_game": 96.91,
+            "rejected_orders_per_game": 0.02
+          }
+        },
+        "market": {
+          "trades_per_game": 53.73,
+          "mean_mispricing_chips": 6.2
+        },
+        "backend": "none",
+        "games_failed": 0,
+        "mechanism": "A",
+        "speed": [
+          1.0,
+          0.0
+        ]
+      },
+      "fig5_2f_2b": {
+        "games": 100,
+        "lineup": [
+          "fundamentalist",
+          "fundamentalist",
+          "bottom_feeder",
+          "bottom_feeder"
+        ],
+        "agents": {
+          "fundamentalist#0": {
+            "mean_pnl": 26.56,
+            "ci95": [
+              11.73,
+              40.83
+            ],
+            "sd_pnl": 75.19,
+            "sd_cash": 27.84,
+            "sd_payout": 80.31,
+            "trades_per_game": 10.55,
+            "decisions_per_game": 240.67,
+            "passes_per_game": 82.03,
+            "rejected_orders_per_game": 0.17
+          },
+          "fundamentalist#1": {
+            "mean_pnl": 2.91,
+            "ci95": [
+              -10.75,
+              16.77
+            ],
+            "sd_pnl": 70.98,
+            "sd_cash": 26.24,
+            "sd_payout": 76.69,
+            "trades_per_game": 10.98,
+            "decisions_per_game": 243.05,
+            "passes_per_game": 83.67,
+            "rejected_orders_per_game": 0.1
+          },
+          "bottom_feeder#2": {
+            "mean_pnl": -14.14,
+            "ci95": [
+              -19.91,
+              -7.35
+            ],
+            "sd_pnl": 32.77,
+            "sd_cash": 25.8,
+            "sd_payout": 32.13,
+            "trades_per_game": 7.06,
+            "decisions_per_game": 241.22,
+            "passes_per_game": 49.1,
+            "rejected_orders_per_game": 0.0
+          },
+          "bottom_feeder#3": {
+            "mean_pnl": -15.33,
+            "ci95": [
+              -21.85,
+              -8.41
+            ],
+            "sd_pnl": 33.87,
+            "sd_cash": 25.34,
+            "sd_payout": 35.98,
+            "trades_per_game": 7.03,
+            "decisions_per_game": 239.51,
+            "passes_per_game": 48.51,
+            "rejected_orders_per_game": 0.0
+          }
+        },
+        "market": {
+          "trades_per_game": 17.81,
+          "mean_mispricing_chips": 6.24
+        },
+        "backend": "none",
+        "games_failed": 0,
+        "mechanism": "A",
+        "speed": [
+          1.0,
+          0.0
+        ]
+      },
+      "tab2_4n": {
+        "games": 100,
+        "lineup": [
+          "noise",
+          "noise",
+          "noise",
+          "noise"
+        ],
+        "agents": {
+          "noise#0": {
+            "mean_pnl": -4.43,
+            "ci95": [
+              -13.8,
+              4.83
+            ],
+            "sd_pnl": 47.29,
+            "sd_cash": 0.0,
+            "sd_payout": 47.29,
+            "trades_per_game": 0.0,
+            "decisions_per_game": 240.67,
+            "passes_per_game": 240.67,
+            "rejected_orders_per_game": 0.0
+          },
+          "noise#1": {
+            "mean_pnl": -3.5,
+            "ci95": [
+              -12.83,
+              6.03
+            ],
+            "sd_pnl": 48.28,
+            "sd_cash": 0.0,
+            "sd_payout": 48.28,
+            "trades_per_game": 0.0,
+            "decisions_per_game": 243.05,
+            "passes_per_game": 243.05,
+            "rejected_orders_per_game": 0.0
+          },
+          "noise#2": {
+            "mean_pnl": 2.83,
+            "ci95": [
+              -6.53,
+              13.43
+            ],
+            "sd_pnl": 52.24,
+            "sd_cash": 0.0,
+            "sd_payout": 52.24,
+            "trades_per_game": 0.0,
+            "decisions_per_game": 241.22,
+            "passes_per_game": 241.22,
+            "rejected_orders_per_game": 0.0
+          },
+          "noise#3": {
+            "mean_pnl": 5.1,
+            "ci95": [
+              -4.6,
+              15.8
+            ],
+            "sd_pnl": 52.01,
+            "sd_cash": 0.0,
+            "sd_payout": 52.01,
+            "trades_per_game": 0.0,
+            "decisions_per_game": 239.51,
+            "passes_per_game": 239.51,
+            "rejected_orders_per_game": 0.0
+          }
+        },
+        "market": {
+          "trades_per_game": 0.0,
+          "mean_mispricing_chips": NaN
+        },
+        "backend": "none",
+        "games_failed": 0,
+        "mechanism": "A",
+        "speed": [
+          1.0,
+          0.0
+        ]
+      },
+      "tab2_4f": {
+        "games": 100,
+        "lineup": [
+          "fundamentalist",
+          "fundamentalist",
+          "fundamentalist",
+          "fundamentalist"
+        ],
+        "agents": {
+          "fundamentalist#0": {
+            "mean_pnl": 3.22,
+            "ci95": [
+              -7.73,
+              14.59
+            ],
+            "sd_pnl": 57.8,
+            "sd_cash": 27.13,
+            "sd_payout": 66.72,
+            "trades_per_game": 12.33,
+            "decisions_per_game": 240.67,
+            "passes_per_game": 95.73,
+            "rejected_orders_per_game": 0.04
+          },
+          "fundamentalist#1": {
+            "mean_pnl": -5.66,
+            "ci95": [
+              -16.64,
+              5.09
+            ],
+            "sd_pnl": 58.48,
+            "sd_cash": 30.06,
+            "sd_payout": 65.7,
+            "trades_per_game": 12.43,
+            "decisions_per_game": 243.05,
+            "passes_per_game": 93.8,
+            "rejected_orders_per_game": 0.04
+          },
+          "fundamentalist#2": {
+            "mean_pnl": -2.24,
+            "ci95": [
+              -12.39,
+              7.57
+            ],
+            "sd_pnl": 50.38,
+            "sd_cash": 28.09,
+            "sd_payout": 62.11,
+            "trades_per_game": 12.88,
+            "decisions_per_game": 241.22,
+            "passes_per_game": 96.24,
+            "rejected_orders_per_game": 0.03
+          },
+          "fundamentalist#3": {
+            "mean_pnl": 4.68,
+            "ci95": [
+              -7.52,
+              17.29
+            ],
+            "sd_pnl": 62.78,
+            "sd_cash": 26.03,
+            "sd_payout": 72.57,
+            "trades_per_game": 11.9,
+            "decisions_per_game": 239.51,
+            "passes_per_game": 97.87,
+            "rejected_orders_per_game": 0.02
+          }
+        },
+        "market": {
+          "trades_per_game": 24.77,
+          "mean_mispricing_chips": 6.2
+        },
+        "backend": "none",
+        "games_failed": 0,
+        "mechanism": "A",
+        "speed": [
+          1.0,
+          0.0
+        ]
+      },
+      "tab2_4b": {
+        "games": 100,
+        "lineup": [
+          "bottom_feeder",
+          "bottom_feeder",
+          "bottom_feeder",
+          "bottom_feeder"
+        ],
+        "agents": {
+          "bottom_feeder#0": {
+            "mean_pnl": -4.43,
+            "ci95": [
+              -13.8,
+              4.83
+            ],
+            "sd_pnl": 47.29,
+            "sd_cash": 0.0,
+            "sd_payout": 47.29,
+            "trades_per_game": 0.0,
+            "decisions_per_game": 240.67,
+            "passes_per_game": 240.67,
+            "rejected_orders_per_game": 0.0
+          },
+          "bottom_feeder#1": {
+            "mean_pnl": -3.5,
+            "ci95": [
+              -12.83,
+              6.03
+            ],
+            "sd_pnl": 48.28,
+            "sd_cash": 0.0,
+            "sd_payout": 48.28,
+            "trades_per_game": 0.0,
+            "decisions_per_game": 243.05,
+            "passes_per_game": 243.05,
+            "rejected_orders_per_game": 0.0
+          },
+          "bottom_feeder#2": {
+            "mean_pnl": 2.83,
+            "ci95": [
+              -6.53,
+              13.43
+            ],
+            "sd_pnl": 52.24,
+            "sd_cash": 0.0,
+            "sd_payout": 52.24,
+            "trades_per_game": 0.0,
+            "decisions_per_game": 241.22,
+            "passes_per_game": 241.22,
+            "rejected_orders_per_game": 0.0
+          },
+          "bottom_feeder#3": {
+            "mean_pnl": 5.1,
+            "ci95": [
+              -4.6,
+              15.8
+            ],
+            "sd_pnl": 52.01,
+            "sd_cash": 0.0,
+            "sd_payout": 52.01,
+            "trades_per_game": 0.0,
+            "decisions_per_game": 239.51,
+            "passes_per_game": 239.51,
+            "rejected_orders_per_game": 0.0
+          }
+        },
+        "market": {
+          "trades_per_game": 0.0,
+          "mean_mispricing_chips": NaN
+        },
+        "backend": "none",
+        "games_failed": 0,
+        "mechanism": "A",
+        "speed": [
+          1.0,
+          0.0
+        ]
+      }
+    },
+    "A-240s-equal": {
+      "fig3_f_3n": {
+        "games": 100,
+        "lineup": [
+          "fundamentalist",
+          "noise",
+          "noise",
+          "noise"
+        ],
+        "agents": {
+          "fundamentalist": {
+            "mean_pnl": 104.99,
+            "ci95": [
+              87.18,
+              125.87
+            ],
+            "sd_pnl": 95.88,
+            "sd_cash": 100.4,
+            "sd_payout": 62.35,
+            "trades_per_game": 25.98,
+            "decisions_per_game": 109.17,
+            "passes_per_game": 25.64,
+            "rejected_orders_per_game": 0.18
+          },
+          "noise#1": {
+            "mean_pnl": -32.43,
+            "ci95": [
+              -38.9,
+              -26.14
+            ],
+            "sd_pnl": 33.03,
+            "sd_cash": 35.13,
+            "sd_payout": 29.16,
+            "trades_per_game": 28.96,
+            "decisions_per_game": 112.94,
+            "passes_per_game": 51.0,
+            "rejected_orders_per_game": 0.11
+          },
+          "noise#2": {
+            "mean_pnl": -37.41,
+            "ci95": [
+              -48.85,
+              -25.9
+            ],
+            "sd_pnl": 58.31,
+            "sd_cash": 49.24,
+            "sd_payout": 41.54,
+            "trades_per_game": 28.59,
+            "decisions_per_game": 110.84,
+            "passes_per_game": 48.48,
+            "rejected_orders_per_game": 0.08
+          },
+          "noise#3": {
+            "mean_pnl": -35.16,
+            "ci95": [
+              -45.14,
+              -25.07
+            ],
+            "sd_pnl": 51.53,
+            "sd_cash": 45.05,
+            "sd_payout": 38.0,
+            "trades_per_game": 28.07,
+            "decisions_per_game": 110.83,
+            "passes_per_game": 49.88,
+            "rejected_orders_per_game": 0.13
+          }
+        },
+        "market": {
+          "trades_per_game": 55.8,
+          "mean_mispricing_chips": 5.81
+        },
+        "backend": "none",
+        "games_failed": 0,
+        "mechanism": "A",
+        "speed": [
+          0.5,
+          0.3
+        ]
+      },
+      "fig3_2f_2n": {
+        "games": 100,
+        "lineup": [
+          "fundamentalist",
+          "fundamentalist",
+          "noise",
+          "noise"
+        ],
+        "agents": {
+          "fundamentalist#0": {
+            "mean_pnl": 43.78,
+            "ci95": [
+              28.63,
+              58.81
+            ],
+            "sd_pnl": 76.88,
+            "sd_cash": 31.18,
+            "sd_payout": 79.92,
+            "trades_per_game": 21.99,
+            "decisions_per_game": 109.73,
+            "passes_per_game": 29.45,
+            "rejected_orders_per_game": 0.14
+          },
+          "fundamentalist#1": {
+            "mean_pnl": 37.38,
+            "ci95": [
+              22.27,
+              52.65
+            ],
+            "sd_pnl": 78.66,
+            "sd_cash": 33.38,
+            "sd_payout": 80.08,
+            "trades_per_game": 21.19,
+            "decisions_per_game": 110.17,
+            "passes_per_game": 30.15,
+            "rejected_orders_per_game": 0.1
+          },
+          "noise#2": {
+            "mean_pnl": -40.85,
+            "ci95": [
+              -46.46,
+              -35.38
+            ],
+            "sd_pnl": 28.12,
+            "sd_cash": 30.08,
+            "sd_payout": 18.57,
+            "trades_per_game": 25.44,
+            "decisions_per_game": 110.72,
+            "passes_per_game": 46.4,
+            "rejected_orders_per_game": 0.06
+          },
+          "noise#3": {
+            "mean_pnl": -40.31,
+            "ci95": [
+              -46.12,
+              -34.27
+            ],
+            "sd_pnl": 30.88,
+            "sd_cash": 33.84,
+            "sd_payout": 21.2,
+            "trades_per_game": 25.26,
+            "decisions_per_game": 110.38,
+            "passes_per_game": 46.64,
+            "rejected_orders_per_game": 0.06
+          }
+        },
+        "market": {
+          "trades_per_game": 46.94,
+          "mean_mispricing_chips": 5.0
+        },
+        "backend": "none",
+        "games_failed": 0,
+        "mechanism": "A",
+        "speed": [
+          0.5,
+          0.3
+        ]
+      },
+      "fig3_3f_n": {
+        "games": 100,
+        "lineup": [
+          "fundamentalist",
+          "fundamentalist",
+          "fundamentalist",
+          "noise"
+        ],
+        "agents": {
+          "fundamentalist#0": {
+            "mean_pnl": 12.99,
+            "ci95": [
+              -0.35,
+              26.76
+            ],
+            "sd_pnl": 70.02,
+            "sd_cash": 26.02,
+            "sd_payout": 69.32,
+            "trades_per_game": 15.68,
+            "decisions_per_game": 109.7,
+            "passes_per_game": 30.69,
+            "rejected_orders_per_game": 0.04
+          },
+          "fundamentalist#1": {
+            "mean_pnl": 13.59,
+            "ci95": [
+              0.22,
+              26.87
+            ],
+            "sd_pnl": 68.86,
+            "sd_cash": 23.31,
+            "sd_payout": 72.55,
+            "trades_per_game": 15.75,
+            "decisions_per_game": 110.7,
+            "passes_per_game": 32.85,
+            "rejected_orders_per_game": 0.06
+          },
+          "fundamentalist#2": {
+            "mean_pnl": 10.03,
+            "ci95": [
+              -2.66,
+              22.54
+            ],
+            "sd_pnl": 66.08,
+            "sd_cash": 23.76,
+            "sd_payout": 70.66,
+            "trades_per_game": 16.15,
+            "decisions_per_game": 108.48,
+            "passes_per_game": 29.96,
+            "rejected_orders_per_game": 0.05
+          },
+          "noise": {
+            "mean_pnl": -36.61,
+            "ci95": [
+              -42.62,
+              -30.41
+            ],
+            "sd_pnl": 32.5,
+            "sd_cash": 30.11,
+            "sd_payout": 30.29,
+            "trades_per_game": 22.16,
+            "decisions_per_game": 110.01,
+            "passes_per_game": 44.57,
+            "rejected_orders_per_game": 0.07
+          }
+        },
+        "market": {
+          "trades_per_game": 34.87,
+          "mean_mispricing_chips": 5.25
+        },
+        "backend": "none",
+        "games_failed": 0,
+        "mechanism": "A",
+        "speed": [
+          0.5,
+          0.3
+        ]
+      },
+      "fig4_f_b_2n": {
+        "games": 100,
+        "lineup": [
+          "fundamentalist",
+          "bottom_feeder",
+          "noise",
+          "noise"
+        ],
+        "agents": {
+          "fundamentalist": {
+            "mean_pnl": 74.11,
+            "ci95": [
+              57.53,
+              92.07
+            ],
+            "sd_pnl": 88.86,
+            "sd_cash": 64.66,
+            "sd_payout": 68.83,
+            "trades_per_game": 22.07,
+            "decisions_per_game": 108.67,
+            "passes_per_game": 21.61,
+            "rejected_orders_per_game": 0.18
+          },
+          "bottom_feeder": {
+            "mean_pnl": 2.66,
+            "ci95": [
+              -8.43,
+              14.16
+            ],
+            "sd_pnl": 58.44,
+            "sd_cash": 27.26,
+            "sd_payout": 55.17,
+            "trades_per_game": 13.14,
+            "decisions_per_game": 111.93,
+            "passes_per_game": 43.0,
+            "rejected_orders_per_game": 0.01
+          },
+          "noise#2": {
+            "mean_pnl": -36.56,
+            "ci95": [
+              -45.27,
+              -27.93
+            ],
+            "sd_pnl": 43.73,
+            "sd_cash": 36.36,
+            "sd_payout": 34.96,
+            "trades_per_game": 24.32,
+            "decisions_per_game": 110.45,
+            "passes_per_game": 45.35,
+            "rejected_orders_per_game": 0.06
+          },
+          "noise#3": {
+            "mean_pnl": -40.21,
+            "ci95": [
+              -50.35,
+              -30.88
+            ],
+            "sd_pnl": 49.13,
+            "sd_cash": 40.76,
+            "sd_payout": 34.3,
+            "trades_per_game": 24.33,
+            "decisions_per_game": 110.07,
+            "passes_per_game": 45.61,
+            "rejected_orders_per_game": 0.08
+          }
+        },
+        "market": {
+          "trades_per_game": 41.93,
+          "mean_mispricing_chips": 6.04
+        },
+        "backend": "none",
+        "games_failed": 0,
+        "mechanism": "A",
+        "speed": [
+          0.5,
+          0.3
+        ]
+      },
+      "fig4_2f_b_n": {
+        "games": 100,
+        "lineup": [
+          "fundamentalist",
+          "fundamentalist",
+          "bottom_feeder",
+          "noise"
+        ],
+        "agents": {
+          "fundamentalist#0": {
+            "mean_pnl": 35.6,
+            "ci95": [
+              20.49,
+              50.32
+            ],
+            "sd_pnl": 77.86,
+            "sd_cash": 28.81,
+            "sd_payout": 78.43,
+            "trades_per_game": 15.06,
+            "decisions_per_game": 109.57,
+            "passes_per_game": 28.6,
+            "rejected_orders_per_game": 0.1
+          },
+          "fundamentalist#1": {
+            "mean_pnl": 19.54,
+            "ci95": [
+              6.21,
+              33.08
+            ],
+            "sd_pnl": 70.97,
+            "sd_cash": 26.13,
+            "sd_payout": 75.38,
+            "trades_per_game": 15.27,
+            "decisions_per_game": 110.12,
+            "passes_per_game": 29.17,
+            "rejected_orders_per_game": 0.07
+          },
+          "bottom_feeder": {
+            "mean_pnl": -18.27,
+            "ci95": [
+              -25.61,
+              -10.01
+            ],
+            "sd_pnl": 40.99,
+            "sd_cash": 28.92,
+            "sd_payout": 40.78,
+            "trades_per_game": 11.21,
+            "decisions_per_game": 109.29,
+            "passes_per_game": 35.74,
+            "rejected_orders_per_game": 0.01
+          },
+          "noise": {
+            "mean_pnl": -36.87,
+            "ci95": [
+              -43.97,
+              -29.89
+            ],
+            "sd_pnl": 35.55,
+            "sd_cash": 33.62,
+            "sd_payout": 32.39,
+            "trades_per_game": 21.58,
+            "decisions_per_game": 109.93,
+            "passes_per_game": 43.18,
+            "rejected_orders_per_game": 0.05
+          }
+        },
+        "market": {
+          "trades_per_game": 31.56,
+          "mean_mispricing_chips": 5.81
+        },
+        "backend": "none",
+        "games_failed": 0,
+        "mechanism": "A",
+        "speed": [
+          0.5,
+          0.3
+        ]
+      },
+      "fig4_3f_b": {
+        "games": 100,
+        "lineup": [
+          "fundamentalist",
+          "fundamentalist",
+          "fundamentalist",
+          "bottom_feeder"
+        ],
+        "agents": {
+          "fundamentalist#0": {
+            "mean_pnl": 11.37,
+            "ci95": [
+              -1.42,
+              23.66
+            ],
+            "sd_pnl": 63.1,
+            "sd_cash": 27.84,
+            "sd_payout": 70.78,
+            "trades_per_game": 9.88,
+            "decisions_per_game": 109.97,
+            "passes_per_game": 31.02,
+            "rejected_orders_per_game": 0.02
+          },
+          "fundamentalist#1": {
+            "mean_pnl": 1.53,
+            "ci95": [
+              -11.35,
+              13.92
+            ],
+            "sd_pnl": 65.28,
+            "sd_cash": 27.45,
+            "sd_payout": 71.09,
+            "trades_per_game": 9.94,
+            "decisions_per_game": 110.58,
+            "passes_per_game": 32.95,
+            "rejected_orders_per_game": 0.07
+          },
+          "fundamentalist#2": {
+            "mean_pnl": 5.34,
+            "ci95": [
+              -6.67,
+              17.25
+            ],
+            "sd_pnl": 60.14,
+            "sd_cash": 28.76,
+            "sd_payout": 70.68,
+            "trades_per_game": 10.01,
+            "decisions_per_game": 108.77,
+            "passes_per_game": 30.98,
+            "rejected_orders_per_game": 0.02
+          },
+          "bottom_feeder": {
+            "mean_pnl": -18.24,
+            "ci95": [
+              -26.07,
+              -9.8
+            ],
+            "sd_pnl": 41.87,
+            "sd_cash": 23.82,
+            "sd_payout": 45.07,
+            "trades_per_game": 6.47,
+            "decisions_per_game": 108.4,
+            "passes_per_game": 33.28,
+            "rejected_orders_per_game": 0.0
+          }
+        },
+        "market": {
+          "trades_per_game": 18.15,
+          "mean_mispricing_chips": 5.87
+        },
+        "backend": "none",
+        "games_failed": 0,
+        "mechanism": "A",
+        "speed": [
+          0.5,
+          0.3
+        ]
+      },
+      "fig5_f_2b_n": {
+        "games": 100,
+        "lineup": [
+          "fundamentalist",
+          "bottom_feeder",
+          "bottom_feeder",
+          "noise"
+        ],
+        "agents": {
+          "fundamentalist": {
+            "mean_pnl": 46.32,
+            "ci95": [
+              31.96,
+              60.94
+            ],
+            "sd_pnl": 74.19,
+            "sd_cash": 47.36,
+            "sd_payout": 67.92,
+            "trades_per_game": 15.86,
+            "decisions_per_game": 108.03,
+            "passes_per_game": 16.03,
+            "rejected_orders_per_game": 0.24
+          },
+          "bottom_feeder#1": {
+            "mean_pnl": -2.53,
+            "ci95": [
+              -13.01,
+              8.2
+            ],
+            "sd_pnl": 54.69,
+            "sd_cash": 24.15,
+            "sd_payout": 55.23,
+            "trades_per_game": 6.27,
+            "decisions_per_game": 111.91,
+            "passes_per_game": 42.16,
+            "rejected_orders_per_game": 0.01
+          },
+          "bottom_feeder#2": {
+            "mean_pnl": -5.15,
+            "ci95": [
+              -14.41,
+              5.05
+            ],
+            "sd_pnl": 50.52,
+            "sd_cash": 18.76,
+            "sd_payout": 52.94,
+            "trades_per_game": 6.45,
+            "decisions_per_game": 110.07,
+            "passes_per_game": 42.05,
+            "rejected_orders_per_game": 0.0
+          },
+          "noise": {
+            "mean_pnl": -38.63,
+            "ci95": [
+              -47.77,
+              -29.69
+            ],
+            "sd_pnl": 45.74,
+            "sd_cash": 36.87,
+            "sd_payout": 37.87,
+            "trades_per_game": 20.6,
+            "decisions_per_game": 109.81,
+            "passes_per_game": 43.06,
+            "rejected_orders_per_game": 0.02
+          }
+        },
+        "market": {
+          "trades_per_game": 24.59,
+          "mean_mispricing_chips": 5.9
+        },
+        "backend": "none",
+        "games_failed": 0,
+        "mechanism": "A",
+        "speed": [
+          0.5,
+          0.3
+        ]
+      },
+      "fig5_2f_2b": {
+        "games": 100,
+        "lineup": [
+          "fundamentalist",
+          "fundamentalist",
+          "bottom_feeder",
+          "bottom_feeder"
+        ],
+        "agents": {
+          "fundamentalist#0": {
+            "mean_pnl": 15.14,
+            "ci95": [
+              1.83,
+              28.24
+            ],
+            "sd_pnl": 68.02,
+            "sd_cash": 21.63,
+            "sd_payout": 73.85,
+            "trades_per_game": 8.37,
+            "decisions_per_game": 109.37,
+            "passes_per_game": 27.35,
+            "rejected_orders_per_game": 0.21
+          },
+          "fundamentalist#1": {
+            "mean_pnl": 4.88,
+            "ci95": [
+              -8.15,
+              18.86
+            ],
+            "sd_pnl": 68.52,
+            "sd_cash": 20.66,
+            "sd_payout": 74.06,
+            "trades_per_game": 8.69,
+            "decisions_per_game": 109.9,
+            "passes_per_game": 27.46,
+            "rejected_orders_per_game": 0.15
+          },
+          "bottom_feeder#2": {
+            "mean_pnl": -13.43,
+            "ci95": [
+              -20.41,
+              -5.5
+            ],
+            "sd_pnl": 37.88,
+            "sd_cash": 15.07,
+            "sd_payout": 38.29,
+            "trades_per_game": 3.58,
+            "decisions_per_game": 109.29,
+            "passes_per_game": 35.77,
+            "rejected_orders_per_game": 0.0
+          },
+          "bottom_feeder#3": {
+            "mean_pnl": -6.59,
+            "ci95": [
+              -15.14,
+              2.88
+            ],
+            "sd_pnl": 43.87,
+            "sd_cash": 18.29,
+            "sd_payout": 48.04,
+            "trades_per_game": 3.92,
+            "decisions_per_game": 108.79,
+            "passes_per_game": 35.81,
+            "rejected_orders_per_game": 0.0
+          }
+        },
+        "market": {
+          "trades_per_game": 12.28,
+          "mean_mispricing_chips": 5.91
+        },
+        "backend": "none",
+        "games_failed": 0,
+        "mechanism": "A",
+        "speed": [
+          0.5,
+          0.3
+        ]
+      },
+      "tab2_4n": {
+        "games": 100,
+        "lineup": [
+          "noise",
+          "noise",
+          "noise",
+          "noise"
+        ],
+        "agents": {
+          "noise#0": {
+            "mean_pnl": -4.43,
+            "ci95": [
+              -13.8,
+              4.83
+            ],
+            "sd_pnl": 47.29,
+            "sd_cash": 0.0,
+            "sd_payout": 47.29,
+            "trades_per_game": 0.0,
+            "decisions_per_game": 121.69,
+            "passes_per_game": 121.69,
+            "rejected_orders_per_game": 0.0
+          },
+          "noise#1": {
+            "mean_pnl": -3.5,
+            "ci95": [
+              -12.83,
+              6.03
+            ],
+            "sd_pnl": 48.28,
+            "sd_cash": 0.0,
+            "sd_payout": 48.28,
+            "trades_per_game": 0.0,
+            "decisions_per_game": 122.39,
+            "passes_per_game": 122.39,
+            "rejected_orders_per_game": 0.0
+          },
+          "noise#2": {
+            "mean_pnl": 2.83,
+            "ci95": [
+              -6.53,
+              13.43
+            ],
+            "sd_pnl": 52.24,
+            "sd_cash": 0.0,
+            "sd_payout": 52.24,
+            "trades_per_game": 0.0,
+            "decisions_per_game": 120.79,
+            "passes_per_game": 120.79,
+            "rejected_orders_per_game": 0.0
+          },
+          "noise#3": {
+            "mean_pnl": 5.1,
+            "ci95": [
+              -4.6,
+              15.8
+            ],
+            "sd_pnl": 52.01,
+            "sd_cash": 0.0,
+            "sd_payout": 52.01,
+            "trades_per_game": 0.0,
+            "decisions_per_game": 119.82,
+            "passes_per_game": 119.82,
+            "rejected_orders_per_game": 0.0
+          }
+        },
+        "market": {
+          "trades_per_game": 0.0,
+          "mean_mispricing_chips": NaN
+        },
+        "backend": "none",
+        "games_failed": 0,
+        "mechanism": "A",
+        "speed": [
+          0.5,
+          0.3
+        ]
+      },
+      "tab2_4f": {
+        "games": 100,
+        "lineup": [
+          "fundamentalist",
+          "fundamentalist",
+          "fundamentalist",
+          "fundamentalist"
+        ],
+        "agents": {
+          "fundamentalist#0": {
+            "mean_pnl": 2.21,
+            "ci95": [
+              -9.36,
+              14.46
+            ],
+            "sd_pnl": 60.38,
+            "sd_cash": 25.95,
+            "sd_payout": 66.93,
+            "trades_per_game": 11.02,
+            "decisions_per_game": 110.3,
+            "passes_per_game": 34.3,
+            "rejected_orders_per_game": 0.03
+          },
+          "fundamentalist#1": {
+            "mean_pnl": -5.47,
+            "ci95": [
+              -16.6,
+              5.6
+            ],
+            "sd_pnl": 59.24,
+            "sd_cash": 26.66,
+            "sd_payout": 67.09,
+            "trades_per_game": 10.73,
+            "decisions_per_game": 110.91,
+            "passes_per_game": 34.68,
+            "rejected_orders_per_game": 0.05
+          },
+          "fundamentalist#2": {
+            "mean_pnl": -2.21,
+            "ci95": [
+              -12.1,
+              8.01
+            ],
+            "sd_pnl": 50.66,
+            "sd_cash": 25.31,
+            "sd_payout": 59.36,
+            "trades_per_game": 11.32,
+            "decisions_per_game": 109.06,
+            "passes_per_game": 34.33,
+            "rejected_orders_per_game": 0.02
+          },
+          "fundamentalist#3": {
+            "mean_pnl": 5.47,
+            "ci95": [
+              -6.11,
+              17.83
+            ],
+            "sd_pnl": 61.27,
+            "sd_cash": 25.57,
+            "sd_payout": 68.58,
+            "trades_per_game": 10.89,
+            "decisions_per_game": 108.61,
+            "passes_per_game": 34.99,
+            "rejected_orders_per_game": 0.02
+          }
+        },
+        "market": {
+          "trades_per_game": 21.98,
+          "mean_mispricing_chips": 5.97
+        },
+        "backend": "none",
+        "games_failed": 0,
+        "mechanism": "A",
+        "speed": [
+          0.5,
+          0.3
+        ]
+      },
+      "tab2_4b": {
+        "games": 100,
+        "lineup": [
+          "bottom_feeder",
+          "bottom_feeder",
+          "bottom_feeder",
+          "bottom_feeder"
+        ],
+        "agents": {
+          "bottom_feeder#0": {
+            "mean_pnl": -4.43,
+            "ci95": [
+              -13.8,
+              4.83
+            ],
+            "sd_pnl": 47.29,
+            "sd_cash": 0.0,
+            "sd_payout": 47.29,
+            "trades_per_game": 0.0,
+            "decisions_per_game": 121.69,
+            "passes_per_game": 121.69,
+            "rejected_orders_per_game": 0.0
+          },
+          "bottom_feeder#1": {
+            "mean_pnl": -3.5,
+            "ci95": [
+              -12.83,
+              6.03
+            ],
+            "sd_pnl": 48.28,
+            "sd_cash": 0.0,
+            "sd_payout": 48.28,
+            "trades_per_game": 0.0,
+            "decisions_per_game": 122.39,
+            "passes_per_game": 122.39,
+            "rejected_orders_per_game": 0.0
+          },
+          "bottom_feeder#2": {
+            "mean_pnl": 2.83,
+            "ci95": [
+              -6.53,
+              13.43
+            ],
+            "sd_pnl": 52.24,
+            "sd_cash": 0.0,
+            "sd_payout": 52.24,
+            "trades_per_game": 0.0,
+            "decisions_per_game": 120.79,
+            "passes_per_game": 120.79,
+            "rejected_orders_per_game": 0.0
+          },
+          "bottom_feeder#3": {
+            "mean_pnl": 5.1,
+            "ci95": [
+              -4.6,
+              15.8
+            ],
+            "sd_pnl": 52.01,
+            "sd_cash": 0.0,
+            "sd_payout": 52.01,
+            "trades_per_game": 0.0,
+            "decisions_per_game": 119.82,
+            "passes_per_game": 119.82,
+            "rejected_orders_per_game": 0.0
+          }
+        },
+        "market": {
+          "trades_per_game": 0.0,
+          "mean_mispricing_chips": NaN
+        },
+        "backend": "none",
+        "games_failed": 0,
+        "mechanism": "A",
+        "speed": [
+          0.5,
+          0.3
+        ]
+      }
+    },
+    "B-240s-paper": {
+      "fig3_f_3n": {
+        "games": 100,
+        "lineup": [
+          "fundamentalist",
+          "noise",
+          "noise",
+          "noise"
+        ],
+        "agents": {
+          "fundamentalist": {
+            "mean_pnl": 111.61,
+            "ci95": [
+              99.88,
+              124.0
+            ],
+            "sd_pnl": 63.12,
+            "sd_cash": 58.16,
+            "sd_payout": 33.52,
+            "trades_per_game": 27.93,
+            "decisions_per_game": 240.67,
+            "passes_per_game": 59.19,
+            "rejected_orders_per_game": 47.39
+          },
+          "noise#1": {
+            "mean_pnl": -35.66,
+            "ci95": [
+              -47.77,
+              -23.96
+            ],
+            "sd_pnl": 61.62,
+            "sd_cash": 59.4,
+            "sd_payout": 19.64,
+            "trades_per_game": 14.11,
+            "decisions_per_game": 243.05,
+            "passes_per_game": 189.07,
+            "rejected_orders_per_game": 28.54
+          },
+          "noise#2": {
+            "mean_pnl": -36.95,
+            "ci95": [
+              -49.51,
+              -24.63
+            ],
+            "sd_pnl": 64.8,
+            "sd_cash": 63.94,
+            "sd_payout": 18.15,
+            "trades_per_game": 14.65,
+            "decisions_per_game": 241.22,
+            "passes_per_game": 187.92,
+            "rejected_orders_per_game": 27.57
+          },
+          "noise#3": {
+            "mean_pnl": -39.0,
+            "ci95": [
+              -48.24,
+              -30.39
+            ],
+            "sd_pnl": 46.78,
+            "sd_cash": 46.96,
+            "sd_payout": 19.11,
+            "trades_per_game": 14.03,
+            "decisions_per_game": 239.51,
+            "passes_per_game": 186.33,
+            "rejected_orders_per_game": 27.74
+          }
+        },
+        "market": {
+          "trades_per_game": 35.36,
+          "mean_mispricing_chips": 6.19
+        },
+        "backend": "none",
+        "games_failed": 0,
+        "mechanism": "B",
+        "speed": [
+          1.0,
+          0.0
+        ]
+      },
+      "fig3_2f_2n": {
+        "games": 100,
+        "lineup": [
+          "fundamentalist",
+          "fundamentalist",
+          "noise",
+          "noise"
+        ],
+        "agents": {
+          "fundamentalist#0": {
+            "mean_pnl": 67.53,
+            "ci95": [
+              49.09,
+              85.19
+            ],
+            "sd_pnl": 95.62,
+            "sd_cash": 50.82,
+            "sd_payout": 79.75,
+            "trades_per_game": 24.87,
+            "decisions_per_game": 240.67,
+            "passes_per_game": 59.61,
+            "rejected_orders_per_game": 58.38
+          },
+          "fundamentalist#1": {
+            "mean_pnl": 59.82,
+            "ci95": [
+              43.37,
+              76.92
+            ],
+            "sd_pnl": 87.25,
+            "sd_cash": 46.34,
+            "sd_payout": 79.61,
+            "trades_per_game": 23.19,
+            "decisions_per_game": 243.05,
+            "passes_per_game": 62.79,
+            "rejected_orders_per_game": 59.62
+          },
+          "noise#2": {
+            "mean_pnl": -58.06,
+            "ci95": [
+              -68.43,
+              -46.96
+            ],
+            "sd_pnl": 54.56,
+            "sd_cash": 55.45,
+            "sd_payout": 8.08,
+            "trades_per_game": 19.55,
+            "decisions_per_game": 241.22,
+            "passes_per_game": 159.14,
+            "rejected_orders_per_game": 43.89
+          },
+          "noise#3": {
+            "mean_pnl": -69.29,
+            "ci95": [
+              -80.78,
+              -58.97
+            ],
+            "sd_pnl": 55.65,
+            "sd_cash": 57.48,
+            "sd_payout": 8.01,
+            "trades_per_game": 19.53,
+            "decisions_per_game": 239.51,
+            "passes_per_game": 155.62,
+            "rejected_orders_per_game": 45.23
+          }
+        },
+        "market": {
+          "trades_per_game": 43.57,
+          "mean_mispricing_chips": 6.22
+        },
+        "backend": "none",
+        "games_failed": 0,
+        "mechanism": "B",
+        "speed": [
+          1.0,
+          0.0
+        ]
+      },
+      "fig3_3f_n": {
+        "games": 100,
+        "lineup": [
+          "fundamentalist",
+          "fundamentalist",
+          "fundamentalist",
+          "noise"
+        ],
+        "agents": {
+          "fundamentalist#0": {
+            "mean_pnl": 26.35,
+            "ci95": [
+              12.07,
+              40.71
+            ],
+            "sd_pnl": 73.33,
+            "sd_cash": 43.33,
+            "sd_payout": 71.13,
+            "trades_per_game": 17.77,
+            "decisions_per_game": 240.67,
+            "passes_per_game": 68.51,
+            "rejected_orders_per_game": 69.24
+          },
+          "fundamentalist#1": {
+            "mean_pnl": 33.46,
+            "ci95": [
+              17.7,
+              49.8
+            ],
+            "sd_pnl": 85.64,
+            "sd_cash": 43.34,
+            "sd_payout": 76.68,
+            "trades_per_game": 17.96,
+            "decisions_per_game": 243.05,
+            "passes_per_game": 77.28,
+            "rejected_orders_per_game": 67.66
+          },
+          "fundamentalist#2": {
+            "mean_pnl": 25.47,
+            "ci95": [
+              11.02,
+              39.35
+            ],
+            "sd_pnl": 74.24,
+            "sd_cash": 46.81,
+            "sd_payout": 70.2,
+            "trades_per_game": 17.13,
+            "decisions_per_game": 241.22,
+            "passes_per_game": 71.76,
+            "rejected_orders_per_game": 69.8
+          },
+          "noise": {
+            "mean_pnl": -85.28,
+            "ci95": [
+              -97.55,
+              -74.67
+            ],
+            "sd_pnl": 57.96,
+            "sd_cash": 58.33,
+            "sd_payout": 4.94,
+            "trades_per_game": 22.86,
+            "decisions_per_game": 239.51,
+            "passes_per_game": 141.18,
+            "rejected_orders_per_game": 53.67
+          }
+        },
+        "market": {
+          "trades_per_game": 37.86,
+          "mean_mispricing_chips": 6.04
+        },
+        "backend": "none",
+        "games_failed": 0,
+        "mechanism": "B",
+        "speed": [
+          1.0,
+          0.0
+        ]
+      },
+      "fig4_f_b_2n": {
+        "games": 100,
+        "lineup": [
+          "fundamentalist",
+          "bottom_feeder",
+          "noise",
+          "noise"
+        ],
+        "agents": {
+          "fundamentalist": {
+            "mean_pnl": 88.34,
+            "ci95": [
+              75.84,
+              101.3
+            ],
+            "sd_pnl": 66.18,
+            "sd_cash": 58.62,
+            "sd_payout": 60.2,
+            "trades_per_game": 22.38,
+            "decisions_per_game": 240.67,
+            "passes_per_game": 46.98,
+            "rejected_orders_per_game": 62.95
+          },
+          "bottom_feeder": {
+            "mean_pnl": 45.75,
+            "ci95": [
+              32.28,
+              60.41
+            ],
+            "sd_pnl": 70.92,
+            "sd_cash": 61.42,
+            "sd_payout": 60.4,
+            "trades_per_game": 19.29,
+            "decisions_per_game": 243.05,
+            "passes_per_game": 61.23,
+            "rejected_orders_per_game": 68.52
+          },
+          "noise#2": {
+            "mean_pnl": -72.78,
+            "ci95": [
+              -85.53,
+              -60.41
+            ],
+            "sd_pnl": 63.83,
+            "sd_cash": 66.13,
+            "sd_payout": 7.13,
+            "trades_per_game": 21.28,
+            "decisions_per_game": 241.22,
+            "passes_per_game": 152.5,
+            "rejected_orders_per_game": 48.21
+          },
+          "noise#3": {
+            "mean_pnl": -61.31,
+            "ci95": [
+              -71.66,
+              -50.62
+            ],
+            "sd_pnl": 52.22,
+            "sd_cash": 53.37,
+            "sd_payout": 8.1,
+            "trades_per_game": 21.47,
+            "decisions_per_game": 239.51,
+            "passes_per_game": 149.28,
+            "rejected_orders_per_game": 49.28
+          }
+        },
+        "market": {
+          "trades_per_game": 42.21,
+          "mean_mispricing_chips": 6.95
+        },
+        "backend": "none",
+        "games_failed": 0,
+        "mechanism": "B",
+        "speed": [
+          1.0,
+          0.0
+        ]
+      },
+      "fig4_2f_b_n": {
+        "games": 100,
+        "lineup": [
+          "fundamentalist",
+          "fundamentalist",
+          "bottom_feeder",
+          "noise"
+        ],
+        "agents": {
+          "fundamentalist#0": {
+            "mean_pnl": 40.04,
+            "ci95": [
+              26.14,
+              54.61
+            ],
+            "sd_pnl": 73.43,
+            "sd_cash": 27.69,
+            "sd_payout": 81.12,
+            "trades_per_game": 16.58,
+            "decisions_per_game": 240.67,
+            "passes_per_game": 69.1,
+            "rejected_orders_per_game": 73.44
+          },
+          "fundamentalist#1": {
+            "mean_pnl": 22.66,
+            "ci95": [
+              7.57,
+              37.99
+            ],
+            "sd_pnl": 77.62,
+            "sd_cash": 30.52,
+            "sd_payout": 78.46,
+            "trades_per_game": 16.49,
+            "decisions_per_game": 243.05,
+            "passes_per_game": 69.49,
+            "rejected_orders_per_game": 76.48
+          },
+          "bottom_feeder": {
+            "mean_pnl": 7.18,
+            "ci95": [
+              -3.64,
+              19.07
+            ],
+            "sd_pnl": 60.38,
+            "sd_cash": 41.07,
+            "sd_payout": 44.02,
+            "trades_per_game": 14.23,
+            "decisions_per_game": 241.22,
+            "passes_per_game": 56.72,
+            "rejected_orders_per_game": 81.5
+          },
+          "noise": {
+            "mean_pnl": -69.88,
+            "ci95": [
+              -78.5,
+              -61.78
+            ],
+            "sd_pnl": 42.42,
+            "sd_cash": 42.75,
+            "sd_payout": 5.15,
+            "trades_per_game": 22.56,
+            "decisions_per_game": 239.51,
+            "passes_per_game": 139.18,
+            "rejected_orders_per_game": 55.97
+          }
+        },
+        "market": {
+          "trades_per_game": 34.93,
+          "mean_mispricing_chips": 6.02
+        },
+        "backend": "none",
+        "games_failed": 0,
+        "mechanism": "B",
+        "speed": [
+          1.0,
+          0.0
+        ]
+      },
+      "fig4_3f_b": {
+        "games": 100,
+        "lineup": [
+          "fundamentalist",
+          "fundamentalist",
+          "fundamentalist",
+          "bottom_feeder"
+        ],
+        "agents": {
+          "fundamentalist#0": {
+            "mean_pnl": 10.59,
+            "ci95": [
+              -2.03,
+              22.89
+            ],
+            "sd_pnl": 63.48,
+            "sd_cash": 36.05,
+            "sd_payout": 72.06,
+            "trades_per_game": 10.32,
+            "decisions_per_game": 240.67,
+            "passes_per_game": 77.57,
+            "rejected_orders_per_game": 98.44
+          },
+          "fundamentalist#1": {
+            "mean_pnl": 1.64,
+            "ci95": [
+              -11.67,
+              15.08
+            ],
+            "sd_pnl": 69.99,
+            "sd_cash": 31.12,
+            "sd_payout": 74.86,
+            "trades_per_game": 10.37,
+            "decisions_per_game": 243.05,
+            "passes_per_game": 80.9,
+            "rejected_orders_per_game": 101.06
+          },
+          "fundamentalist#2": {
+            "mean_pnl": 3.57,
+            "ci95": [
+              -8.35,
+              15.22
+            ],
+            "sd_pnl": 61.82,
+            "sd_cash": 31.26,
+            "sd_payout": 70.44,
+            "trades_per_game": 10.23,
+            "decisions_per_game": 241.22,
+            "passes_per_game": 77.43,
+            "rejected_orders_per_game": 99.88
+          },
+          "bottom_feeder": {
+            "mean_pnl": -15.8,
+            "ci95": [
+              -23.17,
+              -7.71
+            ],
+            "sd_pnl": 39.37,
+            "sd_cash": 24.21,
+            "sd_payout": 40.81,
+            "trades_per_game": 7.48,
+            "decisions_per_game": 239.51,
+            "passes_per_game": 62.14,
+            "rejected_orders_per_game": 110.46
+          }
+        },
+        "market": {
+          "trades_per_game": 19.2,
+          "mean_mispricing_chips": 5.9
+        },
+        "backend": "none",
+        "games_failed": 0,
+        "mechanism": "B",
+        "speed": [
+          1.0,
+          0.0
+        ]
+      },
+      "fig5_f_2b_n": {
+        "games": 100,
+        "lineup": [
+          "fundamentalist",
+          "bottom_feeder",
+          "bottom_feeder",
+          "noise"
+        ],
+        "agents": {
+          "fundamentalist": {
+            "mean_pnl": 46.98,
+            "ci95": [
+              32.2,
+              63.09
+            ],
+            "sd_pnl": 77.94,
+            "sd_cash": 49.43,
+            "sd_payout": 65.16,
+            "trades_per_game": 15.47,
+            "decisions_per_game": 240.67,
+            "passes_per_game": 40.75,
+            "rejected_orders_per_game": 92.47
+          },
+          "bottom_feeder#1": {
+            "mean_pnl": 12.69,
+            "ci95": [
+              1.62,
+              23.8
+            ],
+            "sd_pnl": 55.54,
+            "sd_cash": 27.26,
+            "sd_payout": 55.04,
+            "trades_per_game": 8.45,
+            "decisions_per_game": 243.05,
+            "passes_per_game": 63.97,
+            "rejected_orders_per_game": 102.33
+          },
+          "bottom_feeder#2": {
+            "mean_pnl": 21.42,
+            "ci95": [
+              10.27,
+              33.31
+            ],
+            "sd_pnl": 58.81,
+            "sd_cash": 31.68,
+            "sd_payout": 58.99,
+            "trades_per_game": 8.9,
+            "decisions_per_game": 241.22,
+            "passes_per_game": 62.39,
+            "rejected_orders_per_game": 99.91
+          },
+          "noise": {
+            "mean_pnl": -81.1,
+            "ci95": [
+              -91.65,
+              -71.5
+            ],
+            "sd_pnl": 49.46,
+            "sd_cash": 48.59,
+            "sd_payout": 11.76,
+            "trades_per_game": 26.9,
+            "decisions_per_game": 239.51,
+            "passes_per_game": 130.79,
+            "rejected_orders_per_game": 62.02
+          }
+        },
+        "market": {
+          "trades_per_game": 29.86,
+          "mean_mispricing_chips": 6.49
+        },
+        "backend": "none",
+        "games_failed": 0,
+        "mechanism": "B",
+        "speed": [
+          1.0,
+          0.0
+        ]
+      },
+      "fig5_2f_2b": {
+        "games": 100,
+        "lineup": [
+          "fundamentalist",
+          "fundamentalist",
+          "bottom_feeder",
+          "bottom_feeder"
+        ],
+        "agents": {
+          "fundamentalist#0": {
+            "mean_pnl": 20.08,
+            "ci95": [
+              5.58,
+              34.3
+            ],
+            "sd_pnl": 73.06,
+            "sd_cash": 20.99,
+            "sd_payout": 77.03,
+            "trades_per_game": 8.95,
+            "decisions_per_game": 240.67,
+            "passes_per_game": 68.57,
+            "rejected_orders_per_game": 118.13
+          },
+          "fundamentalist#1": {
+            "mean_pnl": 0.28,
+            "ci95": [
+              -13.26,
+              14.13
+            ],
+            "sd_pnl": 72.12,
+            "sd_cash": 22.65,
+            "sd_payout": 76.57,
+            "trades_per_game": 9.15,
+            "decisions_per_game": 243.05,
+            "passes_per_game": 70.92,
+            "rejected_orders_per_game": 119.52
+          },
+          "bottom_feeder#2": {
+            "mean_pnl": -8.15,
+            "ci95": [
+              -14.47,
+              -1.49
+            ],
+            "sd_pnl": 34.07,
+            "sd_cash": 16.88,
+            "sd_payout": 35.6,
+            "trades_per_game": 3.02,
+            "decisions_per_game": 241.22,
+            "passes_per_game": 73.42,
+            "rejected_orders_per_game": 129.56
+          },
+          "bottom_feeder#3": {
+            "mean_pnl": -12.21,
+            "ci95": [
+              -18.75,
+              -4.82
+            ],
+            "sd_pnl": 35.0,
+            "sd_cash": 15.67,
+            "sd_payout": 35.15,
+            "trades_per_game": 2.9,
+            "decisions_per_game": 239.51,
+            "passes_per_game": 72.18,
+            "rejected_orders_per_game": 127.81
+          }
+        },
+        "market": {
+          "trades_per_game": 12.01,
+          "mean_mispricing_chips": 6.03
+        },
+        "backend": "none",
+        "games_failed": 0,
+        "mechanism": "B",
+        "speed": [
+          1.0,
+          0.0
+        ]
+      },
+      "tab2_4n": {
+        "games": 100,
+        "lineup": [
+          "noise",
+          "noise",
+          "noise",
+          "noise"
+        ],
+        "agents": {
+          "noise#0": {
+            "mean_pnl": -4.43,
+            "ci95": [
+              -13.8,
+              4.83
+            ],
+            "sd_pnl": 47.29,
+            "sd_cash": 0.0,
+            "sd_payout": 47.29,
+            "trades_per_game": 0.0,
+            "decisions_per_game": 240.67,
+            "passes_per_game": 240.67,
+            "rejected_orders_per_game": 0.0
+          },
+          "noise#1": {
+            "mean_pnl": -3.5,
+            "ci95": [
+              -12.83,
+              6.03
+            ],
+            "sd_pnl": 48.28,
+            "sd_cash": 0.0,
+            "sd_payout": 48.28,
+            "trades_per_game": 0.0,
+            "decisions_per_game": 243.05,
+            "passes_per_game": 243.05,
+            "rejected_orders_per_game": 0.0
+          },
+          "noise#2": {
+            "mean_pnl": 2.83,
+            "ci95": [
+              -6.53,
+              13.43
+            ],
+            "sd_pnl": 52.24,
+            "sd_cash": 0.0,
+            "sd_payout": 52.24,
+            "trades_per_game": 0.0,
+            "decisions_per_game": 241.22,
+            "passes_per_game": 241.22,
+            "rejected_orders_per_game": 0.0
+          },
+          "noise#3": {
+            "mean_pnl": 5.1,
+            "ci95": [
+              -4.6,
+              15.8
+            ],
+            "sd_pnl": 52.01,
+            "sd_cash": 0.0,
+            "sd_payout": 52.01,
+            "trades_per_game": 0.0,
+            "decisions_per_game": 239.51,
+            "passes_per_game": 239.51,
+            "rejected_orders_per_game": 0.0
+          }
+        },
+        "market": {
+          "trades_per_game": 0.0,
+          "mean_mispricing_chips": NaN
+        },
+        "backend": "none",
+        "games_failed": 0,
+        "mechanism": "B",
+        "speed": [
+          1.0,
+          0.0
+        ]
+      },
+      "tab2_4f": {
+        "games": 100,
+        "lineup": [
+          "fundamentalist",
+          "fundamentalist",
+          "fundamentalist",
+          "fundamentalist"
+        ],
+        "agents": {
+          "fundamentalist#0": {
+            "mean_pnl": 0.09,
+            "ci95": [
+              -10.35,
+              10.86
+            ],
+            "sd_pnl": 54.92,
+            "sd_cash": 25.78,
+            "sd_payout": 65.95,
+            "trades_per_game": 10.61,
+            "decisions_per_game": 240.67,
+            "passes_per_game": 83.61,
+            "rejected_orders_per_game": 91.21
+          },
+          "fundamentalist#1": {
+            "mean_pnl": -1.32,
+            "ci95": [
+              -11.84,
+              9.52
+            ],
+            "sd_pnl": 58.35,
+            "sd_cash": 28.05,
+            "sd_payout": 70.98,
+            "trades_per_game": 10.58,
+            "decisions_per_game": 243.05,
+            "passes_per_game": 84.98,
+            "rejected_orders_per_game": 93.8
+          },
+          "fundamentalist#2": {
+            "mean_pnl": 0.36,
+            "ci95": [
+              -10.53,
+              11.81
+            ],
+            "sd_pnl": 57.11,
+            "sd_cash": 27.58,
+            "sd_payout": 65.79,
+            "trades_per_game": 10.89,
+            "decisions_per_game": 241.22,
+            "passes_per_game": 85.03,
+            "rejected_orders_per_game": 91.62
+          },
+          "fundamentalist#3": {
+            "mean_pnl": 0.87,
+            "ci95": [
+              -10.95,
+              12.08
+            ],
+            "sd_pnl": 57.67,
+            "sd_cash": 28.02,
+            "sd_payout": 66.95,
+            "trades_per_game": 10.78,
+            "decisions_per_game": 239.51,
+            "passes_per_game": 85.86,
+            "rejected_orders_per_game": 91.08
+          }
+        },
+        "market": {
+          "trades_per_game": 21.43,
+          "mean_mispricing_chips": 5.98
+        },
+        "backend": "none",
+        "games_failed": 0,
+        "mechanism": "B",
+        "speed": [
+          1.0,
+          0.0
+        ]
+      },
+      "tab2_4b": {
+        "games": 100,
+        "lineup": [
+          "bottom_feeder",
+          "bottom_feeder",
+          "bottom_feeder",
+          "bottom_feeder"
+        ],
+        "agents": {
+          "bottom_feeder#0": {
+            "mean_pnl": -4.43,
+            "ci95": [
+              -13.8,
+              4.83
+            ],
+            "sd_pnl": 47.29,
+            "sd_cash": 0.0,
+            "sd_payout": 47.29,
+            "trades_per_game": 0.0,
+            "decisions_per_game": 240.67,
+            "passes_per_game": 240.67,
+            "rejected_orders_per_game": 0.0
+          },
+          "bottom_feeder#1": {
+            "mean_pnl": -3.5,
+            "ci95": [
+              -12.83,
+              6.03
+            ],
+            "sd_pnl": 48.28,
+            "sd_cash": 0.0,
+            "sd_payout": 48.28,
+            "trades_per_game": 0.0,
+            "decisions_per_game": 243.05,
+            "passes_per_game": 243.05,
+            "rejected_orders_per_game": 0.0
+          },
+          "bottom_feeder#2": {
+            "mean_pnl": 2.83,
+            "ci95": [
+              -6.53,
+              13.43
+            ],
+            "sd_pnl": 52.24,
+            "sd_cash": 0.0,
+            "sd_payout": 52.24,
+            "trades_per_game": 0.0,
+            "decisions_per_game": 241.22,
+            "passes_per_game": 241.22,
+            "rejected_orders_per_game": 0.0
+          },
+          "bottom_feeder#3": {
+            "mean_pnl": 5.1,
+            "ci95": [
+              -4.6,
+              15.8
+            ],
+            "sd_pnl": 52.01,
+            "sd_cash": 0.0,
+            "sd_payout": 52.01,
+            "trades_per_game": 0.0,
+            "decisions_per_game": 239.51,
+            "passes_per_game": 239.51,
+            "rejected_orders_per_game": 0.0
+          }
+        },
+        "market": {
+          "trades_per_game": 0.0,
+          "mean_mispricing_chips": NaN
+        },
+        "backend": "none",
+        "games_failed": 0,
+        "mechanism": "B",
+        "speed": [
+          1.0,
+          0.0
+        ]
+      }
+    },
+    "B-240s-equal": {
+      "fig3_f_3n": {
+        "games": 100,
+        "lineup": [
+          "fundamentalist",
+          "noise",
+          "noise",
+          "noise"
+        ],
+        "agents": {
+          "fundamentalist": {
+            "mean_pnl": 64.27,
+            "ci95": [
+              54.6,
+              73.22
+            ],
+            "sd_pnl": 47.91,
+            "sd_cash": 23.68,
+            "sd_payout": 48.81,
+            "trades_per_game": 16.99,
+            "decisions_per_game": 108.12,
+            "passes_per_game": 17.02,
+            "rejected_orders_per_game": 17.67
+          },
+          "noise#1": {
+            "mean_pnl": -18.26,
+            "ci95": [
+              -30.14,
+              -4.7
+            ],
+            "sd_pnl": 66.7,
+            "sd_cash": 54.6,
+            "sd_payout": 36.31,
+            "trades_per_game": 9.37,
+            "decisions_per_game": 117.35,
+            "passes_per_game": 84.3,
+            "rejected_orders_per_game": 15.85
+          },
+          "noise#2": {
+            "mean_pnl": -23.41,
+            "ci95": [
+              -35.35,
+              -12.65
+            ],
+            "sd_pnl": 57.3,
+            "sd_cash": 51.79,
+            "sd_payout": 26.91,
+            "trades_per_game": 9.11,
+            "decisions_per_game": 115.42,
+            "passes_per_game": 82.9,
+            "rejected_orders_per_game": 15.33
+          },
+          "noise#3": {
+            "mean_pnl": -22.6,
+            "ci95": [
+              -29.8,
+              -14.59
+            ],
+            "sd_pnl": 39.84,
+            "sd_cash": 40.2,
+            "sd_payout": 29.17,
+            "trades_per_game": 9.03,
+            "decisions_per_game": 114.86,
+            "passes_per_game": 82.21,
+            "rejected_orders_per_game": 15.73
+          }
+        },
+        "market": {
+          "trades_per_game": 22.25,
+          "mean_mispricing_chips": 6.37
+        },
+        "backend": "none",
+        "games_failed": 0,
+        "mechanism": "B",
+        "speed": [
+          0.5,
+          0.3
+        ]
+      },
+      "fig3_2f_2n": {
+        "games": 100,
+        "lineup": [
+          "fundamentalist",
+          "fundamentalist",
+          "noise",
+          "noise"
+        ],
+        "agents": {
+          "fundamentalist#0": {
+            "mean_pnl": 27.71,
+            "ci95": [
+              13.55,
+              41.49
+            ],
+            "sd_pnl": 73.79,
+            "sd_cash": 26.11,
+            "sd_payout": 71.62,
+            "trades_per_game": 13.69,
+            "decisions_per_game": 108.43,
+            "passes_per_game": 18.62,
+            "rejected_orders_per_game": 24.42
+          },
+          "fundamentalist#1": {
+            "mean_pnl": 27.06,
+            "ci95": [
+              14.33,
+              39.39
+            ],
+            "sd_pnl": 67.14,
+            "sd_cash": 30.67,
+            "sd_payout": 72.69,
+            "trades_per_game": 13.48,
+            "decisions_per_game": 108.76,
+            "passes_per_game": 18.69,
+            "rejected_orders_per_game": 24.08
+          },
+          "noise#2": {
+            "mean_pnl": -26.71,
+            "ci95": [
+              -34.12,
+              -18.93
+            ],
+            "sd_pnl": 39.46,
+            "sd_cash": 30.81,
+            "sd_payout": 34.52,
+            "trades_per_game": 11.52,
+            "decisions_per_game": 113.26,
+            "passes_per_game": 67.72,
+            "rejected_orders_per_game": 22.28
+          },
+          "noise#3": {
+            "mean_pnl": -28.06,
+            "ci95": [
+              -34.49,
+              -22.17
+            ],
+            "sd_pnl": 31.28,
+            "sd_cash": 29.99,
+            "sd_payout": 31.47,
+            "trades_per_game": 11.83,
+            "decisions_per_game": 113.24,
+            "passes_per_game": 68.65,
+            "rejected_orders_per_game": 21.2
+          }
+        },
+        "market": {
+          "trades_per_game": 25.26,
+          "mean_mispricing_chips": 5.53
+        },
+        "backend": "none",
+        "games_failed": 0,
+        "mechanism": "B",
+        "speed": [
+          0.5,
+          0.3
+        ]
+      },
+      "fig3_3f_n": {
+        "games": 100,
+        "lineup": [
+          "fundamentalist",
+          "fundamentalist",
+          "fundamentalist",
+          "noise"
+        ],
+        "agents": {
+          "fundamentalist#0": {
+            "mean_pnl": 24.72,
+            "ci95": [
+              11.67,
+              37.16
+            ],
+            "sd_pnl": 66.01,
+            "sd_cash": 24.73,
+            "sd_payout": 69.89,
+            "trades_per_game": 10.91,
+            "decisions_per_game": 108.79,
+            "passes_per_game": 21.8,
+            "rejected_orders_per_game": 30.12
+          },
+          "fundamentalist#1": {
+            "mean_pnl": 4.36,
+            "ci95": [
+              -7.56,
+              16.85
+            ],
+            "sd_pnl": 64.37,
+            "sd_cash": 22.22,
+            "sd_payout": 69.75,
+            "trades_per_game": 10.99,
+            "decisions_per_game": 109.37,
+            "passes_per_game": 23.4,
+            "rejected_orders_per_game": 29.96
+          },
+          "fundamentalist#2": {
+            "mean_pnl": 4.5,
+            "ci95": [
+              -7.18,
+              16.58
+            ],
+            "sd_pnl": 61.74,
+            "sd_cash": 20.91,
+            "sd_payout": 64.67,
+            "trades_per_game": 10.68,
+            "decisions_per_game": 107.4,
+            "passes_per_game": 21.84,
+            "rejected_orders_per_game": 29.48
+          },
+          "noise": {
+            "mean_pnl": -33.58,
+            "ci95": [
+              -38.93,
+              -29.02
+            ],
+            "sd_pnl": 25.27,
+            "sd_cash": 24.4,
+            "sd_payout": 11.38,
+            "trades_per_game": 12.82,
+            "decisions_per_game": 112.14,
+            "passes_per_game": 60.41,
+            "rejected_orders_per_game": 25.56
+          }
+        },
+        "market": {
+          "trades_per_game": 22.7,
+          "mean_mispricing_chips": 5.42
+        },
+        "backend": "none",
+        "games_failed": 0,
+        "mechanism": "B",
+        "speed": [
+          0.5,
+          0.3
+        ]
+      },
+      "fig4_f_b_2n": {
+        "games": 100,
+        "lineup": [
+          "fundamentalist",
+          "bottom_feeder",
+          "noise",
+          "noise"
+        ],
+        "agents": {
+          "fundamentalist": {
+            "mean_pnl": 47.2,
+            "ci95": [
+              33.75,
+              60.97
+            ],
+            "sd_pnl": 67.89,
+            "sd_cash": 45.1,
+            "sd_payout": 63.48,
+            "trades_per_game": 12.88,
+            "decisions_per_game": 108.05,
+            "passes_per_game": 15.78,
+            "rejected_orders_per_game": 24.26
+          },
+          "bottom_feeder": {
+            "mean_pnl": 11.17,
+            "ci95": [
+              -0.66,
+              23.22
+            ],
+            "sd_pnl": 61.11,
+            "sd_cash": 23.88,
+            "sd_payout": 59.99,
+            "trades_per_game": 7.49,
+            "decisions_per_game": 112.71,
+            "passes_per_game": 48.68,
+            "rejected_orders_per_game": 23.8
+          },
+          "noise#2": {
+            "mean_pnl": -29.72,
+            "ci95": [
+              -37.25,
+              -22.04
+            ],
+            "sd_pnl": 41.17,
+            "sd_cash": 33.06,
+            "sd_payout": 32.19,
+            "trades_per_game": 12.11,
+            "decisions_per_game": 113.29,
+            "passes_per_game": 67.12,
+            "rejected_orders_per_game": 23.13
+          },
+          "noise#3": {
+            "mean_pnl": -28.65,
+            "ci95": [
+              -37.9,
+              -20.29
+            ],
+            "sd_pnl": 44.51,
+            "sd_cash": 37.97,
+            "sd_payout": 30.94,
+            "trades_per_game": 11.3,
+            "decisions_per_game": 113.03,
+            "passes_per_game": 67.02,
+            "rejected_orders_per_game": 23.77
+          }
+        },
+        "market": {
+          "trades_per_game": 21.89,
+          "mean_mispricing_chips": 6.14
+        },
+        "backend": "none",
+        "games_failed": 0,
+        "mechanism": "B",
+        "speed": [
+          0.5,
+          0.3
+        ]
+      },
+      "fig4_2f_b_n": {
+        "games": 100,
+        "lineup": [
+          "fundamentalist",
+          "fundamentalist",
+          "bottom_feeder",
+          "noise"
+        ],
+        "agents": {
+          "fundamentalist#0": {
+            "mean_pnl": 19.69,
+            "ci95": [
+              6.22,
+              32.91
+            ],
+            "sd_pnl": 68.14,
+            "sd_cash": 24.74,
+            "sd_payout": 68.52,
+            "trades_per_game": 10.07,
+            "decisions_per_game": 108.52,
+            "passes_per_game": 19.4,
+            "rejected_orders_per_game": 32.63
+          },
+          "fundamentalist#1": {
+            "mean_pnl": 23.34,
+            "ci95": [
+              9.95,
+              37.46
+            ],
+            "sd_pnl": 69.83,
+            "sd_cash": 29.5,
+            "sd_payout": 73.3,
+            "trades_per_game": 10.38,
+            "decisions_per_game": 109.01,
+            "passes_per_game": 20.08,
+            "rejected_orders_per_game": 32.05
+          },
+          "bottom_feeder": {
+            "mean_pnl": -7.11,
+            "ci95": [
+              -15.31,
+              1.77
+            ],
+            "sd_pnl": 45.04,
+            "sd_cash": 17.14,
+            "sd_payout": 49.34,
+            "trades_per_game": 5.37,
+            "decisions_per_game": 110.59,
+            "passes_per_game": 47.33,
+            "rejected_orders_per_game": 26.94
+          },
+          "noise": {
+            "mean_pnl": -35.92,
+            "ci95": [
+              -42.95,
+              -28.98
+            ],
+            "sd_pnl": 35.41,
+            "sd_cash": 35.54,
+            "sd_payout": 24.57,
+            "trades_per_game": 12.94,
+            "decisions_per_game": 112.0,
+            "passes_per_game": 58.84,
+            "rejected_orders_per_game": 27.14
+          }
+        },
+        "market": {
+          "trades_per_game": 19.38,
+          "mean_mispricing_chips": 5.69
+        },
+        "backend": "none",
+        "games_failed": 0,
+        "mechanism": "B",
+        "speed": [
+          0.5,
+          0.3
+        ]
+      },
+      "fig4_3f_b": {
+        "games": 100,
+        "lineup": [
+          "fundamentalist",
+          "fundamentalist",
+          "fundamentalist",
+          "bottom_feeder"
+        ],
+        "agents": {
+          "fundamentalist#0": {
+            "mean_pnl": 10.74,
+            "ci95": [
+              -0.35,
+              22.43
+            ],
+            "sd_pnl": 58.31,
+            "sd_cash": 25.27,
+            "sd_payout": 65.85,
+            "trades_per_game": 7.61,
+            "decisions_per_game": 108.96,
+            "passes_per_game": 23.18,
+            "rejected_orders_per_game": 41.23
+          },
+          "fundamentalist#1": {
+            "mean_pnl": -1.06,
+            "ci95": [
+              -12.78,
+              10.86
+            ],
+            "sd_pnl": 62.58,
+            "sd_cash": 21.27,
+            "sd_payout": 67.22,
+            "trades_per_game": 7.72,
+            "decisions_per_game": 109.82,
+            "passes_per_game": 26.43,
+            "rejected_orders_per_game": 41.28
+          },
+          "fundamentalist#2": {
+            "mean_pnl": 5.12,
+            "ci95": [
+              -6.14,
+              16.49
+            ],
+            "sd_pnl": 59.48,
+            "sd_cash": 22.59,
+            "sd_payout": 66.86,
+            "trades_per_game": 7.74,
+            "decisions_per_game": 107.77,
+            "passes_per_game": 24.54,
+            "rejected_orders_per_game": 40.27
+          },
+          "bottom_feeder": {
+            "mean_pnl": -14.8,
+            "ci95": [
+              -22.05,
+              -6.84
+            ],
+            "sd_pnl": 39.15,
+            "sd_cash": 15.65,
+            "sd_payout": 42.18,
+            "trades_per_game": 3.13,
+            "decisions_per_game": 111.36,
+            "passes_per_game": 52.68,
+            "rejected_orders_per_game": 32.35
+          }
+        },
+        "market": {
+          "trades_per_game": 13.1,
+          "mean_mispricing_chips": 5.82
+        },
+        "backend": "none",
+        "games_failed": 0,
+        "mechanism": "B",
+        "speed": [
+          0.5,
+          0.3
+        ]
+      },
+      "fig5_f_2b_n": {
+        "games": 100,
+        "lineup": [
+          "fundamentalist",
+          "bottom_feeder",
+          "bottom_feeder",
+          "noise"
+        ],
+        "agents": {
+          "fundamentalist": {
+            "mean_pnl": 30.54,
+            "ci95": [
+              17.18,
+              44.65
+            ],
+            "sd_pnl": 69.46,
+            "sd_cash": 46.25,
+            "sd_payout": 62.96,
+            "trades_per_game": 8.62,
+            "decisions_per_game": 107.65,
+            "passes_per_game": 12.92,
+            "rejected_orders_per_game": 36.51
+          },
+          "bottom_feeder#1": {
+            "mean_pnl": -7.43,
+            "ci95": [
+              -15.54,
+              1.77
+            ],
+            "sd_pnl": 45.3,
+            "sd_cash": 17.15,
+            "sd_payout": 47.16,
+            "trades_per_game": 2.92,
+            "decisions_per_game": 113.19,
+            "passes_per_game": 52.86,
+            "rejected_orders_per_game": 34.57
+          },
+          "bottom_feeder#2": {
+            "mean_pnl": 7.94,
+            "ci95": [
+              -2.89,
+              19.17
+            ],
+            "sd_pnl": 59.08,
+            "sd_cash": 15.75,
+            "sd_payout": 58.65,
+            "trades_per_game": 3.17,
+            "decisions_per_game": 111.24,
+            "passes_per_game": 52.09,
+            "rejected_orders_per_game": 33.97
+          },
+          "noise": {
+            "mean_pnl": -31.04,
+            "ci95": [
+              -39.88,
+              -22.8
+            ],
+            "sd_pnl": 45.22,
+            "sd_cash": 37.96,
+            "sd_payout": 29.42,
+            "trades_per_game": 12.93,
+            "decisions_per_game": 111.73,
+            "passes_per_game": 57.47,
+            "rejected_orders_per_game": 30.23
+          }
+        },
+        "market": {
+          "trades_per_game": 13.82,
+          "mean_mispricing_chips": 5.78
+        },
+        "backend": "none",
+        "games_failed": 0,
+        "mechanism": "B",
+        "speed": [
+          0.5,
+          0.3
+        ]
+      },
+      "fig5_2f_2b": {
+        "games": 100,
+        "lineup": [
+          "fundamentalist",
+          "fundamentalist",
+          "bottom_feeder",
+          "bottom_feeder"
+        ],
+        "agents": {
+          "fundamentalist#0": {
+            "mean_pnl": 11.75,
+            "ci95": [
+              -0.84,
+              24.2
+            ],
+            "sd_pnl": 64.52,
+            "sd_cash": 18.01,
+            "sd_payout": 68.09,
+            "trades_per_game": 6.27,
+            "decisions_per_game": 108.72,
+            "passes_per_game": 21.51,
+            "rejected_orders_per_game": 48.78
+          },
+          "fundamentalist#1": {
+            "mean_pnl": 1.09,
+            "ci95": [
+              -10.82,
+              13.42
+            ],
+            "sd_pnl": 62.27,
+            "sd_cash": 18.47,
+            "sd_payout": 67.5,
+            "trades_per_game": 6.41,
+            "decisions_per_game": 109.37,
+            "passes_per_game": 22.4,
+            "rejected_orders_per_game": 48.98
+          },
+          "bottom_feeder#2": {
+            "mean_pnl": -7.45,
+            "ci95": [
+              -15.55,
+              0.97
+            ],
+            "sd_pnl": 43.24,
+            "sd_cash": 9.09,
+            "sd_payout": 43.75,
+            "trades_per_game": 1.13,
+            "decisions_per_game": 112.68,
+            "passes_per_game": 63.49,
+            "rejected_orders_per_game": 35.01
+          },
+          "bottom_feeder#3": {
+            "mean_pnl": -5.39,
+            "ci95": [
+              -13.4,
+              3.55
+            ],
+            "sd_pnl": 43.77,
+            "sd_cash": 9.35,
+            "sd_payout": 43.9,
+            "trades_per_game": 1.11,
+            "decisions_per_game": 112.62,
+            "passes_per_game": 62.59,
+            "rejected_orders_per_game": 35.06
+          }
+        },
+        "market": {
+          "trades_per_game": 7.46,
+          "mean_mispricing_chips": 5.71
+        },
+        "backend": "none",
+        "games_failed": 0,
+        "mechanism": "B",
+        "speed": [
+          0.5,
+          0.3
+        ]
+      },
+      "tab2_4n": {
+        "games": 100,
+        "lineup": [
+          "noise",
+          "noise",
+          "noise",
+          "noise"
+        ],
+        "agents": {
+          "noise#0": {
+            "mean_pnl": -4.43,
+            "ci95": [
+              -13.8,
+              4.83
+            ],
+            "sd_pnl": 47.29,
+            "sd_cash": 0.0,
+            "sd_payout": 47.29,
+            "trades_per_game": 0.0,
+            "decisions_per_game": 121.69,
+            "passes_per_game": 121.69,
+            "rejected_orders_per_game": 0.0
+          },
+          "noise#1": {
+            "mean_pnl": -3.5,
+            "ci95": [
+              -12.83,
+              6.03
+            ],
+            "sd_pnl": 48.28,
+            "sd_cash": 0.0,
+            "sd_payout": 48.28,
+            "trades_per_game": 0.0,
+            "decisions_per_game": 122.39,
+            "passes_per_game": 122.39,
+            "rejected_orders_per_game": 0.0
+          },
+          "noise#2": {
+            "mean_pnl": 2.83,
+            "ci95": [
+              -6.53,
+              13.43
+            ],
+            "sd_pnl": 52.24,
+            "sd_cash": 0.0,
+            "sd_payout": 52.24,
+            "trades_per_game": 0.0,
+            "decisions_per_game": 120.79,
+            "passes_per_game": 120.79,
+            "rejected_orders_per_game": 0.0
+          },
+          "noise#3": {
+            "mean_pnl": 5.1,
+            "ci95": [
+              -4.6,
+              15.8
+            ],
+            "sd_pnl": 52.01,
+            "sd_cash": 0.0,
+            "sd_payout": 52.01,
+            "trades_per_game": 0.0,
+            "decisions_per_game": 119.82,
+            "passes_per_game": 119.82,
+            "rejected_orders_per_game": 0.0
+          }
+        },
+        "market": {
+          "trades_per_game": 0.0,
+          "mean_mispricing_chips": NaN
+        },
+        "backend": "none",
+        "games_failed": 0,
+        "mechanism": "B",
+        "speed": [
+          0.5,
+          0.3
+        ]
+      },
+      "tab2_4f": {
+        "games": 100,
+        "lineup": [
+          "fundamentalist",
+          "fundamentalist",
+          "fundamentalist",
+          "fundamentalist"
+        ],
+        "agents": {
+          "fundamentalist#0": {
+            "mean_pnl": 0.48,
+            "ci95": [
+              -9.7,
+              11.09
+            ],
+            "sd_pnl": 55.58,
+            "sd_cash": 24.88,
+            "sd_payout": 65.85,
+            "trades_per_game": 8.31,
+            "decisions_per_game": 109.36,
+            "passes_per_game": 25.68,
+            "rejected_orders_per_game": 37.34
+          },
+          "fundamentalist#1": {
+            "mean_pnl": -4.37,
+            "ci95": [
+              -14.75,
+              5.59
+            ],
+            "sd_pnl": 53.93,
+            "sd_cash": 23.02,
+            "sd_payout": 62.85,
+            "trades_per_game": 7.96,
+            "decisions_per_game": 109.97,
+            "passes_per_game": 27.49,
+            "rejected_orders_per_game": 37.84
+          },
+          "fundamentalist#2": {
+            "mean_pnl": 1.21,
+            "ci95": [
+              -9.78,
+              12.19
+            ],
+            "sd_pnl": 55.31,
+            "sd_cash": 20.29,
+            "sd_payout": 62.25,
+            "trades_per_game": 8.23,
+            "decisions_per_game": 108.11,
+            "passes_per_game": 26.88,
+            "rejected_orders_per_game": 36.26
+          },
+          "fundamentalist#3": {
+            "mean_pnl": 2.68,
+            "ci95": [
+              -9.13,
+              15.26
+            ],
+            "sd_pnl": 61.38,
+            "sd_cash": 23.02,
+            "sd_payout": 69.41,
+            "trades_per_game": 8.36,
+            "decisions_per_game": 107.81,
+            "passes_per_game": 27.53,
+            "rejected_orders_per_game": 36.65
+          }
+        },
+        "market": {
+          "trades_per_game": 16.43,
+          "mean_mispricing_chips": 5.64
+        },
+        "backend": "none",
+        "games_failed": 0,
+        "mechanism": "B",
+        "speed": [
+          0.5,
+          0.3
+        ]
+      },
+      "tab2_4b": {
+        "games": 100,
+        "lineup": [
+          "bottom_feeder",
+          "bottom_feeder",
+          "bottom_feeder",
+          "bottom_feeder"
+        ],
+        "agents": {
+          "bottom_feeder#0": {
+            "mean_pnl": -4.43,
+            "ci95": [
+              -13.8,
+              4.83
+            ],
+            "sd_pnl": 47.29,
+            "sd_cash": 0.0,
+            "sd_payout": 47.29,
+            "trades_per_game": 0.0,
+            "decisions_per_game": 121.69,
+            "passes_per_game": 121.69,
+            "rejected_orders_per_game": 0.0
+          },
+          "bottom_feeder#1": {
+            "mean_pnl": -3.5,
+            "ci95": [
+              -12.83,
+              6.03
+            ],
+            "sd_pnl": 48.28,
+            "sd_cash": 0.0,
+            "sd_payout": 48.28,
+            "trades_per_game": 0.0,
+            "decisions_per_game": 122.39,
+            "passes_per_game": 122.39,
+            "rejected_orders_per_game": 0.0
+          },
+          "bottom_feeder#2": {
+            "mean_pnl": 2.83,
+            "ci95": [
+              -6.53,
+              13.43
+            ],
+            "sd_pnl": 52.24,
+            "sd_cash": 0.0,
+            "sd_payout": 52.24,
+            "trades_per_game": 0.0,
+            "decisions_per_game": 120.79,
+            "passes_per_game": 120.79,
+            "rejected_orders_per_game": 0.0
+          },
+          "bottom_feeder#3": {
+            "mean_pnl": 5.1,
+            "ci95": [
+              -4.6,
+              15.8
+            ],
+            "sd_pnl": 52.01,
+            "sd_cash": 0.0,
+            "sd_payout": 52.01,
+            "trades_per_game": 0.0,
+            "decisions_per_game": 119.82,
+            "passes_per_game": 119.82,
+            "rejected_orders_per_game": 0.0
+          }
+        },
+        "market": {
+          "trades_per_game": 0.0,
+          "mean_mispricing_chips": NaN
+        },
+        "backend": "none",
+        "games_failed": 0,
+        "mechanism": "B",
+        "speed": [
+          0.5,
+          0.3
+        ]
+      }
+    },
+    "A-10k-own": {
+      "tab3_fast_3slow": {
+        "games": 100,
+        "lineup": [
+          "fundamentalist@1/0",
+          "fundamentalist@1/200",
+          "fundamentalist@1/200",
+          "fundamentalist@1/200"
+        ],
+        "agents": {
+          "fundamentalist@1/0": {
+            "mean_pnl": -8.86,
+            "ci95": [
+              -23.66,
+              6.16
+            ],
+            "sd_pnl": 75.34,
+            "sd_cash": 20.45,
+            "sd_payout": 79.22,
+            "trades_per_game": 12.93,
+            "decisions_per_game": 5779.16,
+            "passes_per_game": 1757.73,
+            "rejected_orders_per_game": 0.03
+          },
+          "fundamentalist@1/200#1": {
+            "mean_pnl": 4.88,
+            "ci95": [
+              -5.42,
+              15.5
+            ],
+            "sd_pnl": 53.43,
+            "sd_cash": 23.89,
+            "sd_payout": 61.4,
+            "trades_per_game": 7.59,
+            "decisions_per_game": 39.14,
+            "passes_per_game": 10.0,
+            "rejected_orders_per_game": 0.14
+          },
+          "fundamentalist@1/200#2": {
+            "mean_pnl": 2.85,
+            "ci95": [
+              -6.84,
+              13.01
+            ],
+            "sd_pnl": 50.65,
+            "sd_cash": 22.33,
+            "sd_payout": 55.03,
+            "trades_per_game": 7.77,
+            "decisions_per_game": 37.29,
+            "passes_per_game": 8.15,
+            "rejected_orders_per_game": 0.12
+          },
+          "fundamentalist@1/200#3": {
+            "mean_pnl": 1.13,
+            "ci95": [
+              -8.01,
+              11.57
+            ],
+            "sd_pnl": 50.19,
+            "sd_cash": 20.83,
+            "sd_payout": 54.24,
+            "trades_per_game": 7.53,
+            "decisions_per_game": 38.76,
+            "passes_per_game": 9.59,
+            "rejected_orders_per_game": 0.1
+          }
+        },
+        "market": {
+          "trades_per_game": 17.91,
+          "mean_mispricing_chips": 5.96
+        },
+        "backend": "none",
+        "games_failed": 0,
+        "mechanism": "A",
+        "speed": [
+          1.0,
+          0.0
+        ]
+      }
+    }
+  },
+  "table3": {
+    "slow0": {
+      "wealth": {
+        "mean": 13.74,
+        "ci95": [
+          -8.2,
+          36.89
+        ]
+      },
+      "cash": {
+        "mean": 47.04,
+        "ci95": [
+          39.84,
+          54.09
+        ]
+      },
+      "payout": {
+        "mean": -33.3,
+        "ci95": [
+          -56.3,
+          -8.9
+        ]
+      }
+    },
+    "slow1": {
+      "wealth": {
+        "mean": 11.71,
+        "ci95": [
+          -8.79,
+          33.29
+        ]
+      },
+      "cash": {
+        "mean": 50.61,
+        "ci95": [
+          43.51,
+          57.29
+        ]
+      },
+      "payout": {
+        "mean": -38.9,
+        "ci95": [
+          -60.2,
+          -16.2
+        ]
+      }
+    },
+    "slow2": {
+      "wealth": {
+        "mean": 9.99,
+        "ci95": [
+          -11.44,
+          32.03
+        ]
+      },
+      "cash": {
+        "mean": 47.79,
+        "ci95": [
+          41.21,
+          53.91
+        ]
+      },
+      "payout": {
+        "mean": -37.8,
+        "ci95": [
+          -59.9,
+          -15.0
+        ]
+      }
+    }
+  },
+  "noise": {
+    "A/fundamentalist": {
+      "sd_pnl": 85.1,
+      "mean_pnl": 38.9
+    },
+    "A/bottom_feeder": {
+      "sd_pnl": 51.5,
+      "mean_pnl": -2.8,
+      "sd_diff_vs_fundamentalist": 89.4,
+      "mde_40_games": 39.6
+    },
+    "A/chartist": {
+      "sd_pnl": 52.0,
+      "mean_pnl": -22.6,
+      "sd_diff_vs_fundamentalist": 91.0,
+      "mde_40_games": 40.3
+    },
+    "A/noise": {
+      "sd_pnl": 34.6,
+      "mean_pnl": -38.3,
+      "sd_diff_vs_fundamentalist": 96.6,
+      "mde_40_games": 42.8
+    },
+    "A/market_maker_gm": {
+      "sd_pnl": 31.8,
+      "mean_pnl": -10.7,
+      "sd_diff_vs_fundamentalist": 79.7,
+      "mde_40_games": 35.3
+    },
+    "A/market_maker_as": {
+      "sd_pnl": 47.9,
+      "mean_pnl": -10.6,
+      "sd_diff_vs_fundamentalist": 96.3,
+      "mde_40_games": 42.6
+    },
+    "B/fundamentalist": {
+      "sd_pnl": 70.3,
+      "mean_pnl": 24.7
+    },
+    "B/bottom_feeder": {
+      "sd_pnl": 47.1,
+      "mean_pnl": -3.8,
+      "sd_diff_vs_fundamentalist": 75.7,
+      "mde_40_games": 33.5
+    },
+    "B/chartist": {
+      "sd_pnl": 66.1,
+      "mean_pnl": -17.5,
+      "sd_diff_vs_fundamentalist": 81.5,
+      "mde_40_games": 36.1
+    },
+    "B/noise": {
+      "sd_pnl": 33.9,
+      "mean_pnl": -32.8,
+      "sd_diff_vs_fundamentalist": 72.0,
+      "mde_40_games": 31.9
+    },
+    "B/market_maker_gm": {
+      "sd_pnl": 38.7,
+      "mean_pnl": -3.6,
+      "sd_diff_vs_fundamentalist": 62.5,
+      "mde_40_games": 27.7
+    },
+    "B/market_maker_as": {
+      "sd_pnl": 76.5,
+      "mean_pnl": -28.0,
+      "sd_diff_vs_fundamentalist": 92.4,
+      "mde_40_games": 40.9
+    }
+  }
+}
