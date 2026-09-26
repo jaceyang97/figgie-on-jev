@@ -5,3 +5,6 @@ results/
 .venv/
 .env
 .env.local
+paper/**/*.aux
+paper/**/*.log
+paper/**/*.out

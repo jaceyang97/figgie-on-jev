@@ -22,6 +22,15 @@
 \author{Jace Yang\\\small\url{https://github.com/jaceyang97/figgie-on-jev}}
 \date{26 September 2026}
 
+\makeatletter\newcommand{\inputtab}[1]{\@@input #1 }\makeatother
+\newcommand{\STAGETWOREQUESTS}{112,032}
+\newcommand{\STAGETWOCOST}{28.50}
+\newcommand{\STAGETWOGAMES}{38}
+\newcommand{\STAGETWOABSTRACT}{In full games, Jev earns less than its twin: on average $-34$ chips per game in A and
+$-58$ in B (\STAGETWOGAMES{} paired games per condition). No condition is clearly better than its twin; 8 of 13
+conditions in A and 2 of 13 in B are not clearly different from it. The wording does not change profit, and more
+similar decisions do not give more similar profit.}
+
 \begin{document}
 \maketitle
 
@@ -56,9 +65,21 @@ literature. Each rule-based trader is a \emph{twin}: the reference that Jev must
 We have four research questions. We wrote them, and our predictions, before we collected the data.
 \begin{itemize}
 \item \textbf{RQ1, belief.} How well does Jev estimate the goal suit?
+  H1a: with a full, factual description of the game, Jev's estimates are not worse than the card-counting calculation.
+  H1b: if we give Jev the result of the card-counting calculation, Jev becomes too confident.
+  H1c: Jev's estimates become more correct later in the game.
 \item \textbf{RQ2, market rules.} How do rule sets A and B change the results?
+  H2a (replication): in A, the rule-based traders rank as in the paper (fundamentalist, bottom-feeder, noise trader).
+  H2b: in B, the paper's traders trade less and the fundamentalist has a smaller advantage.
+  H2c: the profit difference between Jev and its twin is different in A and B (no direction predicted).
 \item \textbf{RQ3, persona wording.} Can a text description control Jev's actions? Which type of description works better?
+  H3a: Jev obeys simple yes-or-no rules (for example ``never take'') with both wordings.
+  H3b: Jev does not do calculations that a description tells it to do.
+  H3c: a behaviour description can change Jev's actions in ways that it does not state (Jev reads the words literally).
+  H3d: the effect of the wording is the same in A and B.
 \item \textbf{RQ4, profit.} Does Jev make more or less money than its twin in the same seat?
+  H4a: Jev without a persona makes less than the fundamentalist but more than the noise trader.
+  H4b: the more similar Jev's decisions are to a rule-based trader, the more similar its profit is to that trader's.
 \end{itemize}
 We fixed three primary measurements in advance: the change in similarity to the twin that each persona causes (decision
 layer), the difference in log loss between Jev and card counting (belief), and the mean profit difference between Jev
@@ -252,7 +273,7 @@ advantage (112 vs 222 chips), as predicted (H2b).
  & \multicolumn{3}{c}{95\% interval, slow minus fast (chips)} \\
 Competitor & Wealth & Cash & Payout \\
 \midrule
-\input{tables/table3.tex}
+\inputtab{tables/table3.tex}
 \midrule
 Paper, slow0 & [15.7, 38.4] & [58.1, 65.8] & [$-$46.8, $-$23.0] \\
 \bottomrule
@@ -336,10 +357,16 @@ cancel, and for Jev seats each decision with its probability and goal-suit belie
 game, seat and decision number.
 \begin{verbatim}
 python -m figgie.experiments.replicate --out results/final/stage0
-python -m figgie.experiments.stage1 moments --out results/final/stage1/moments.jsonl
-python -m figgie.experiments.stage1 ask --study 1a --backend jev --moments ... --out results/final/stage1/1a.jsonl
+S1=results/final/stage1
+python -m figgie.experiments.stage1 moments --out $S1/moments.jsonl
+for s in 1a 1b 1c; do
+  python -m figgie.experiments.stage1 ask --study $s --backend jev \
+      --moments $S1/moments.jsonl --out $S1/$s.jsonl
+done
+python -m figgie.experiments.stage1 analyse --moments $S1/moments.jsonl \
+    --rows $S1/1a.jsonl $S1/1b.jsonl $S1/1c.jsonl --out $S1/report.json
 python -m figgie.experiments.sweep --backend jev --games 40 --out results/final/stage2
-python -m figgie.experiments.paired --run results/final/stage2
+python -m figgie.experiments.paired --run results/final/stage2 --stage1 $S1/report.json
 python paper/final/make_figures.py
 \end{verbatim}
 
@@ -373,7 +400,7 @@ Paper 31122, 2023.
 \toprule
 Setting & Line-up (4 of one type) & SD wealth & SD cash & SD payout & Trades per game \\
 \midrule
-\input{tables/table2.tex}
+\inputtab{tables/table2.tex}
 \midrule
 Paper & Noise & 201.0 & 188.5 & 61.4 & -- \\
 Paper & Fundamentalist & 61.8 & 33.1 & 68.6 & -- \\
@@ -389,7 +416,7 @@ Paper & Bottom-feeder & 48.6 & 0 & 48.6 & -- \\
 \toprule
 Rule set & Type in the tested seat & Mean profit & SD profit & SD of difference to fundamentalist \\
 \midrule
-\input{tables/noise.tex}
+\inputtab{tables/noise.tex}
 \bottomrule
 \end{tabular}
 \caption{Noise check: the stage~2 line-up with rule-based traders only, equal speed, 100 games.}
@@ -403,7 +430,7 @@ Rule set & Type in the tested seat & Mean profit & SD profit & SD of difference 
  & & \multicolumn{3}{c}{Jev} & \multicolumn{2}{c}{Card counting} \\
 Rule set & State & Log loss [95\%] & Brier & Top-1 & Log loss & Top-1 \\
 \midrule
-\input{tables/stage1b.tex}
+\inputtab{tables/stage1b.tex}
 \bottomrule
 \end{tabular}
 \caption{Stage 1b: goal-suit belief, 100 moments per rule set. Uniform guess: log loss 1.386, Brier 0.75, top-1 0.25.}
@@ -417,7 +444,7 @@ Rule set & State & Log loss [95\%] & Brier & Top-1 & Log loss & Top-1 \\
  & & \multicolumn{3}{c}{Overlap with twin} & \multicolumn{2}{c}{Change vs neutral} \\
 Rule set & Type & Algorithm & Behaviour & None & Algorithm & Behaviour \\
 \midrule
-\input{tables/stage1a.tex}
+\inputtab{tables/stage1a.tex}
 \bottomrule
 \end{tabular}
 \caption{Stage 1a: similarity to the twin, 100 moments per cell. $^*$: Holm-corrected $p < 0.05$ (paired bootstrap

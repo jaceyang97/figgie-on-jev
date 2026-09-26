@@ -14,6 +14,10 @@ the seeds):
   - the regression d = b0 + bA*[A] + bD*[behaviour wording] + sum_k g_k*[type k]
     + bAD*[A]*[behaviour wording], and the same with the number of goal cards in
     the starting hand as a covariate (secondary)
+  - H4a: neutral Jev against the fundamentalist twin and against the noise-trader
+    twin (the neutral and noise conditions share games and seats)
+  - H4b (with --stage1): across the 24 persona cells, the rank correlation of the
+    stage 1a overlap with the stage 2 mean d and with |mean d| (permutation p value)
   - secondary measures per condition, for the Jev arm and the twin arm: trades
     per game, the tested seat's trades and rejected orders, mispricing (goal
     card 10, other cards 0), and Jev's goal-suit belief (log loss and Brier
@@ -234,16 +238,91 @@ def analyse(rows) -> dict:
     return report
 
 
+def h4a(rows) -> dict:
+    """Neutral Jev minus the fundamentalist twin and minus the noise-trader twin, same game and seat."""
+    out = {}
+    for mech in sorted({r["mechanism"] for r in rows}):
+        neutral = {r["game"]: r for r in rows if r["mechanism"] == mech and r["condition"] == "neutral"}
+        noise = {r["game"]: r for r in rows if r["mechanism"] == mech and r["condition"] == "noise"}
+        joined = []
+        for g, r in neutral.items():
+            if g in noise:
+                if noise[g]["seat"] != r["seat"]:
+                    raise ValueError(f"{mech} game {g}: neutral and noise arms use different seats")
+                joined.append({"game": g, "d_fund": r["d"], "d_noise": r["pnl_jev"] - noise[g]["pnl_twin"]})
+        if joined:
+            out[mech] = {"games": len(joined),
+                         "minus_fundamentalist": fmt(*cluster_boot(joined, lambda rs: mean([r["d_fund"] for r in rs]))),
+                         "minus_noise_trader": fmt(*cluster_boot(joined, lambda rs: mean([r["d_noise"] for r in rs])))}
+    return out
+
+
+def ranks(xs: list[float]) -> list[float]:
+    order = sorted(range(len(xs)), key=lambda i: xs[i])
+    r = [0.0] * len(xs)
+    i = 0
+    while i < len(order):
+        j = i
+        while j + 1 < len(order) and xs[order[j + 1]] == xs[order[i]]:
+            j += 1
+        for k in range(i, j + 1):
+            r[order[k]] = (i + j) / 2
+        i = j + 1
+    return r
+
+
+def pearson(x: list[float], y: list[float]) -> float:
+    mx, my = mean(x), mean(y)
+    sxy = sum((a - mx) * (b - my) for a, b in zip(x, y))
+    return sxy / math.sqrt(sum((a - mx) ** 2 for a in x) * sum((b - my) ** 2 for b in y))
+
+
+def spearman(x, y, n_perm: int = 20000, seed: int = 0) -> dict:
+    rx, ry = ranks(x), ranks(y)
+    rho = pearson(rx, ry)
+    rng = random.Random(seed)
+    ry2 = list(ry)
+    hits = 0
+    for _ in range(n_perm):
+        rng.shuffle(ry2)
+        hits += abs(pearson(rx, ry2)) >= abs(rho) - 1e-12
+    return {"rho": round(rho, 3), "p_two_sided": round((hits + 1) / (n_perm + 1), 4), "cells": len(x)}
+
+
+def h4b(report: dict, stage1: dict) -> dict:
+    """Stage 1a overlap (decision similarity) against stage 2 mean d (profit similarity), one point per cell."""
+    cells = []
+    for key, v in report["conditions"].items():
+        mech, cond = key.split("/")
+        if cond == "neutral":
+            continue
+        typ, wording = (cond[:-5], "behaviour") if cond.endswith("-desc") else (cond, "algorithm")
+        s1 = stage1["1a"].get(f"{mech}/{typ}/{wording}")
+        if s1:
+            cells.append({"cell": key, "overlap": s1["overlap"]["mean"], "mean_d": v["mean_d"]["estimate"]})
+    if len(cells) < 4:
+        return {}
+    x = [c["overlap"] for c in cells]
+    return {"overlap_vs_mean_d": spearman(x, [c["mean_d"] for c in cells]),
+            "overlap_vs_abs_mean_d": spearman(x, [abs(c["mean_d"]) for c in cells]),
+            "cells": cells}
+
+
 def main(argv=None):
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--run", required=True, help="the sweep output directory")
     ap.add_argument("--out", default=None, help="write the report here as JSON (default: <run>/paired.json)")
     ap.add_argument("--pairs-csv", default=None, help="also write one row per pair (default: <run>/pairs.csv)")
+    ap.add_argument("--stage1", default=None, help="the stage 1 report.json, for H4b")
     args = ap.parse_args(argv)
     rows = pairs(args.run)
     if not rows:
         raise SystemExit("no paired games found")
     report = analyse(rows)
+    report["h4a"] = h4a(rows)
+    if args.stage1:
+        with open(args.stage1) as f:
+            report["h4b"] = h4b(report, json.load(f))
     out = args.out or os.path.join(args.run, "paired.json")
     with open(out, "w") as f:
         json.dump(report, f, indent=2)

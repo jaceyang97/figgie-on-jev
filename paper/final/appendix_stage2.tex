@@ -1,0 +1,18 @@
+\begin{table}[h]
+\centering\small
+\begin{tabular}{llrrrrrrrr}
+\toprule
+ & & \multicolumn{2}{c}{Seat trades} & \multicolumn{2}{c}{Passes} & \multicolumn{2}{c}{Mispricing} &
+ \multicolumn{2}{c}{Belief log loss} \\
+\cmidrule(lr){3-4}\cmidrule(lr){5-6}\cmidrule(lr){7-8}\cmidrule(lr){9-10}
+Rule set & Condition & Jev & Twin & Jev & Twin & Jev game & Twin game & Jev & Card c. \\
+\midrule
+\inputtab{tables/stage2_secondary.tex}
+\bottomrule
+\end{tabular}
+\caption{Stage 2, secondary measures (means per game, \STAGETWOGAMES{} games per cell). Seat trades: trades of the
+tested seat. Passes: decisions with no order. Mispricing: mean $|\text{price} - \text{value}|$ over all trades of the
+game, with value 10 for a goal card and 0 for other cards. Belief: mean log loss of Jev's goal-suit belief over its
+decisions, and of card counting at the same moments (uniform guess: 1.386).}
+\label{tab:s2sec}
+\end{table}

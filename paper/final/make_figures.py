@@ -13,6 +13,7 @@ import csv
 import json
 import math
 import os
+import re
 import sys
 from collections import defaultdict
 
@@ -287,7 +288,11 @@ def stage2():
                                       for c in conds], rotation=35, ha="right")
     ax.set_ylabel("Jev profit minus twin profit\n(chips per game)")
     ax.grid(axis="y", lw=0.3, alpha=0.5)
-    ax.legend(frameon=False, loc="lower left", ncol=2)
+    from matplotlib.lines import Line2D
+    handles = [Line2D([], [], color=C[m], marker="o", ls="", ms=3.2, label=f"rule set {m}") for m in "AB"]
+    handles += [Line2D([], [], color="0.3", marker="o", ls="", ms=3.2, label="algorithm wording"),
+                Line2D([], [], color="0.3", marker="s", mfc="white", ls="", ms=3.2, label="behaviour wording")]
+    ax.legend(handles=handles, frameon=False, loc="lower right", ncol=2)
     save(fig, "stage2_paired.pdf")
 
     # Jev's belief over game time, all conditions pooled, vs card counting at the same moments
@@ -331,6 +336,7 @@ def stage2():
             cells += [f"{v['mean_pnl_jev']:.0f}", f"{v['mean_pnl_twin']:.0f}",
                       f"{d['estimate']:+.0f} [{d['ci95'][0]:.0f}, {d['ci95'][1]:.0f}]{sig}"]
         name = SHORT[c.removesuffix("-desc")] + (" (behaviour)" if c.endswith("-desc") else (" (algorithm)" if c != "neutral" else ""))
+        cells = [re.sub(r"(?<![\w$])-(?=\d)", "$-$", c) for c in cells]
         lines.append(f"{name} & {' & '.join(cells)} \\\\")
     open(os.path.join(TAB, "stage2.tex"), "w").write("\n".join(lines) + "\n")
 

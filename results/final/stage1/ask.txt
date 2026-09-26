@@ -1,0 +1,6 @@
+1a: 3600 requests to make (0 already done)
+calls 3600, estimated cost US$0.781
+1b: 1000 requests to make (0 already done)
+calls 1000, estimated cost US$0.220
+1c: 100 requests to make (0 already done)
+calls 100, estimated cost US$0.021

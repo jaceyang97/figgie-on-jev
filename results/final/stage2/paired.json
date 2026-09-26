@@ -1,0 +1,1274 @@
+{
+  "n_pairs": 988,
+  "conditions": {
+    "A/bottom_feeder": {
+      "games": 38,
+      "mean_d": {
+        "estimate": -42.74,
+        "ci95": [
+          -64.5,
+          -19.97
+        ]
+      },
+      "mean_pnl_jev": -52.11,
+      "mean_pnl_twin": -9.37,
+      "sd_d": 71.63,
+      "jev": {
+        "trades_per_game": 36.55,
+        "seat_trades": 18.97,
+        "seat_rejected": 0.13,
+        "seat_passes": 73.76,
+        "mispricing": 6.52
+      },
+      "twin": {
+        "trades_per_game": 23.71,
+        "seat_trades": 6.16,
+        "seat_rejected": 0.0,
+        "seat_passes": 42.92,
+        "mispricing": 6.011
+      },
+      "jev_belief": {
+        "logloss": 1.5777,
+        "brier": 0.8363,
+        "logloss_cc": 1.2856,
+        "brier_cc": 0.6963,
+        "logloss_uniform": 1.3863,
+        "brier_uniform": 0.75
+      }
+    },
+    "A/bottom_feeder-desc": {
+      "games": 38,
+      "mean_d": {
+        "estimate": 10.37,
+        "ci95": [
+          -13.74,
+          34.5
+        ]
+      },
+      "mean_pnl_jev": 1.0,
+      "mean_pnl_twin": -9.37,
+      "sd_d": 77.93,
+      "jev": {
+        "trades_per_game": 37.76,
+        "seat_trades": 22.95,
+        "seat_rejected": 0.21,
+        "seat_passes": 46.71,
+        "mispricing": 6.59
+      },
+      "twin": {
+        "trades_per_game": 23.71,
+        "seat_trades": 6.16,
+        "seat_rejected": 0.0,
+        "seat_passes": 42.92,
+        "mispricing": 6.011
+      },
+      "jev_belief": {
+        "logloss": 1.477,
+        "brier": 0.7934,
+        "logloss_cc": 1.3384,
+        "brier_cc": 0.7176,
+        "logloss_uniform": 1.3863,
+        "brier_uniform": 0.75
+      }
+    },
+    "A/chartist": {
+      "games": 38,
+      "mean_d": {
+        "estimate": -10.97,
+        "ci95": [
+          -33.84,
+          11.89
+        ]
+      },
+      "mean_pnl_jev": -41.13,
+      "mean_pnl_twin": -30.16,
+      "sd_d": 74.78,
+      "jev": {
+        "trades_per_game": 37.53,
+        "seat_trades": 19.61,
+        "seat_rejected": 0.08,
+        "seat_passes": 56.87,
+        "mispricing": 6.654
+      },
+      "twin": {
+        "trades_per_game": 26.5,
+        "seat_trades": 5.95,
+        "seat_rejected": 0.0,
+        "seat_passes": 80.87,
+        "mispricing": 6.288
+      },
+      "jev_belief": {
+        "logloss": 1.5356,
+        "brier": 0.8131,
+        "logloss_cc": 1.3286,
+        "brier_cc": 0.7227,
+        "logloss_uniform": 1.3863,
+        "brier_uniform": 0.75
+      }
+    },
+    "A/chartist-desc": {
+      "games": 38,
+      "mean_d": {
+        "estimate": -29.63,
+        "ci95": [
+          -54.97,
+          -2.79
+        ]
+      },
+      "mean_pnl_jev": -59.79,
+      "mean_pnl_twin": -30.16,
+      "sd_d": 85.72,
+      "jev": {
+        "trades_per_game": 39.63,
+        "seat_trades": 24.66,
+        "seat_rejected": 0.32,
+        "seat_passes": 49.32,
+        "mispricing": 9.557
+      },
+      "twin": {
+        "trades_per_game": 26.5,
+        "seat_trades": 5.95,
+        "seat_rejected": 0.0,
+        "seat_passes": 80.87,
+        "mispricing": 6.288
+      },
+      "jev_belief": {
+        "logloss": 1.6373,
+        "brier": 0.8586,
+        "logloss_cc": 1.4109,
+        "brier_cc": 0.7438,
+        "logloss_uniform": 1.3863,
+        "brier_uniform": 0.75
+      }
+    },
+    "A/fundamentalist": {
+      "games": 38,
+      "mean_d": {
+        "estimate": -105.08,
+        "ci95": [
+          -148.66,
+          -61.97
+        ]
+      },
+      "mean_pnl_jev": -77.37,
+      "mean_pnl_twin": 27.71,
+      "sd_d": 136.96,
+      "jev": {
+        "trades_per_game": 45.68,
+        "seat_trades": 33.42,
+        "seat_rejected": 0.84,
+        "seat_passes": 27.37,
+        "mispricing": 9.5
+      },
+      "twin": {
+        "trades_per_game": 31.89,
+        "seat_trades": 16.11,
+        "seat_rejected": 0.21,
+        "seat_passes": 28.13,
+        "mispricing": 5.994
+      },
+      "jev_belief": {
+        "logloss": 1.7014,
+        "brier": 0.8744,
+        "logloss_cc": 1.1988,
+        "brier_cc": 0.6665,
+        "logloss_uniform": 1.3863,
+        "brier_uniform": 0.75
+      }
+    },
+    "A/fundamentalist-desc": {
+      "games": 38,
+      "mean_d": {
+        "estimate": -90.18,
+        "ci95": [
+          -125.53,
+          -55.0
+        ]
+      },
+      "mean_pnl_jev": -62.47,
+      "mean_pnl_twin": 27.71,
+      "sd_d": 110.88,
+      "jev": {
+        "trades_per_game": 46.24,
+        "seat_trades": 29.87,
+        "seat_rejected": 0.61,
+        "seat_passes": 48.5,
+        "mispricing": 7.25
+      },
+      "twin": {
+        "trades_per_game": 31.89,
+        "seat_trades": 16.11,
+        "seat_rejected": 0.21,
+        "seat_passes": 28.13,
+        "mispricing": 5.994
+      },
+      "jev_belief": {
+        "logloss": 1.5806,
+        "brier": 0.8377,
+        "logloss_cc": 1.282,
+        "brier_cc": 0.6978,
+        "logloss_uniform": 1.3863,
+        "brier_uniform": 0.75
+      }
+    },
+    "A/market_maker_as": {
+      "games": 38,
+      "mean_d": {
+        "estimate": 2.71,
+        "ci95": [
+          -15.37,
+          21.87
+        ]
+      },
+      "mean_pnl_jev": -7.29,
+      "mean_pnl_twin": -10.0,
+      "sd_d": 59.26,
+      "jev": {
+        "trades_per_game": 33.79,
+        "seat_trades": 20.0,
+        "seat_rejected": 0.11,
+        "seat_passes": 36.87,
+        "mispricing": 6.677
+      },
+      "twin": {
+        "trades_per_game": 26.68,
+        "seat_trades": 9.76,
+        "seat_rejected": 0.0,
+        "seat_passes": 31.79,
+        "mispricing": 6.018
+      },
+      "jev_belief": {
+        "logloss": 1.5067,
+        "brier": 0.8011,
+        "logloss_cc": 1.2506,
+        "brier_cc": 0.6784,
+        "logloss_uniform": 1.3863,
+        "brier_uniform": 0.75
+      }
+    },
+    "A/market_maker_as-desc": {
+      "games": 38,
+      "mean_d": {
+        "estimate": 7.74,
+        "ci95": [
+          -12.05,
+          27.18
+        ]
+      },
+      "mean_pnl_jev": -2.26,
+      "mean_pnl_twin": -10.0,
+      "sd_d": 60.79,
+      "jev": {
+        "trades_per_game": 37.03,
+        "seat_trades": 21.84,
+        "seat_rejected": 0.03,
+        "seat_passes": 41.55,
+        "mispricing": 6.038
+      },
+      "twin": {
+        "trades_per_game": 26.68,
+        "seat_trades": 9.76,
+        "seat_rejected": 0.0,
+        "seat_passes": 31.79,
+        "mispricing": 6.018
+      },
+      "jev_belief": {
+        "logloss": 1.4946,
+        "brier": 0.794,
+        "logloss_cc": 1.1997,
+        "brier_cc": 0.6503,
+        "logloss_uniform": 1.3863,
+        "brier_uniform": 0.75
+      }
+    },
+    "A/market_maker_gm": {
+      "games": 38,
+      "mean_d": {
+        "estimate": -7.61,
+        "ci95": [
+          -21.39,
+          6.97
+        ]
+      },
+      "mean_pnl_jev": -14.11,
+      "mean_pnl_twin": -6.5,
+      "sd_d": 45.73,
+      "jev": {
+        "trades_per_game": 35.71,
+        "seat_trades": 20.16,
+        "seat_rejected": 0.05,
+        "seat_passes": 42.26,
+        "mispricing": 5.74
+      },
+      "twin": {
+        "trades_per_game": 27.03,
+        "seat_trades": 8.16,
+        "seat_rejected": 0.0,
+        "seat_passes": 66.32,
+        "mispricing": 5.182
+      },
+      "jev_belief": {
+        "logloss": 1.5038,
+        "brier": 0.8007,
+        "logloss_cc": 1.2301,
+        "brier_cc": 0.6803,
+        "logloss_uniform": 1.3863,
+        "brier_uniform": 0.75
+      }
+    },
+    "A/market_maker_gm-desc": {
+      "games": 38,
+      "mean_d": {
+        "estimate": -14.34,
+        "ci95": [
+          -37.89,
+          6.55
+        ]
+      },
+      "mean_pnl_jev": -20.84,
+      "mean_pnl_twin": -6.5,
+      "sd_d": 71.17,
+      "jev": {
+        "trades_per_game": 37.45,
+        "seat_trades": 22.82,
+        "seat_rejected": 0.08,
+        "seat_passes": 40.92,
+        "mispricing": 6.04
+      },
+      "twin": {
+        "trades_per_game": 27.03,
+        "seat_trades": 8.16,
+        "seat_rejected": 0.0,
+        "seat_passes": 66.32,
+        "mispricing": 5.182
+      },
+      "jev_belief": {
+        "logloss": 1.5263,
+        "brier": 0.8036,
+        "logloss_cc": 1.2286,
+        "brier_cc": 0.6643,
+        "logloss_uniform": 1.3863,
+        "brier_uniform": 0.75
+      }
+    },
+    "A/neutral": {
+      "games": 38,
+      "mean_d": {
+        "estimate": -121.29,
+        "ci95": [
+          -158.11,
+          -84.87
+        ]
+      },
+      "mean_pnl_jev": -93.58,
+      "mean_pnl_twin": 27.71,
+      "sd_d": 115.63,
+      "jev": {
+        "trades_per_game": 51.53,
+        "seat_trades": 34.87,
+        "seat_rejected": 0.5,
+        "seat_passes": 40.58,
+        "mispricing": 8.152
+      },
+      "twin": {
+        "trades_per_game": 31.89,
+        "seat_trades": 16.11,
+        "seat_rejected": 0.21,
+        "seat_passes": 28.13,
+        "mispricing": 5.994
+      },
+      "jev_belief": {
+        "logloss": 1.5888,
+        "brier": 0.834,
+        "logloss_cc": 1.1127,
+        "brier_cc": 0.5873,
+        "logloss_uniform": 1.3863,
+        "brier_uniform": 0.75
+      }
+    },
+    "A/noise": {
+      "games": 38,
+      "mean_d": {
+        "estimate": -15.26,
+        "ci95": [
+          -45.82,
+          14.87
+        ]
+      },
+      "mean_pnl_jev": -46.97,
+      "mean_pnl_twin": -31.71,
+      "sd_d": 95.84,
+      "jev": {
+        "trades_per_game": 44.68,
+        "seat_trades": 32.79,
+        "seat_rejected": 0.58,
+        "seat_passes": 24.92,
+        "mispricing": 7.503
+      },
+      "twin": {
+        "trades_per_game": 42.08,
+        "seat_trades": 24.29,
+        "seat_rejected": 0.13,
+        "seat_passes": 46.18,
+        "mispricing": 5.904
+      },
+      "jev_belief": {
+        "logloss": 1.475,
+        "brier": 0.7894,
+        "logloss_cc": 1.3821,
+        "brier_cc": 0.7539,
+        "logloss_uniform": 1.3863,
+        "brier_uniform": 0.75
+      }
+    },
+    "A/noise-desc": {
+      "games": 38,
+      "mean_d": {
+        "estimate": -27.68,
+        "ci95": [
+          -62.89,
+          7.74
+        ]
+      },
+      "mean_pnl_jev": -59.39,
+      "mean_pnl_twin": -31.71,
+      "sd_d": 112.08,
+      "jev": {
+        "trades_per_game": 46.13,
+        "seat_trades": 37.03,
+        "seat_rejected": 0.61,
+        "seat_passes": 19.68,
+        "mispricing": 8.07
+      },
+      "twin": {
+        "trades_per_game": 42.08,
+        "seat_trades": 24.29,
+        "seat_rejected": 0.13,
+        "seat_passes": 46.18,
+        "mispricing": 5.904
+      },
+      "jev_belief": {
+        "logloss": 1.566,
+        "brier": 0.8332,
+        "logloss_cc": 1.2839,
+        "brier_cc": 0.6844,
+        "logloss_uniform": 1.3863,
+        "brier_uniform": 0.75
+      }
+    },
+    "B/bottom_feeder": {
+      "games": 38,
+      "mean_d": {
+        "estimate": -56.01,
+        "ci95": [
+          -85.57,
+          -27.38
+        ]
+      },
+      "mean_pnl_jev": -67.03,
+      "mean_pnl_twin": -11.02,
+      "sd_d": 93.56,
+      "jev": {
+        "trades_per_game": 21.26,
+        "seat_trades": 11.58,
+        "seat_rejected": 0.45,
+        "seat_passes": 83.39,
+        "mispricing": 9.137
+      },
+      "twin": {
+        "trades_per_game": 14.24,
+        "seat_trades": 3.16,
+        "seat_rejected": 32.47,
+        "seat_passes": 54.37,
+        "mispricing": 6.225
+      },
+      "jev_belief": {
+        "logloss": 1.5905,
+        "brier": 0.8335,
+        "logloss_cc": 1.285,
+        "brier_cc": 0.7048,
+        "logloss_uniform": 1.3863,
+        "brier_uniform": 0.75
+      }
+    },
+    "B/bottom_feeder-desc": {
+      "games": 38,
+      "mean_d": {
+        "estimate": -47.51,
+        "ci95": [
+          -74.61,
+          -23.33
+        ]
+      },
+      "mean_pnl_jev": -58.53,
+      "mean_pnl_twin": -11.02,
+      "sd_d": 83.58,
+      "jev": {
+        "trades_per_game": 24.11,
+        "seat_trades": 16.53,
+        "seat_rejected": 0.68,
+        "seat_passes": 49.55,
+        "mispricing": 8.264
+      },
+      "twin": {
+        "trades_per_game": 14.24,
+        "seat_trades": 3.16,
+        "seat_rejected": 32.47,
+        "seat_passes": 54.37,
+        "mispricing": 6.225
+      },
+      "jev_belief": {
+        "logloss": 1.6421,
+        "brier": 0.8574,
+        "logloss_cc": 1.1873,
+        "brier_cc": 0.649,
+        "logloss_uniform": 1.3863,
+        "brier_uniform": 0.75
+      }
+    },
+    "B/chartist": {
+      "games": 38,
+      "mean_d": {
+        "estimate": -48.04,
+        "ci95": [
+          -77.44,
+          -17.93
+        ]
+      },
+      "mean_pnl_jev": -72.82,
+      "mean_pnl_twin": -24.78,
+      "sd_d": 97.62,
+      "jev": {
+        "trades_per_game": 22.95,
+        "seat_trades": 12.89,
+        "seat_rejected": 0.29,
+        "seat_passes": 73.24,
+        "mispricing": 9.055
+      },
+      "twin": {
+        "trades_per_game": 14.63,
+        "seat_trades": 1.92,
+        "seat_rejected": 9.05,
+        "seat_passes": 101.29,
+        "mispricing": 6.89
+      },
+      "jev_belief": {
+        "logloss": 1.5519,
+        "brier": 0.8172,
+        "logloss_cc": 1.283,
+        "brier_cc": 0.6909,
+        "logloss_uniform": 1.3863,
+        "brier_uniform": 0.75
+      }
+    },
+    "B/chartist-desc": {
+      "games": 38,
+      "mean_d": {
+        "estimate": -60.89,
+        "ci95": [
+          -94.69,
+          -24.84
+        ]
+      },
+      "mean_pnl_jev": -85.68,
+      "mean_pnl_twin": -24.78,
+      "sd_d": 111.75,
+      "jev": {
+        "trades_per_game": 25.66,
+        "seat_trades": 17.42,
+        "seat_rejected": 0.5,
+        "seat_passes": 56.84,
+        "mispricing": 12.511
+      },
+      "twin": {
+        "trades_per_game": 14.63,
+        "seat_trades": 1.92,
+        "seat_rejected": 9.05,
+        "seat_passes": 101.29,
+        "mispricing": 6.89
+      },
+      "jev_belief": {
+        "logloss": 1.7029,
+        "brier": 0.868,
+        "logloss_cc": 1.4189,
+        "brier_cc": 0.7735,
+        "logloss_uniform": 1.3863,
+        "brier_uniform": 0.75
+      }
+    },
+    "B/fundamentalist": {
+      "games": 38,
+      "mean_d": {
+        "estimate": -104.62,
+        "ci95": [
+          -149.27,
+          -58.78
+        ]
+      },
+      "mean_pnl_jev": -90.25,
+      "mean_pnl_twin": 14.37,
+      "sd_d": 142.8,
+      "jev": {
+        "trades_per_game": 30.76,
+        "seat_trades": 24.89,
+        "seat_rejected": 1.0,
+        "seat_passes": 23.16,
+        "mispricing": 10.651
+      },
+      "twin": {
+        "trades_per_game": 19.82,
+        "seat_trades": 10.97,
+        "seat_rejected": 30.08,
+        "seat_passes": 20.08,
+        "mispricing": 5.757
+      },
+      "jev_belief": {
+        "logloss": 1.6355,
+        "brier": 0.8517,
+        "logloss_cc": 1.2673,
+        "brier_cc": 0.6956,
+        "logloss_uniform": 1.3863,
+        "brier_uniform": 0.75
+      }
+    },
+    "B/fundamentalist-desc": {
+      "games": 38,
+      "mean_d": {
+        "estimate": -83.99,
+        "ci95": [
+          -121.39,
+          -46.13
+        ]
+      },
+      "mean_pnl_jev": -69.62,
+      "mean_pnl_twin": 14.37,
+      "sd_d": 119.56,
+      "jev": {
+        "trades_per_game": 27.39,
+        "seat_trades": 20.61,
+        "seat_rejected": 0.53,
+        "seat_passes": 38.5,
+        "mispricing": 9.748
+      },
+      "twin": {
+        "trades_per_game": 19.82,
+        "seat_trades": 10.97,
+        "seat_rejected": 30.08,
+        "seat_passes": 20.08,
+        "mispricing": 5.757
+      },
+      "jev_belief": {
+        "logloss": 1.5774,
+        "brier": 0.8241,
+        "logloss_cc": 1.3142,
+        "brier_cc": 0.7047,
+        "logloss_uniform": 1.3863,
+        "brier_uniform": 0.75
+      }
+    },
+    "B/market_maker_as": {
+      "games": 38,
+      "mean_d": {
+        "estimate": -7.76,
+        "ci95": [
+          -39.82,
+          22.68
+        ]
+      },
+      "mean_pnl_jev": -43.87,
+      "mean_pnl_twin": -36.11,
+      "sd_d": 101.91,
+      "jev": {
+        "trades_per_game": 20.71,
+        "seat_trades": 13.5,
+        "seat_rejected": 0.42,
+        "seat_passes": 33.71,
+        "mispricing": 7.748
+      },
+      "twin": {
+        "trades_per_game": 18.79,
+        "seat_trades": 10.95,
+        "seat_rejected": 0.47,
+        "seat_passes": 38.87,
+        "mispricing": 6.75
+      },
+      "jev_belief": {
+        "logloss": 1.6293,
+        "brier": 0.8518,
+        "logloss_cc": 1.2635,
+        "brier_cc": 0.693,
+        "logloss_uniform": 1.3863,
+        "brier_uniform": 0.75
+      }
+    },
+    "B/market_maker_as-desc": {
+      "games": 38,
+      "mean_d": {
+        "estimate": -3.47,
+        "ci95": [
+          -35.53,
+          24.84
+        ]
+      },
+      "mean_pnl_jev": -39.58,
+      "mean_pnl_twin": -36.11,
+      "sd_d": 94.51,
+      "jev": {
+        "trades_per_game": 25.34,
+        "seat_trades": 18.42,
+        "seat_rejected": 0.55,
+        "seat_passes": 24.45,
+        "mispricing": 8.301
+      },
+      "twin": {
+        "trades_per_game": 18.79,
+        "seat_trades": 10.95,
+        "seat_rejected": 0.47,
+        "seat_passes": 38.87,
+        "mispricing": 6.75
+      },
+      "jev_belief": {
+        "logloss": 1.5666,
+        "brier": 0.8354,
+        "logloss_cc": 1.2062,
+        "brier_cc": 0.6508,
+        "logloss_uniform": 1.3863,
+        "brier_uniform": 0.75
+      }
+    },
+    "B/market_maker_gm": {
+      "games": 38,
+      "mean_d": {
+        "estimate": -50.13,
+        "ci95": [
+          -70.63,
+          -28.32
+        ]
+      },
+      "mean_pnl_jev": -56.82,
+      "mean_pnl_twin": -6.68,
+      "sd_d": 67.72,
+      "jev": {
+        "trades_per_game": 22.29,
+        "seat_trades": 15.24,
+        "seat_rejected": 0.66,
+        "seat_passes": 37.11,
+        "mispricing": 9.277
+      },
+      "twin": {
+        "trades_per_game": 20.55,
+        "seat_trades": 13.08,
+        "seat_rejected": 0.45,
+        "seat_passes": 44.11,
+        "mispricing": 4.808
+      },
+      "jev_belief": {
+        "logloss": 1.6225,
+        "brier": 0.8394,
+        "logloss_cc": 1.252,
+        "brier_cc": 0.7083,
+        "logloss_uniform": 1.3863,
+        "brier_uniform": 0.75
+      }
+    },
+    "B/market_maker_gm-desc": {
+      "games": 38,
+      "mean_d": {
+        "estimate": -48.61,
+        "ci95": [
+          -73.29,
+          -22.11
+        ]
+      },
+      "mean_pnl_jev": -55.29,
+      "mean_pnl_twin": -6.68,
+      "sd_d": 82.09,
+      "jev": {
+        "trades_per_game": 23.42,
+        "seat_trades": 17.26,
+        "seat_rejected": 0.79,
+        "seat_passes": 22.76,
+        "mispricing": 8.706
+      },
+      "twin": {
+        "trades_per_game": 20.55,
+        "seat_trades": 13.08,
+        "seat_rejected": 0.45,
+        "seat_passes": 44.11,
+        "mispricing": 4.808
+      },
+      "jev_belief": {
+        "logloss": 1.6884,
+        "brier": 0.874,
+        "logloss_cc": 1.2973,
+        "brier_cc": 0.7061,
+        "logloss_uniform": 1.3863,
+        "brier_uniform": 0.75
+      }
+    },
+    "B/neutral": {
+      "games": 38,
+      "mean_d": {
+        "estimate": -74.66,
+        "ci95": [
+          -111.03,
+          -35.68
+        ]
+      },
+      "mean_pnl_jev": -60.29,
+      "mean_pnl_twin": 14.37,
+      "sd_d": 121.31,
+      "jev": {
+        "trades_per_game": 29.29,
+        "seat_trades": 22.71,
+        "seat_rejected": 0.66,
+        "seat_passes": 34.58,
+        "mispricing": 10.711
+      },
+      "twin": {
+        "trades_per_game": 19.82,
+        "seat_trades": 10.97,
+        "seat_rejected": 30.08,
+        "seat_passes": 20.08,
+        "mispricing": 5.757
+      },
+      "jev_belief": {
+        "logloss": 1.6341,
+        "brier": 0.8502,
+        "logloss_cc": 1.2712,
+        "brier_cc": 0.6855,
+        "logloss_uniform": 1.3863,
+        "brier_uniform": 0.75
+      }
+    },
+    "B/noise": {
+      "games": 38,
+      "mean_d": {
+        "estimate": -82.92,
+        "ci95": [
+          -115.68,
+          -45.21
+        ]
+      },
+      "mean_pnl_jev": -116.63,
+      "mean_pnl_twin": -33.71,
+      "sd_d": 113.4,
+      "jev": {
+        "trades_per_game": 32.92,
+        "seat_trades": 25.61,
+        "seat_rejected": 0.76,
+        "seat_passes": 53.84,
+        "mispricing": 9.814
+      },
+      "twin": {
+        "trades_per_game": 21.92,
+        "seat_trades": 11.18,
+        "seat_rejected": 23.32,
+        "seat_passes": 69.45,
+        "mispricing": 6.28
+      },
+      "jev_belief": {
+        "logloss": 1.7092,
+        "brier": 0.8741,
+        "logloss_cc": 1.3412,
+        "brier_cc": 0.7301,
+        "logloss_uniform": 1.3863,
+        "brier_uniform": 0.75
+      }
+    },
+    "B/noise-desc": {
+      "games": 38,
+      "mean_d": {
+        "estimate": -85.13,
+        "ci95": [
+          -111.5,
+          -57.74
+        ]
+      },
+      "mean_pnl_jev": -118.84,
+      "mean_pnl_twin": -33.71,
+      "sd_d": 83.36,
+      "jev": {
+        "trades_per_game": 32.66,
+        "seat_trades": 26.53,
+        "seat_rejected": 0.92,
+        "seat_passes": 31.66,
+        "mispricing": 9.682
+      },
+      "twin": {
+        "trades_per_game": 21.92,
+        "seat_trades": 11.18,
+        "seat_rejected": 23.32,
+        "seat_passes": 69.45,
+        "mispricing": 6.28
+      },
+      "jev_belief": {
+        "logloss": 1.6609,
+        "brier": 0.8583,
+        "logloss_cc": 1.2819,
+        "brier_cc": 0.6971,
+        "logloss_uniform": 1.3863,
+        "brier_uniform": 0.75
+      }
+    }
+  },
+  "rule_sets": {
+    "A": {
+      "pairs": 494,
+      "mean_d": {
+        "estimate": -34.15,
+        "ci95": [
+          -43.68,
+          -25.12
+        ]
+      }
+    },
+    "B": {
+      "pairs": 494,
+      "mean_d": {
+        "estimate": -57.98,
+        "ci95": [
+          -68.36,
+          -46.77
+        ]
+      }
+    }
+  },
+  "effects": {
+    "A_minus_B": {
+      "estimate": 23.83,
+      "ci95": [
+        10.55,
+        36.2
+      ]
+    },
+    "behaviour_minus_algorithm": {
+      "estimate": 4.59,
+      "ci95": [
+        -6.26,
+        15.52
+      ]
+    }
+  },
+  "regression": {
+    "intercept": {
+      "estimate": -106.82,
+      "ci95": [
+        -133.94,
+        -79.86
+      ]
+    },
+    "rule_set_A": {
+      "estimate": 17.7,
+      "ci95": [
+        3.38,
+        31.36
+      ]
+    },
+    "behaviour_wording": {
+      "estimate": -2.05,
+      "ci95": [
+        -17.77,
+        12.99
+      ]
+    },
+    "A_x_behaviour": {
+      "estimate": 13.28,
+      "ci95": [
+        -6.8,
+        31.67
+      ]
+    },
+    "type_bottom_feeder": {
+      "estimate": 61.71,
+      "ci95": [
+        35.47,
+        85.81
+      ]
+    },
+    "type_chartist": {
+      "estimate": 58.29,
+      "ci95": [
+        26.6,
+        87.64
+      ]
+    },
+    "type_fundamentalist": {
+      "estimate": -0.29,
+      "ci95": [
+        -29.47,
+        28.55
+      ]
+    },
+    "type_market_maker_as": {
+      "estimate": 95.48,
+      "ci95": [
+        57.92,
+        127.33
+      ]
+    },
+    "type_market_maker_gm": {
+      "estimate": 65.51,
+      "ci95": [
+        39.5,
+        90.06
+      ]
+    },
+    "type_noise": {
+      "estimate": 42.93,
+      "ci95": [
+        8.73,
+        76.14
+      ]
+    }
+  },
+  "regression_with_goal_cards": {
+    "intercept": {
+      "estimate": -92.05,
+      "ci95": [
+        -124.7,
+        -59.28
+      ]
+    },
+    "rule_set_A": {
+      "estimate": 17.7,
+      "ci95": [
+        3.38,
+        31.36
+      ]
+    },
+    "behaviour_wording": {
+      "estimate": -2.05,
+      "ci95": [
+        -17.77,
+        12.99
+      ]
+    },
+    "A_x_behaviour": {
+      "estimate": 13.28,
+      "ci95": [
+        -6.8,
+        31.67
+      ]
+    },
+    "type_bottom_feeder": {
+      "estimate": 61.71,
+      "ci95": [
+        35.47,
+        85.81
+      ]
+    },
+    "type_chartist": {
+      "estimate": 58.29,
+      "ci95": [
+        26.6,
+        87.64
+      ]
+    },
+    "type_fundamentalist": {
+      "estimate": -0.29,
+      "ci95": [
+        -29.47,
+        28.55
+      ]
+    },
+    "type_market_maker_as": {
+      "estimate": 95.48,
+      "ci95": [
+        57.92,
+        127.33
+      ]
+    },
+    "type_market_maker_gm": {
+      "estimate": 65.51,
+      "ci95": [
+        39.5,
+        90.06
+      ]
+    },
+    "type_noise": {
+      "estimate": 42.93,
+      "ci95": [
+        8.73,
+        76.14
+      ]
+    },
+    "goal_cards_start": {
+      "estimate": -7.1,
+      "ci95": [
+        -13.82,
+        -0.77
+      ]
+    }
+  },
+  "h4a": {
+    "A": {
+      "games": 38,
+      "minus_fundamentalist": {
+        "estimate": -121.29,
+        "ci95": [
+          -158.11,
+          -84.87
+        ]
+      },
+      "minus_noise_trader": {
+        "estimate": -61.87,
+        "ci95": [
+          -91.71,
+          -31.39
+        ]
+      }
+    },
+    "B": {
+      "games": 38,
+      "minus_fundamentalist": {
+        "estimate": -74.66,
+        "ci95": [
+          -111.03,
+          -35.68
+        ]
+      },
+      "minus_noise_trader": {
+        "estimate": -26.58,
+        "ci95": [
+          -61.76,
+          10.55
+        ]
+      }
+    }
+  },
+  "h4b": {
+    "overlap_vs_mean_d": {
+      "rho": -0.495,
+      "p_two_sided": 0.0155,
+      "cells": 24
+    },
+    "overlap_vs_abs_mean_d": {
+      "rho": 0.518,
+      "p_two_sided": 0.0103,
+      "cells": 24
+    },
+    "cells": [
+      {
+        "cell": "A/bottom_feeder",
+        "overlap": 0.3187,
+        "mean_d": -42.74
+      },
+      {
+        "cell": "A/bottom_feeder-desc",
+        "overlap": 0.3611,
+        "mean_d": 10.37
+      },
+      {
+        "cell": "A/chartist",
+        "overlap": 0.3832,
+        "mean_d": -10.97
+      },
+      {
+        "cell": "A/chartist-desc",
+        "overlap": 0.3021,
+        "mean_d": -29.63
+      },
+      {
+        "cell": "A/fundamentalist",
+        "overlap": 0.4163,
+        "mean_d": -105.08
+      },
+      {
+        "cell": "A/fundamentalist-desc",
+        "overlap": 0.3891,
+        "mean_d": -90.18
+      },
+      {
+        "cell": "A/market_maker_as",
+        "overlap": 0.0535,
+        "mean_d": 2.71
+      },
+      {
+        "cell": "A/market_maker_as-desc",
+        "overlap": 0.0386,
+        "mean_d": 7.74
+      },
+      {
+        "cell": "A/market_maker_gm",
+        "overlap": 0.0406,
+        "mean_d": -7.61
+      },
+      {
+        "cell": "A/market_maker_gm-desc",
+        "overlap": 0.0353,
+        "mean_d": -14.34
+      },
+      {
+        "cell": "A/noise",
+        "overlap": 0.551,
+        "mean_d": -15.26
+      },
+      {
+        "cell": "A/noise-desc",
+        "overlap": 0.4939,
+        "mean_d": -27.68
+      },
+      {
+        "cell": "B/bottom_feeder",
+        "overlap": 0.5724,
+        "mean_d": -56.01
+      },
+      {
+        "cell": "B/bottom_feeder-desc",
+        "overlap": 0.4728,
+        "mean_d": -47.51
+      },
+      {
+        "cell": "B/chartist",
+        "overlap": 0.4153,
+        "mean_d": -48.04
+      },
+      {
+        "cell": "B/chartist-desc",
+        "overlap": 0.4376,
+        "mean_d": -60.89
+      },
+      {
+        "cell": "B/fundamentalist",
+        "overlap": 0.3555,
+        "mean_d": -104.62
+      },
+      {
+        "cell": "B/fundamentalist-desc",
+        "overlap": 0.4253,
+        "mean_d": -83.99
+      },
+      {
+        "cell": "B/market_maker_as",
+        "overlap": 0.0976,
+        "mean_d": -7.76
+      },
+      {
+        "cell": "B/market_maker_as-desc",
+        "overlap": 0.0987,
+        "mean_d": -3.47
+      },
+      {
+        "cell": "B/market_maker_gm",
+        "overlap": 0.0637,
+        "mean_d": -50.13
+      },
+      {
+        "cell": "B/market_maker_gm-desc",
+        "overlap": 0.069,
+        "mean_d": -48.61
+      },
+      {
+        "cell": "B/noise",
+        "overlap": 0.548,
+        "mean_d": -82.92
+      },
+      {
+        "cell": "B/noise-desc",
+        "overlap": 0.3839,
+        "mean_d": -85.13
+      }
+    ]
+  }
+}
