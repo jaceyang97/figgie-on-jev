@@ -260,3 +260,27 @@ def test_hierarchical_choice_sums_before_picking():
     assert max(probs, key=probs.get) == "pass"
     assert hierarchical_choice(probs) == "bid_spades_6"
     assert hierarchical_choice({"pass": 0.6, "bid_spades_5": 0.4}) == "pass"
+
+
+def test_duplicate_agents_keep_separate_rows():
+    from types import SimpleNamespace
+
+    from figgie.experiments.tournament import run
+
+    args = SimpleNamespace(lineup="fundamentalist,bottom_feeder,fundamentalist,noise", games=8, duration=30.0,
+                           jev_latency=None, seed=0, max_calls=None, log=None, out=None, workers=1,
+                           backend="mock", provider=None)
+    agents = run(args)["agents"]
+    assert set(agents) == {"fundamentalist#0", "fundamentalist#2", "bottom_feeder", "noise"}
+    # P&L is zero-sum, so the four per-seat means must add to zero.
+    assert sum(a["mean_pnl"] for a in agents.values()) == pytest.approx(0, abs=0.05)
+
+
+def test_bootstrap_resamples_whole_groups():
+    from figgie.stats import bootstrap_ci
+
+    xs = [0.0] * 5 + [1.0] * 5
+    lo, hi = bootstrap_ci(xs, groups=[0] * 5 + [1] * 5)
+    assert (lo, hi) == (0.0, 1.0)  # two clusters: every resample is all-0, all-1 or half and half
+    lo2, hi2 = bootstrap_ci(xs)
+    assert hi2 - lo2 < 1.0

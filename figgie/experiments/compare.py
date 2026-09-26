@@ -75,7 +75,9 @@ def run(args) -> dict:
         probe = Probe(p_snapshot=args.p_snapshot)
         opponents = [make_agent(s) for s in args.opponents.split(",")]
         result = play_game([probe] + opponents, rng, duration=args.duration)
-        points += [(g, result.deck.goal, snap) for snap in probe.snapshots[: args.per_game]]
+        # Sample across the whole game, not just the first snapshots, which all fall in the opening seconds.
+        snaps = rng.sample(probe.snapshots, min(args.per_game, len(probe.snapshots)))
+        points += [(g, result.deck.goal, snap) for snap in sorted(snaps, key=lambda s: s["view"].t)]
     parts = set(filter(None, args.context.split(",")))
 
     def question(point):
@@ -133,7 +135,7 @@ def summarise(rows, client) -> dict:
     out = {"backend": client.backend, "decision_points": len(rows), "jev_calls": client.calls, "cost_usd": round(client.cost_usd, 4)}
     for k in ("brier_posterior", "brier_jev", "logloss_posterior", "logloss_jev", "tv_distance", "top1_agree", "action_agree", "regret"):
         xs = col(k)
-        lo, hi = bootstrap_ci(xs)
+        lo, hi = bootstrap_ci(xs, groups=[r["game"] for r in rows])  # points in one game are not independent
         out[k] = {"mean": round(mean(xs), 4), "ci95": [round(lo, 4), round(hi, 4)]}
     out["brier_uniform"] = 0.75  # 4 suits at 25%: 3 * 0.0625 + 0.5625
     return out

@@ -91,8 +91,9 @@ def run(args, client=None) -> dict:
     games = []
     for rec in records:
         order, goal = rec["seats"], rec["goal"]
+        shift = rec["game"] % 4  # order is specs rotated by the game number
         for seat, spec in enumerate(order):
-            key = f"{spec}#{specs.index(spec)}" if specs.count(spec) > 1 else spec
+            key = f"{spec}#{(seat + shift) % 4}" if specs.count(spec) > 1 else spec
             pnl[key].append(rec["pnl"][seat])
             trades_by[key].append(rec["seat_trades"][seat])
             rejected_by[key].append(rec["rejected"][seat])
