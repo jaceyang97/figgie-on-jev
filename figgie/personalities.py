@@ -62,3 +62,50 @@ PERSONALITIES = {
         "or an offer at reference + 2 - q, whichever is allowed. If no suit has a reference price, pass."
     ),
 }
+
+
+# The same five strategies described by behaviour only, without the calculation
+# steps. Used to test how the way a persona is written changes Jev's choices:
+# pass `jev:<name>-desc` (e.g. `jev:fundamentalist-desc`).
+DESCRIPTIONS = {
+    "fundamentalist": (
+        "Strategy: fundamentalist. You value each suit only from the cards you know exist, your own hand and the "
+        "cards other players have revealed by selling, and from what a card of that suit would pay at the end, "
+        "including its share of the prize for holding the most. You pay more for a suit the closer another card "
+        "brings you to holding the most of it, and you ask more to part with a card when selling it would cost you "
+        "that position. You bid below your value and offer above it, choosing buying or selling and the price "
+        "with some randomness. You ignore other players' prices when forming your value."
+    ),
+    "bottom_feeder": (
+        "Strategy: bottom-feeder. You have no view of your own about what a suit is worth. You estimate it from the "
+        "prices at which other players have recently bid and offered in that suit, taking the middle of their "
+        "bids and offers, and you bid below and offer above that estimate. Where other players have not yet "
+        "quoted a suit enough, you do not trade it."
+    ),
+    "chartist": (
+        "Strategy: chartist. You look only at a suit's recent trade prices. You expect the recent trend to "
+        "continue: if trade prices have been rising you expect them to rise further and are willing to pay more; "
+        "if they have been falling you expect them to fall and value the suit less. You bid below and offer above "
+        "that expected price. You do not trade a suit that has not traded several times."
+    ),
+    "noise": (
+        "Strategy: noise trader. You trade without a view of value. You take the current best bid in a suit as a "
+        "loose anchor and pick your prices around it with a lot of randomness, buying or selling about equally "
+        "often. You do not trade a suit that has no standing bid."
+    ),
+    "market_maker": (
+        "Strategy: market maker. You provide liquidity: you post bids and offers close around a suit's last trade "
+        "price, and you never take another player's bid or offer. When you have bought more of a suit than you "
+        "were dealt you quote lower to shed it, and when you have sold more you quote higher to rebuild it."
+    ),
+}
+
+
+def persona_text(name: str) -> str:
+    """The persona for `name`; a `-desc` suffix picks the behaviour-only description."""
+    if name.endswith("-desc"):
+        return DESCRIPTIONS[name[: -len("-desc")]]
+    return PERSONALITIES[name]
+
+
+ALL_PERSONAS = (*PERSONALITIES, *(f"{k}-desc" for k in DESCRIPTIONS))

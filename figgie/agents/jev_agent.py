@@ -5,7 +5,7 @@ from __future__ import annotations
 from ..cards import SUITS
 from ..engine import View
 from ..market import PASS, Action
-from ..personalities import PERSONALITIES
+from ..personalities import ALL_PERSONAS, persona_text
 from .base import Agent
 
 RULES = (
@@ -152,7 +152,7 @@ def action_menu(view: View) -> dict[str, tuple[Action, str]]:
 
 
 def action_question(menu: dict, personality: str) -> dict:
-    persona = PERSONALITIES[personality]
+    persona = persona_text(personality)
     instructions = RULES + ("\n\n" + persona if persona else "") + "\n\nYou are the player in the state. Which action do you take now?"
     return {"type": "choice", "instructions": instructions, "criteria": {k: d for k, (_, d) in menu.items()}}
 
@@ -216,8 +216,8 @@ class JevAgent(Agent):
         kw.setdefault("wake_rate", 0.5)
         kw.setdefault("latency", 0.3)
         super().__init__(**kw)
-        if personality not in PERSONALITIES:
-            raise ValueError(f"unknown personality {personality!r}; choose from {sorted(PERSONALITIES)}")
+        if personality not in ALL_PERSONAS:
+            raise ValueError(f"unknown personality {personality!r}; choose from {sorted(ALL_PERSONAS)}")
         self.client = client
         self.personality = personality
         self.assist = assist

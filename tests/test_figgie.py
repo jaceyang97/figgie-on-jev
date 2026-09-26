@@ -8,7 +8,7 @@ from figgie.cards import ALL_DECKS, POT, SUITS, deal
 from figgie.engine import View, play_game, settle
 from figgie.jev import MockJev
 from figgie.market import Action, Market
-from figgie.personalities import PERSONALITIES
+from figgie.personalities import ALL_PERSONAS, DESCRIPTIONS, PERSONALITIES
 from figgie.posterior import CardCounter, goal_probabilities
 
 
@@ -97,7 +97,7 @@ def test_fundamentalist_beats_noise_on_average():
 
 
 def test_jev_agent_runs_with_mock_and_every_personality():
-    for p in PERSONALITIES:
+    for p in ALL_PERSONAS:
         client = MockJev(seed=1)
         agents = [JevAgent(client, personality=p, wake_rate=0.2), Fundamentalist(), BottomFeeder(), Noise()]
         res = play_game(agents, random.Random(2), duration=30)
@@ -284,3 +284,13 @@ def test_bootstrap_resamples_whole_groups():
     assert (lo, hi) == (0.0, 1.0)  # two clusters: every resample is all-0, all-1 or half and half
     lo2, hi2 = bootstrap_ci(xs)
     assert hi2 - lo2 < 1.0
+
+
+def test_every_strategy_has_a_behaviour_only_description():
+    assert set(DESCRIPTIONS) == set(PERSONALITIES) - {"neutral"}
+    menu = {"pass": (None, "Do nothing this turn.")}
+    q = action_question(menu, "fundamentalist-desc")
+    assert DESCRIPTIONS["fundamentalist"] in q["instructions"]
+    assert PERSONALITIES["fundamentalist"] not in q["instructions"]
+    for text in DESCRIPTIONS.values():
+        assert "goal suit" not in text  # describe behaviour only, never which suit wins
