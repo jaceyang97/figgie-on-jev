@@ -2,7 +2,7 @@
 
 The core four follow Ozerov, DiSilvio and Luo (2021), "Traders in a Strange
 Land", section 2.3. They share one order rule (the paper's Algorithm 2) and
-differ only in how they value a card. The other six are extensions, each taken
+differ only in how they value a card. The market maker is one extension, taken
 from a published model (see EXTENSION_SOURCES).
 
 Where the paper leaves a choice open we pick: the suit to act in is drawn at
@@ -20,18 +20,12 @@ from ..market import PASS, Action
 from ..posterior import card_values
 from .base import Agent
 
-TAU = 3  # chartist and contrarian look-back, in trades
+TAU = 3  # chartist look-back, in trades
 K_PREY = 4  # bottom-feeder: orders per side it averages (the paper's k)
 MM_HALF_SPREAD = 2  # market maker: chips either side of the last trade price
-MAX_PRICE = 30  # zero-intelligence sellers draw prices up to this
 
 EXTENSION_SOURCES = {
     "market_maker": "Avellaneda & Stoikov (2008), Quantitative Finance 8(3); Glosten & Milgrom (1985), JFE 14(1)",
-    "herder": "Banerjee (1992), QJE 107(3); Bikhchandani, Hirshleifer & Welch (1992), JPE 100(5)",
-    "contrarian": "De Bondt & Thaler (1985), J. Finance 40(3); Lakonishok, Shleifer & Vishny (1994), J. Finance 49(5)",
-    "sniper": "Budish, Cramton & Shim (2015), QJE 130(4)",
-    "zero_intelligence": "Gode & Sunder (1993), JPE 101(1)",
-    "disposition": "Shefrin & Statman (1985), J. Finance 40(3); Odean (1998), J. Finance 53(5)",
 }
 
 
@@ -157,7 +151,7 @@ class Noise(PaperAgent):
         return out
 
 
-# --- Extensions -------------------------------------------------------------
+# --- Extension --------------------------------------------------------------
 
 
 class MarketMaker(Agent):
@@ -188,86 +182,4 @@ class MarketMaker(Agent):
         return self.rng.choice(options) if options else PASS
 
 
-class Herder(Agent):
-    """Copies the most recent trade's initiating side in that suit."""
-
-    name = "herder"
-
-    def decide(self, view: View) -> Action:
-        if not view.trades:
-            return PASS
-        t = view.trades[-1]
-        if t.aggressor == t.buyer:
-            return buy_at(view, t.suit, t.price)
-        return sell_at(view, t.suit, t.price)
-
-
-class Contrarian(Agent):
-    """Sells a suit whose price rose over the last TAU trades, buys one whose price fell."""
-
-    name = "contrarian"
-
-    def decide(self, view: View) -> Action:
-        for s in self.rng.sample(SUITS, len(SUITS)):
-            p = trade_prices(view, s)
-            if len(p) < TAU + 1 or p[-1] == p[-TAU - 1]:
-                continue
-            if p[-1] > p[-TAU - 1]:
-                a = sell_at(view, s, p[-1])
-            else:
-                a = buy_at(view, s, p[-1])
-            if a != PASS:
-                return a
-        return PASS
-
-
-class Sniper(Agent):
-    """Never quotes; takes the standing quote most mispriced against the fundamentalist's values."""
-
-    name = "sniper"
-
-    def decide(self, view: View) -> Action:
-        edges = take_edges(view, card_values(self.counter.known(), view.hand))
-        if not edges:
-            return PASS
-        best, gain = max(edges.items(), key=lambda kv: kv[1])
-        return best if gain > 0 else PASS
-
-
-class ZeroIntelligence(Agent):
-    """ZI-C: random suit, side and price, but never buys above or sells below its (fundamentalist) value."""
-
-    name = "zero_intelligence"
-
-    def decide(self, view: View) -> Action:
-        s = self.rng.choice(SUITS)
-        pb, ps = card_values(self.counter.known(), view.hand)[s]
-        if self.rng.random() < 0.5:
-            return buy_at(view, s, self.rng.randint(1, math.floor(pb))) if pb >= 1 else PASS
-        lo = max(1, math.ceil(ps))
-        return sell_at(view, s, self.rng.randint(lo, max(lo, MAX_PRICE)))
-
-
-class Disposition(Fundamentalist):
-    """The fundamentalist's rule, but never sells a suit below the average price it paid for it."""
-
-    name = "disposition"
-
-    def decide(self, view: View) -> Action:
-        action = super().decide(view)
-        if action.kind not in ("sell", "ask"):
-            return action
-        paid = [t.price for t in view.trades if t.suit == action.suit and t.buyer == view.me]
-        if not paid:
-            return action
-        floor = sum(paid) / len(paid)
-        if action.kind == "sell":
-            return action if view.bids[action.suit].price >= floor else PASS
-        return action if action.price >= floor else Action("ask", action.suit, math.ceil(floor))
-
-
-__all__ = [
-    "Fundamentalist", "BottomFeeder", "Chartist", "Noise",
-    "MarketMaker", "Herder", "Contrarian", "Sniper", "ZeroIntelligence", "Disposition",
-    "EXTENSION_SOURCES", "take_edges",
-]
+__all__ = ["Fundamentalist", "BottomFeeder", "Chartist", "Noise", "MarketMaker", "EXTENSION_SOURCES", "take_edges"]

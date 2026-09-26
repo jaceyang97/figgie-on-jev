@@ -1,11 +1,8 @@
 from .base import Agent
-from .classical import (
-    BottomFeeder, Chartist, Contrarian, Disposition, Fundamentalist, Herder, MarketMaker, Noise, Sniper,
-    ZeroIntelligence,
-)
+from .classical import BottomFeeder, Chartist, Fundamentalist, MarketMaker, Noise
 from .jev_agent import JevAgent
 
-# The Figgie paper's four strategies, then the literature-backed extensions.
+# The Figgie paper's four strategies, then the market maker from the wider literature.
 CORE = ("fundamentalist", "bottom_feeder", "chartist", "noise")
 CLASSICAL = {
     "fundamentalist": Fundamentalist,
@@ -13,11 +10,6 @@ CLASSICAL = {
     "chartist": Chartist,
     "noise": Noise,
     "market_maker": MarketMaker,
-    "herder": Herder,
-    "contrarian": Contrarian,
-    "sniper": Sniper,
-    "zero_intelligence": ZeroIntelligence,
-    "disposition": Disposition,
 }
 
 
