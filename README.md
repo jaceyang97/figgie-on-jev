@@ -2,63 +2,75 @@
 
 A Figgie market simulator for two questions:
 
-1. **How do Jev's decisions compare with classical maths models?** Jev is TypeSafe AI's decision model. The classical baseline is exact Bayesian card counting and the hand-coded strategies from Ozerov, DiSilvio and Luo, [*Traders in a Strange Land*](https://arxiv.org/abs/2110.00879) (2021).
-2. **How do different Jev "personalities" change a game?** For example, a value trader, a market maker, a momentum chaser, a majority hoarder, a timid player or a gambler.
+1. **How do Jev's decisions compare with classical models?** Jev is TypeSafe AI's decision model. The classical baseline is card counting and the rule-based traders from Ozerov, DiSilvio and Luo, [*Traders in a Strange Land*](https://arxiv.org/abs/2110.00879) (2021).
+2. **Can Jev play a given type of market participant?** Each Jev persona is a written version of one rule-based trader. We compare Jev with that trader (its "twin") in the same seat and the same games.
 
-Pure Python 3.10+, no dependencies (`pytest` for tests).
+Pure Python 3.10+, no dependencies (`pytest` for tests). The experiment design is in the project proposal; this file says how to run it.
 
 ## Quick start
 
 ```bash
-python -m pytest -q                                   # tests
-python -m figgie.experiments.tournament --games 40 \
-    --lineup fundamentalist,bottom_feeder,chartist,noise   # classical only, no API key needed
+python -m pytest -q
+python -m figgie.experiments.tournament --games 40 --mechanism A \
+    --lineup fundamentalist,bottom_feeder,noise,noise        # rule-based only, no API key needed
 ```
 
-Every experiment runs offline with `--backend mock`, which is the default. The mock is **not Jev**: it answers at random so you can check the pipeline without an API key.
+Every experiment runs offline with `--backend mock`, which is the default. The mock is **not Jev**: it answers at random, so you can check the code and the logs without an API key and at no cost.
 
-To use the real model, add a key to `.env.local` in the repo root. That file is gitignored, and variables already set in your shell take precedence over it:
+To use the real model, add a key to `.env.local` in the repo root (gitignored; variables already set in your shell take precedence):
 
 ```dotenv
 OPENROUTER_API_KEY=sk-or-v1-...
 TYPESAFE_API_KEY=...
 ```
 
-Then run:
+If `OPENROUTER_API_KEY` is set, the client calls OpenRouter (`POST https://openrouter.ai/api/alpha/decisions`, model `typesafe/jev-1.13`). Otherwise it calls TypeSafe directly (`POST https://api.typesafe.ai/v1/systemone`, model `jev-latest`). `--provider openrouter|typesafe` forces a route. With `--provider openrouter` and no key, requests go out without an `Authorization` header, for sandboxes whose network proxy adds the key.
 
-```bash
-python -m figgie.experiments.compare --backend jev --games 20 --log jev.jsonl --out results/compare
-python -m figgie.experiments.sweep   --backend jev --games 20 --out results/sweep
-```
+## Rule sets
 
-The client uses the same routing as Jace's other Jev code. If `OPENROUTER_API_KEY` is set, it calls OpenRouter (`POST https://openrouter.ai/api/alpha/decisions`, model `typesafe/jev-1.13`). Otherwise it calls TypeSafe directly (`POST https://api.typesafe.ai/v1/systemone`, model `jev-latest`). Use `--provider openrouter|typesafe` to force a route and `JEV_MODEL` to override the model. With `--provider openrouter` and no `OPENROUTER_API_KEY`, requests go out without an `Authorization` header, for environments whose network proxy injects the key (such as a Claude cloud sandbox with an openrouter.ai credential).
+- **A, order book** (the paper). Many orders can wait at each price. A new order trades with the best waiting order on the other side, at the waiting order's price (price-time priority). Orders stay after other trades. Each player keeps at most 5 orders per side per suit (the oldest goes). A player's own order on the other side is removed, not traded against. An order whose owner can no longer pay or deliver is removed when it is reached. Players can cancel their orders in a suit.
+- **B, open outcry** (real Figgie). One best bid and one best ask per suit. A new bid must beat the best bid, a new ask must beat the best ask. Every trade removes all bids and asks in all suits.
 
-## Results
+`--mechanism A|B` picks one. Games last 240 seconds, or with `--max-events 10000` they end after 10,000 events, as in the paper.
 
-The first real Jev run (20 games per condition, 15,947 calls, $1.63) is written up in [`paper/paper.pdf`](paper/paper.pdf); its summary files are in `results/compare/` and `results/sweep/`, and `python paper/make_figures.py` redraws the figures.
+## Traders
+
+| Spec | What it is |
+|---|---|
+| `fundamentalist`, `bottom_feeder`, `chartist`, `noise` | The paper's four traders (section 2.3, Algorithms 2 to 4). The fundamentalist deletes its stale orders in rule set A (Algorithm 4). The bottom-feeder copies the fundamentalists; the seat under test is never its prey. |
+| `market_maker_gm` | Glosten and Milgrom (1985): quotes are the card's expected value after a buy or a sell, from card counting and the direction of other players' trades. |
+| `market_maker_as` | Avellaneda and Stoikov (2008): quotes around the market price, moved against the cards it holds, wider with price variance and time left. |
+| `jev:<persona>` | Jev with the persona of that trader (`jev:fundamentalist`: the steps of the algorithm) or its behaviour description (`jev:fundamentalist-desc`). `jev:neutral` has no persona. |
+
+Jev context flags: `+summary` and `+log` add facts from the game (the public trade and order record); `+known` and `+assist` add values that code calculates (cards known to exist, card-counting probabilities) and are ablations only. Example: `jev:chartist-desc+summary`.
+
+Speed: `--speed equal` (default; every trader decides 0.5 times per second on average and its order arrives 0.3 s later), `--speed paper` (1 per second, no delay) or `--speed <rate>/<latency>`. A spec can carry its own speed: `fundamentalist@1/200`.
+
+Jev's action is a sample from its probabilities over the whole menu (`--decode sample`, the default). The menu has pass, take the best price, cancel (A only) and bids and asks at the prices 1 to 20 and 22 to 40 in steps of 2: at most 253 options, below Jev's limit of 255.
 
 ## Experiments
 
-| Command | Question | Output |
-|---|---|---|
-| `figgie.experiments.compare` | At the same frozen game states, how do Jev's goal-suit beliefs and trade choices compare with the exact posterior and the fundamentalist? | Brier score and log loss (Jev, posterior, 25% baseline), distance between Jev and the posterior, top-1 agreement, action agreement, regret in chips. `decisions.csv` has one row per decision point. |
-| `figgie.experiments.sweep` | Each personality in the same seat against the same three opponents, plus classical agents in that seat for reference. | A table of P&L with bootstrap 95% CI, trades, and market-wide trades and mispricing. |
-| `figgie.experiments.tournament` | Any four-agent line-up, for example four Jev personalities playing each other. | P&L per agent with CI, activity, rejected orders and market metrics. Seats rotate each game. |
+| Stage | Command | What it does | Cost |
+|---|---|---|---|
+| 0 | `figgie.experiments.replicate --out results/stage0` | The paper's line-ups (figures 3 to 5, tables 2 and 3), 100 games each, in A with 10,000 events, A with 240 s and B with 240 s, at the paper's speed and the equal speed. Also the profit noise of each trader type in the stage 2 line-up. Writes `report.md`. | Free |
+| 1 | `figgie.experiments.stage1 moments / ask / analyse` | Frozen moments from rule-based games. 1a: persona wording (algorithm, behaviour, none) against the twin. 1b: five state versions, goal-suit belief against card counting. 1c: repeatability. | About US$1.5 |
+| 2 | `figgie.experiments.sweep --backend jev --out results/stage2` | 26 conditions (2 rule sets × (neutral + 6 types × 2 wordings)), 40 games each, and each condition's twin, against a fundamentalist, a bottom-feeder and a noise trader. All conditions use the same game seeds. `--max-calls` is a hard spending limit. | About US$28 |
+| 2 | `figgie.experiments.paired --run results/stage2` | Jev minus twin in the same seat and games: per condition, per rule set, A minus B, behaviour minus algorithm wording, and the regression with and without the starting goal cards. | Free |
+| any | `figgie.experiments.tournament` | Any four-trader line-up. Seats rotate each game. | Free with rule-based traders |
 
-Agent specs: the Figgie paper's four strategies (`fundamentalist`, `bottom_feeder`, `chartist`, `noise`, implemented as in section 2.3 of the paper, sharing its Algorithm 2 order rule), a market maker from the wider literature (`market_maker`, after Avellaneda & Stoikov 2008 and Glosten & Milgrom 1985), and `jev:<personality>` with optional context flags `+log`, `+summary` (observed facts) and `+known`, `+assist` (derived by code). Each Jev personality is an action-only translation of the rule-based agent of the same name; `jev:neutral` has none. The `+assist` version is a hybrid: the exact card-counting probabilities are added to Jev's state, so code does the maths and Jev makes the decision. Personalities live in `figgie/personalities.py`; add your own there.
+`figgie.experiments.compare` is the first run's decision study (rule set B only), kept to reproduce it.
 
-Useful flags: `--jev-latency` sets the simulated delay in seconds. By default the simulation uses each call's measured round-trip time, so Jev's speed is priced in. `--max-calls` is a hard cap on API calls. `--log` records every request and response.
+## What is logged
+
+- `run.json` (or `run_<step>.json`) in each output directory: the git commit, whether the tree had changes, Python version, command line and all settings.
+- Game records, one JSON line per game (`games.jsonl`, or `<out>/<A|B>/games/<condition>.jsonl` in stage 2): seed, rule set, deck and goal suit, seats and speeds, starting and final hands, profit, cash and payout per seat, decisions, passes and rejected orders per seat, every trade `[t, suit, price, buyer, seller, aggressor]`, every order `[t, player, side, suit, price, oid]`, every cancel with its reason, and for Jev seats one line per decision (time, chosen action and its probability, the goal-suit belief, and card counting at the same moment for comparison). A rerun with the same arguments continues from these files.
+- Jev client logs, one JSON line per request (`<out>/<A|B>/logs/<condition>.jsonl` in stage 2): the full request and response and `meta` with run, condition, game, seed, seat, decision number, time, rule set, persona and decoding, so each request joins to its game record.
 
 ## How it works
 
-- `figgie/cards.py` and `figgie/posterior.py` hold the 12 possible decks, dealing, and exact Bayesian goal-suit probabilities from the cards known to exist. Known cards are your hand plus cards other players have shown they held by selling them. Card values include a share of the majority bonus.
-- `figgie/market.py` has one best bid and one best ask per suit. Crossing orders trade, and every trade clears all quotes, as in the real game.
-- `figgie/engine.py` is the discrete-event game. An agent decides on what it sees now, and its order lands `latency` seconds later against the book as it is *then*, so slow agents lose races.
-- `figgie/agents/` has the paper's fundamentalist, bottom-feeder, chartist and a noise trader. `JevAgent` sends Jev the JSON state and one Choice question listing every legal action (at most 73, well under Jev's limit of 255).
-- `figgie/jev.py` is a stdlib HTTP client for Jev through OpenRouter or TypeSafe directly (the same request body on both routes), plus the mock. It tracks calls, tokens and cost ($0.042 per million input tokens).
-
-A Jev agent wakes about every 2 seconds, so a 4-minute game makes about 100 calls per Jev seat.
-
-## Sanity check against the paper
-
-Classical line-up, 40 games (`tournament --lineup fundamentalist,bottom_feeder,chartist,noise`): the fundamentalist and bottom-feeder both make about +160 chips a game. The chartist loses about 275 chips, and nearly all of its orders are rejected because it chases stale prices. This matches the paper's qualitative findings: fundamentalists win, bottom-feeders cap their edge, and chartists fail.
+- `figgie/cards.py` and `figgie/posterior.py`: the 12 possible decks, dealing, and card counting (the paper's Algorithm 3 and its likelihood over the 12 decks).
+- `figgie/market.py`: rule set B (`Market`) and rule set A (`BookMarket`).
+- `figgie/engine.py`: the discrete-event game. A trader wakes after an exponential gap, decides on what it sees, and its order reaches the market `latency` seconds later. Each seat has its own random stream for wake-ups and decisions, so the same seed gives the same deal and the same opponent wake-up gaps in every condition.
+- `figgie/agents/`: the rule-based traders and `JevAgent`; `figgie/personalities.py`: the personas.
+- `figgie/jev.py`: the HTTP client for Jev, the mock, a shared rate limiter (18 requests per second) and a shared call budget.
+- `figgie/records.py`: what each game and run writes to disk.

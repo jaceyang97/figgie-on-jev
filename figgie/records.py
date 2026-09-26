@@ -46,9 +46,9 @@ def run_header(kind: str, args: dict) -> dict:
     }
 
 
-def write_run_header(out_dir: str, kind: str, args: dict) -> None:
+def write_run_header(out_dir: str, kind: str, args: dict, name: str = "run.json") -> None:
     os.makedirs(out_dir, exist_ok=True)
-    with open(os.path.join(out_dir, "run.json"), "w") as f:
+    with open(os.path.join(out_dir, name), "w") as f:
         json.dump(run_header(kind, args), f, indent=2)
 
 

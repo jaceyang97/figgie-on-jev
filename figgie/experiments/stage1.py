@@ -10,7 +10,9 @@ Three steps, each a subcommand:
            view, the true goal suit, the card-counting probabilities and the twin's
            action distribution (Monte Carlo over its random choices; an order the
            market would reject counts as pass; a price outside Jev's price ladder
-           moves to the nearest ladder price).
+           moves to the nearest ladder price). In rule set A the twin's automatic
+           cancel step (for example the fundamentalist's Algorithm 4) runs before
+           it chooses an action and is not part of this distribution.
   ask      Ask Jev about the moments. 1a: each type's moments with the algorithm
            persona, the behaviour persona and no persona. 1b: the fundamentalist
            seat's moments, no persona, five state versions, action and goal suit.
@@ -164,7 +166,7 @@ def make_moments(args) -> None:
                         n_out += 1
                     g += 1
                 print(f"{mech} {typ}: {got} moments from {g} games")
-    write_run_header(os.path.dirname(os.path.abspath(args.out)), "stage1-moments", vars(args))
+    write_run_header(os.path.dirname(os.path.abspath(args.out)), "stage1-moments", vars(args), "run_moments.json")
     print(f"wrote {n_out} moments to {args.out}")
 
 
@@ -211,7 +213,7 @@ def ask(args) -> None:
     if not jobs:
         return
     out_dir = os.path.dirname(os.path.abspath(args.out))
-    write_run_header(out_dir, f"stage1-{args.study}", vars(args))
+    write_run_header(out_dir, f"stage1-{args.study}", vars(args), f"run_{args.study}.json")
     client = make_client(args.backend, provider=args.provider, limiter=RateLimiter(args.max_rps),
                          budget=CallBudget(args.max_calls), log_path=args.log or args.out.replace(".jsonl", ".log.jsonl"))
     lock = __import__("threading").Lock()
@@ -419,7 +421,9 @@ def analyse(args) -> None:
     if args.out:
         with open(args.out, "w") as f:
             f.write(text)
-    print(text)
+        print(f"wrote {args.out}")
+    else:
+        print(text)
 
 
 def main(argv=None):
@@ -439,7 +443,7 @@ def main(argv=None):
     a = sub.add_parser("ask")
     a.add_argument("--study", choices=["1a", "1b", "1c"], required=True)
     a.add_argument("--moments", required=True)
-    a.add_argument("--context", default="log,summary", help="state version for 1a and 1c")
+    a.add_argument("--context", default="summary", help="state version for 1a and 1c (the same as stage 2)")
     a.add_argument("--repeat-moments", type=int, default=50)
     a.add_argument("--backend", choices=["mock", "jev"], default="mock")
     a.add_argument("--provider", choices=["openrouter", "typesafe"], default=None)

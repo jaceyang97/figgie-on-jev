@@ -334,6 +334,8 @@ class JevAgent(Agent):
         if "goal" in answers:
             g = answers["goal"].get("probabilities") or {answers["goal"]["choice"]: 1.0}
             rec["goal"] = {s: round(g.get(s, 0.0), 5) for s in SUITS}
+            # For analysis only (never in Jev's state unless +assist): card counting at the same moment.
+            rec["card_counting"] = {s: round(p, 5) for s, p in self.counter.goal_probabilities().items()}
         self.trace.append(rec)
         if action != PASS:
             self.decisions.append((view.t, action.label()))

@@ -113,8 +113,8 @@ DESCRIPTIONS = {
     ),
     "market_maker_gm": (
         "Strategy: market maker. You provide liquidity: you post a bid and an offer and you never take another "
-        "player's bid or offer. You set your prices from how likely you think each suit is to be the goal suit, "
-        "using the cards you know exist. You treat each trade as information: when other players buy a suit you "
+        "player's bid or offer. You set your prices from what you expect each suit to pay at the end of "
+        "the game, using the cards you know exist. You treat each trade as information: when other players buy a suit you "
         "raise your prices for it, and when they sell it you lower them. Your offer is above your bid, so that "
         "trading with players who may know more than you costs you less."
     ),

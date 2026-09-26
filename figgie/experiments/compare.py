@@ -1,14 +1,17 @@
-"""Experiment 1: Jev's decisions vs the classical (exact Bayesian) model.
+"""Legacy (the first run, 2026-09-25): Jev's decisions vs card counting, rule set B only.
+
+Superseded by figgie.experiments.stage1 (frozen moments in both rule sets, persona wording,
+state versions, repeatability). Kept so the first run can be reproduced.
 
 Plays games between classical agents and, at random decision points of one
 seat, freezes the view and asks Jev two questions in one call:
 
-  goal   - which suit is the goal suit? (compared with the exact posterior)
+  goal   - which suit is the goal suit? (compared with card counting)
   action - which action would you take? (compared with the fundamentalist)
 
 Metrics
   Brier score and log loss of the goal-suit probabilities against the true goal
-  suit, for Jev, the exact posterior and a uniform 25% guess; mean total
+  suit, for Jev, card counting and a uniform 25% guess; mean total
   variation distance between Jev and the posterior; top-1 agreement.
   For actions: how often Jev picks the same action as the fundamentalist, and
   Jev's regret in chips: the best immediate edge available from taking a price
@@ -151,7 +154,7 @@ def main(argv=None):
     ap.add_argument("--p-snapshot", type=float, default=0.3)
     ap.add_argument("--opponents", default="fundamentalist,bottom_feeder,noise")
     ap.add_argument("--personality", default="neutral")
-    ap.add_argument("--assist", action="store_true", help="give Jev the exact goal probabilities in the state")
+    ap.add_argument("--assist", action="store_true", help="give Jev the card-counting goal probabilities in the state")
     ap.add_argument("--context", default="", help="comma list of extra context parts: log, summary, known, assist "
                     "(log and summary are observed facts; known and assist are derived by code)")
     ap.add_argument("--duration", type=float, default=240.0)
