@@ -2,7 +2,7 @@
 
 The core four translate Ozerov, DiSilvio and Luo (2021), section 2.3: each
 defines how to value a card and all share the paper's order rule (Algorithm
-2). The market maker translates a published model; its source is in
+2). The two market makers translate published models; their sources are in
 figgie.agents.classical.EXTENSION_SOURCES. Each persona has a rule-coded twin
 of the same name in figgie.agents.classical. "neutral" has no persona and is
 the control.
@@ -19,13 +19,17 @@ ORDER_RULE = (
     "otherwise offer at that price. If you have no value for any suit, pass."
 )
 
-FUNDAMENTAL_VALUE = (
-    "Value from card counting. For each suit, track how many cards each player is known to hold: start with your "
+CARD_COUNTING = (
+    "For each suit, track how many cards each player is known to hold: start with your "
     "dealt hand for you and zero for everyone else. On every trade the buyer gains one card; the seller loses one if "
     "they were known to hold one, otherwise their count becomes zero. The sum of these counts is the number of "
     "distinct cards of that suit seen. From the four sums, compute the probability of each of the 12 possible decks: "
     "all decks are equally likely before any evidence, and each is weighted by the number of ways the seen cards "
-    "could be drawn from it. Your buy value for a suit when you hold n cards of it is the sum, over the decks in "
+    "could be drawn from it."
+)
+
+FUNDAMENTAL_VALUE = (
+    "Value from card counting. " + CARD_COUNTING + " Your buy value for a suit when you hold n cards of it is the sum, over the decks in "
     "which that suit is the goal suit, of P(deck) x (10 + a x 1.2^n) if n is below x, or P(deck) x 10 if n is at "
     "least x. Here x is 5 if the goal suit has 8 cards and 6 if it has 10, the prize P is 120 if the goal suit has 8 "
     "cards and 100 if it has 10, and a = P x (1 - 1.2) / (1 - 1.2^x). Your sell value is the buy value computed "
@@ -54,12 +58,26 @@ PERSONALITIES = {
         "Z is a fresh random draw from a standard normal distribution; buy value and sell value are both this. "
         "Without a standing bid you have no value for the suit. " + ORDER_RULE
     ),
-    # Extension from the wider literature.
-    "market_maker": (
-        "Strategy: market maker. Never buy at a standing ask or sell at a standing bid. Pick a suit with a reference "
-        "price: its last trade price, or if it has not traded, the midpoint of its standing bid and ask. Let q be the "
-        "cards of that suit you hold now minus the cards of it you were dealt. Post either a bid at reference - 2 - q "
-        "or an offer at reference + 2 - q, whichever is allowed. If no suit has a reference price, pass."
+    # Extensions from the wider literature: two market makers.
+    "market_maker_gm": (
+        "Strategy: market maker (Glosten-Milgrom). Never buy at a standing ask or sell at a standing bid. Belief: "
+        + CARD_COUNTING + " The probability that a suit is the goal suit is the total probability of the decks in "
+        "which it is the goal suit. Then, for every trade by another player, multiply the probability of the traded "
+        "suit by 0.65 and of every other suit by 0.35 if the trade took an ask, or the traded suit by 0.35 and every "
+        "other suit by 0.65 if it hit a bid, and rescale the four to sum to 1. For a suit with probability g, your "
+        "offer is 10 x 0.65g / (0.65g + 0.35(1 - g)) rounded up and your bid is 10 x 0.35g / (0.35g + 0.65(1 - g)) "
+        "rounded down, with the offer at least 1 above the bid. Pick a suit at random and post the bid or the offer "
+        "that the market accepts, if you do not already have it posted. If none is accepted, pass."
+    ),
+    "market_maker_as": (
+        "Strategy: market maker (Avellaneda-Stoikov). Never buy at a standing ask or sell at a standing bid. For a "
+        "suit, the mid price is the average of its standing bid and ask; without both, it is the suit's last trade "
+        "price; a suit with neither has no mid. Let q be the cards of the suit you hold now minus the cards of it you "
+        "were dealt, v the variance of the changes between consecutive trade prices of the suit (4 if it has fewer "
+        "than 3 trades), and f the fraction of the game still to play. Your centre price is mid - 0.1 x q x v x f and "
+        "your half spread is 0.05 x v x f + 0.645. Your bid is centre - half spread rounded down and your offer is "
+        "centre + half spread rounded up. Pick a suit with a mid at random and post the bid or the offer that the "
+        "market accepts, if you do not already have it posted. If none is accepted, pass."
     ),
 }
 
@@ -93,10 +111,18 @@ DESCRIPTIONS = {
         "loose anchor and pick your prices around it with a lot of randomness, buying or selling about equally "
         "often. You do not trade a suit that has no standing bid."
     ),
-    "market_maker": (
-        "Strategy: market maker. You provide liquidity: you post bids and offers close around a suit's last trade "
-        "price, and you never take another player's bid or offer. When you have bought more of a suit than you "
-        "were dealt you quote lower to shed it, and when you have sold more you quote higher to rebuild it."
+    "market_maker_gm": (
+        "Strategy: market maker. You provide liquidity: you post a bid and an offer and you never take another "
+        "player's bid or offer. You set your prices from how likely you think each suit is to be the goal suit, "
+        "using the cards you know exist. You treat each trade as information: when other players buy a suit you "
+        "raise your prices for it, and when they sell it you lower them. Your offer is above your bid, so that "
+        "trading with players who may know more than you costs you less."
+    ),
+    "market_maker_as": (
+        "Strategy: market maker. You provide liquidity: you post bids and offers around a suit's current market "
+        "price and you never take another player's bid or offer. When you hold more of a suit than you were dealt "
+        "you move your prices down to sell it, and when you hold fewer you move them up. You quote wider when "
+        "prices have moved a lot and early in the game, and narrower near the end."
     ),
 }
 

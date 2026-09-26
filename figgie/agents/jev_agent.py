@@ -8,7 +8,7 @@ from ..market import PASS, Action
 from ..personalities import ALL_PERSONAS, persona_text
 from .base import Agent
 
-RULES = (
+RULES_B = (
     "Figgie rules. There are 4 players and a 40-card deck in four suits: spades, clubs, hearts and diamonds. "
     "Spades and clubs are black; hearts and diamonds are red. One suit has 12 cards, one suit has 8 cards and the "
     "other two suits have 10 cards each. Which suit has how many cards is secret and random. The goal suit is the "
@@ -24,7 +24,32 @@ RULES = (
     "Cards of other suits pay nothing."
 )
 
-PRICE_LADDER = tuple(range(1, 31))  # every whole-chip price 1-30; the menu stays under 255 options
+# Rule set A keeps Figgie's cards, chips and payout but uses a limit order book instead of open outcry.
+RULES_A = (
+    "Figgie rules. There are 4 players and a 40-card deck in four suits: spades, clubs, hearts and diamonds. "
+    "Spades and clubs are black; hearts and diamonds are red. One suit has 12 cards, one suit has 8 cards and the "
+    "other two suits have 10 cards each. Which suit has how many cards is secret and random. The goal suit is the "
+    "other suit of the same colour as the 12-card suit. Each player starts with 350 chips, puts 50 chips into a "
+    "200-chip pot, and is dealt 10 random cards. "
+    "Trading lasts 240 seconds. Each suit has an order book. Bids and asks for one card at any price stay on the "
+    "book until they trade or their owner cancels them. A new bid at or above the lowest ask trades at that ask's "
+    "price, and a new ask at or below the highest bid trades at that bid's price; the best price trades first, and "
+    "the oldest order first at the same price. Buying takes the lowest ask; selling takes the highest bid. A trade "
+    "removes only the two orders that traded. Each player can have at most 5 bids and 5 asks in a suit; a sixth "
+    "cancels that player's oldest one. A new order that would trade with your own order cancels your order instead. "
+    "When an order comes to trade, the seller must still hold the card and the buyer must still have the chips; "
+    "otherwise the resting order is removed. Cancelling removes all your orders in a suit. You can only sell cards "
+    "you hold and only bid or buy with chips you have. Orders reach the market after a short delay, so an order "
+    "can fail if the book has changed. "
+    "When trading ends, the goal suit is revealed. The pot pays 10 chips for each goal-suit card a player holds, "
+    "and the rest of the pot goes to the player holding the most goal-suit cards, split equally if tied. "
+    "Cards of other suits pay nothing."
+)
+RULES = {"A": RULES_A, "B": RULES_B}
+
+# Whole-chip prices Jev can quote: every price 1-20, then every second price to 40. 30 levels keep the menu
+# at most 1 + 8 + 4 + 4 x 2 x 30 = 253 options, under Jev's limit of 255.
+PRICE_LADDER = tuple(range(1, 21)) + tuple(range(22, 41, 2))
 
 
 def describe_state(view: View, known: dict[str, int] | None = None, goal_probs: dict[str, float] | None = None,
@@ -37,6 +62,13 @@ def describe_state(view: View, known: dict[str, int] | None = None, goal_probs: 
     """
     book = {}
     for s in SUITS:
+        if view.mechanism == "A":
+            depth = view.depth[s]
+            book[s] = {
+                "bids_best_first": [{"price": q.price, "mine": q.player == view.me} for q in depth["bids"]],
+                "asks_best_first": [{"price": q.price, "mine": q.player == view.me} for q in depth["asks"]],
+            }
+            continue
         bid, ask = view.bids[s], view.asks[s]
         book[s] = {
             "best_bid": None if bid is None else bid.price,
@@ -59,6 +91,8 @@ def describe_state(view: View, known: dict[str, int] | None = None, goal_probs: 
         "order_book": book,
         "recent_trades_oldest_first": trades,
     }
+    if view.mechanism == "A":
+        state["my_resting_orders"] = [f"{o.side} {o.suit} {o.price}" for o in view.my_orders]
     if known is not None:
         state["cards_known_to_exist_derived"] = dict(known)
     if goal_probs is not None:
@@ -133,6 +167,8 @@ def describe_history(view: View, n_prices: int = 6) -> dict:
 def action_menu(view: View) -> dict[str, tuple[Action, str]]:
     """Every legal action as label -> (action, description). Jev picks one label."""
     menu = {"pass": (PASS, "Do nothing this turn.")}
+    if view.mechanism == "A":
+        return _action_menu_a(view, menu)
     for s in SUITS:
         bid, ask = view.bids[s], view.asks[s]
         if ask is not None and ask.player != view.me and ask.price <= view.chips:
@@ -151,16 +187,40 @@ def action_menu(view: View) -> dict[str, tuple[Action, str]]:
     return menu
 
 
-def action_question(menu: dict, personality: str) -> dict:
+def _action_menu_a(view: View, menu: dict) -> dict:
+    """Rule set A: take the best price, rest a bid or ask at a ladder price that does not cross, or cancel."""
+    mine = {o.suit for o in view.my_orders}
+    for s in SUITS:
+        bid, ask = view.bids[s], view.asks[s]
+        if ask is not None and ask.player != view.me and ask.price <= view.chips:
+            a = Action("buy", s)
+            menu[a.label()] = (a, f"Buy one {s} at the lowest ask of {ask.price}.")
+        if bid is not None and bid.player != view.me and view.hand[s] > 0:
+            a = Action("sell", s)
+            menu[a.label()] = (a, f"Sell one {s} at the highest bid of {bid.price}.")
+        if s in mine:
+            a = Action("cancel", s)
+            menu[a.label()] = (a, f"Cancel all my orders in {s}.")
+        for p in PRICE_LADDER:
+            if (ask is None or p < ask.price) and p <= view.chips:
+                a = Action("bid", s, p)
+                menu[a.label()] = (a, f"Bid {p} for one {s}.")
+            if view.hand[s] > 0 and (bid is None or p > bid.price):
+                a = Action("ask", s, p)
+                menu[a.label()] = (a, f"Offer one {s} at {p}.")
+    return menu
+
+
+def action_question(menu: dict, personality: str, mechanism: str = "B") -> dict:
     persona = persona_text(personality)
-    instructions = RULES + ("\n\n" + persona if persona else "") + "\n\nYou are the player in the state. Which action do you take now?"
+    instructions = RULES[mechanism] + ("\n\n" + persona if persona else "") + "\n\nYou are the player in the state. Which action do you take now?"
     return {"type": "choice", "instructions": instructions, "criteria": {k: d for k, (_, d) in menu.items()}}
 
 
-def goal_question() -> dict:
+def goal_question(mechanism: str = "B") -> dict:
     return {
         "type": "choice",
-        "instructions": RULES + "\n\nFrom this player's point of view, which suit is the goal suit?",
+        "instructions": RULES[mechanism] + "\n\nFrom this player's point of view, which suit is the goal suit?",
         "criteria": {s: f"The goal suit is {s}." for s in SUITS},
     }
 
@@ -202,55 +262,79 @@ def hierarchical_choice(probs: dict[str, float]) -> str:
     return best({k: p for k, p in labels.items() if (k.split("_")[1] if "_" in k else "") == suit})
 
 
-class JevAgent(Agent):
-    """Asks Jev which action to take, optionally with the classical posterior as a hint.
+DECODES = ("sample", "argmax", "hierarchical")
 
-    `assist=True` gives Jev the card-counting goal probabilities (a hybrid:
-    code does the maths, Jev decides). `latency` defaults to Jev's measured
-    round-trip time when `use_measured_latency` is set.
+
+class JevAgent(Agent):
+    """Asks Jev which action to take and, in the same request, which suit is the goal suit.
+
+    The action is drawn at random with Jev's probabilities (`decode="sample"`, the experiment's setting);
+    "argmax" and "hierarchical" are kept to reproduce earlier runs. Context flags add the full event log
+    (`log`), a numeric summary of it (`summary`), or code-derived fields for ablations (`known`, `assist`).
+    Every decision is kept in `trace` for the game record, and every request carries `meta` (run, condition,
+    game, seat, time, decision number) into the client's log so calls can be joined to games.
     """
 
+    kind = "jev"
+
     def __init__(self, client, personality: str = "neutral", assist: bool = False, known: bool = False,
-                 log: bool = False, summary: bool = False, decode: str = "hierarchical",
-                 use_measured_latency: bool = False, **kw):
-        kw.setdefault("wake_rate", 0.5)
-        kw.setdefault("latency", 0.3)
+                 log: bool = False, summary: bool = False, decode: str = "sample", meta: dict | None = None,
+                 ask_goal: bool = True, **kw):
         super().__init__(**kw)
         if personality not in ALL_PERSONAS:
             raise ValueError(f"unknown personality {personality!r}; choose from {sorted(ALL_PERSONAS)}")
+        if decode not in DECODES:
+            raise ValueError(f"unknown decode {decode!r}; choose from {DECODES}")
         self.client = client
         self.personality = personality
         self.assist = assist
         self.known = known
         self.log = log
         self.summary = summary
-        self.decisions: list[tuple[float, str]] = []  # (time, label) of this seat's non-pass choices
-        if decode not in ("hierarchical", "argmax", "sample"):
-            raise ValueError(f"unknown decode {decode!r}")
         self.decode = decode
-        self.use_measured_latency = use_measured_latency
+        self.meta = dict(meta or {})
+        self.ask_goal = ask_goal
         flags = [f for f, on in (("log", log), ("summary", summary), ("known", known), ("assist", assist)) if on]
         self.name = f"jev:{personality}" + "".join(f"+{f}" for f in flags)
         self.last_answer = None
 
-    def latency(self) -> float:
-        return self.client.last_latency if self.use_measured_latency else self._latency
+    def start(self, *a, **kw):
+        super().start(*a, **kw)
+        self.decisions: list[tuple[float, str]] = []  # (time, label) of this seat's non-pass choices
+        self.trace: list[dict] = []
 
     def decide(self, view: View) -> Action:
         menu = action_menu(view)
         goal = self.counter.goal_probabilities() if self.assist else None
         state = add_context(view, self.counter.known() if self.known else None, goal, self.log, self.summary,
                             self.recent_decisions(view) if (self.log or self.summary) else None)
-        answer = self.client.ask(state, {"action": action_question(menu, self.personality)})["action"]
+        questions = {"action": action_question(menu, self.personality, view.mechanism)}
+        if self.ask_goal:
+            questions["goal"] = goal_question(view.mechanism)
+        n = len(self.trace)
+        meta = {**self.meta, "seat": view.me, "t": round(view.t, 3), "decision": n, "mechanism": view.mechanism,
+                "persona": self.personality, "decode": self.decode}
+        answers = self.client.ask(state, questions, meta=meta)
+        answer = answers["action"]
         self.last_answer = answer
         probs = answer.get("probabilities") or {answer["choice"]: 1.0}
         if self.decode == "argmax":
             label = answer["choice"]
         elif self.decode == "sample":
-            label = self.rng.choices(list(probs), weights=list(probs.values()))[0]
+            labels = [k for k in probs if k in menu]
+            label = self.rng.choices(labels, weights=[probs[k] for k in labels])[0] if labels else "pass"
         else:
             label = hierarchical_choice(probs)
         action = menu.get(label, (PASS, ""))[0]
+        kinds: dict[str, float] = {}
+        for k, p in probs.items():
+            kinds[k.split("_")[0]] = kinds.get(k.split("_")[0], 0.0) + p
+        rec = {"t": round(view.t, 3), "decision": n, "label": action.label(), "p_label": round(probs.get(label, 0.0), 5),
+               "menu": len(menu), "p_kind": {k: round(v, 4) for k, v in kinds.items()}}
+        if "goal" in answers:
+            g = answers["goal"].get("probabilities") or {answers["goal"]["choice"]: 1.0}
+            rec["goal"] = {s: round(g.get(s, 0.0), 5) for s in SUITS}
+        self.trace.append(rec)
         if action != PASS:
             self.decisions.append((view.t, action.label()))
         return action
@@ -265,6 +349,8 @@ class JevAgent(Agent):
             posted = any(t0 <= o.t < t1 and o.player == view.me for o in view.orders)
             if label.startswith(("buy", "sell")):
                 result = "filled" if traded else "not filled"
+            elif label.startswith("cancel"):
+                result = "sent"
             else:
                 result = "posted, then filled" if traded else "posted" if posted else "not accepted"
             out.append(f"t={round(t0)}s {label}: {result}")

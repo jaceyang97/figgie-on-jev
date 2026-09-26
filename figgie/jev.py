@@ -57,6 +57,27 @@ class JevError(RuntimeError):
     pass
 
 
+class CallBudget:
+    """A hard cap on Jev calls shared by every client in a run (the run's spending limit)."""
+
+    def __init__(self, max_calls: int | None):
+        self.max_calls = max_calls
+        self.calls = 0
+        self.lock = threading.Lock()
+
+    def take(self) -> None:
+        with self.lock:
+            if self.max_calls is not None and self.calls >= self.max_calls:
+                raise JevError(f"run budget of {self.max_calls} Jev calls reached")
+            self.calls += 1
+
+
+def write_log(path: str | None, lock: threading.Lock, record: dict) -> None:
+    if path:
+        with lock, open(path, "a") as f:
+            f.write(json.dumps(record) + "\n")
+
+
 def load_env_file(path: str = ".env.local") -> None:
     """Read NAME=VALUE lines into os.environ. Variables already set in the process win."""
     if not os.path.exists(path):
@@ -91,7 +112,8 @@ def pick_route(provider: str | None = None) -> tuple[str, dict, str]:
 
 
 class JevClient:
-    """Calls the real Jev API. Every call is appended to `log_path` (JSONL) if given.
+    """Calls the real Jev API. Every call is appended to `log_path` (JSONL) if given, with the caller's `meta`
+    (run, condition, game, seat, time, decision number) so each call can be joined to its game.
 
     Safe to share between threads: requests are paced by one rate limiter, and
     `last_latency` is per thread, so each game sees its own round-trip times.
@@ -101,7 +123,8 @@ class JevClient:
 
     def __init__(self, provider: str | None = None, model: str | None = None, log_path: str | None = None,
                  timeout: float = 20.0, max_calls: int | None = None, env_file: str = ".env.local",
-                 retries: int = 3, max_rps: float = MAX_RPS, limiter: RateLimiter | None = None):
+                 retries: int = 3, max_rps: float = MAX_RPS, limiter: RateLimiter | None = None,
+                 budget: CallBudget | None = None):
         load_env_file(env_file)
         self.provider, route, self.api_key = pick_route(provider)
         self.url = route["url"]
@@ -114,7 +137,9 @@ class JevClient:
         self.calls = 0
         self.input_tokens = 0
         self.limiter = limiter or RateLimiter(max_rps)
+        self.budget = budget
         self.lock = threading.Lock()
+        self.log_lock = threading.Lock()
         self.local = threading.local()
 
     @property
@@ -125,11 +150,13 @@ class JevClient:
     def cost_usd(self) -> float:
         return self.input_tokens * PRICE_PER_INPUT_TOKEN
 
-    def ask(self, state, questions: dict) -> dict:
+    def ask(self, state, questions: dict, meta: dict | None = None) -> dict:
         with self.lock:
             if self.max_calls is not None and self.calls >= self.max_calls:
                 raise JevError(f"max_calls={self.max_calls} reached")
             self.calls += 1
+        if self.budget:
+            self.budget.take()
         payload = {"model": self.model, "state": state, "questions": questions}
         headers = {"Content-Type": "application/json"}
         if self.api_key:
@@ -152,9 +179,8 @@ class JevClient:
         latency = self.local.latency = time.perf_counter() - start
         with self.lock:
             self.input_tokens += int(data.get("usage", {}).get("input_tokens", 0))
-            if self.log_path:
-                with open(self.log_path, "a") as f:
-                    f.write(json.dumps({"latency": latency, "request": payload, "response": data}) + "\n")
+        write_log(self.log_path, self.log_lock, {"meta": meta or {}, "wall_time": time.time(), "latency": latency,
+                                                 "request": payload, "response": data})
         return data["answers"]
 
 
@@ -162,23 +188,45 @@ class MockJev:
     """Offline stand-in with the same interface. It is NOT Jev.
 
     It answers every question with random probabilities, so results produced
-    with it only show that the pipeline runs; they say nothing about Jev.
+    with it only show that the pipeline runs; they say nothing about Jev. It
+    writes the same log records as the real client (with an estimated token
+    count), so the logging and cost paths can be checked for free.
     """
 
     backend = "mock"
 
-    def __init__(self, seed: int = 0, latency: float = 0.3, **_):
+    def __init__(self, seed: int = 0, latency: float = 0.3, log_path: str | None = None, max_calls: int | None = None,
+                 budget: CallBudget | None = None, **_):
         self.rng = random.Random(seed)
         self.lock = threading.Lock()
+        self.log_lock = threading.Lock()
         self.calls = 0
         self.input_tokens = 0
-        self.cost_usd = 0.0
         self.last_latency = latency
+        self.log_path = log_path
+        self.max_calls = max_calls
+        self.budget = budget
+        self.model = "mock"
 
-    def ask(self, state, questions: dict) -> dict:
+    @property
+    def cost_usd(self) -> float:
+        return self.input_tokens * PRICE_PER_INPUT_TOKEN
+
+    def ask(self, state, questions: dict, meta: dict | None = None) -> dict:
+        payload = {"model": self.model, "state": state, "questions": questions}
+        tokens = len(json.dumps(payload)) // 4  # rough: about 4 characters per token
         with self.lock:
+            if self.max_calls is not None and self.calls >= self.max_calls:
+                raise JevError(f"max_calls={self.max_calls} reached")
             self.calls += 1
-            return self._answer(questions)
+            self.input_tokens += tokens
+            answers = self._answer(questions)
+        if self.budget:
+            self.budget.take()
+        write_log(self.log_path, self.log_lock, {"meta": meta or {}, "wall_time": time.time(), "latency": self.last_latency,
+                                                 "request": payload,
+                                                 "response": {"answers": answers, "usage": {"input_tokens": tokens}}})
+        return answers
 
     def _answer(self, questions: dict) -> dict:
         answers = {}
@@ -200,7 +248,8 @@ class MockJev:
 
 def make_client(backend: str, **kw):
     if backend == "jev":
-        return JevClient(**{k: v for k, v in kw.items() if k in ("provider", "log_path", "max_calls", "max_rps", "limiter")})
+        return JevClient(**{k: v for k, v in kw.items()
+                            if k in ("provider", "log_path", "max_calls", "max_rps", "limiter", "budget")})
     if backend == "mock":
         return MockJev(**kw)
     raise ValueError(f"unknown backend {backend!r}")

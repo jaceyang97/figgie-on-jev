@@ -1,14 +1,25 @@
-"""Run every Jev personality against the same field and print one table.
+"""Stage 2, the game layer: every Jev condition and its rule-based twin, in both rule sets.
 
-Each personality takes one seat against the same three opponents, so the rows
-are directly comparable. Each rule-based twin (and any other baseline) takes
-the same seat too. All seats and games run at once; one rate limiter keeps
-the Jev calls under the API's request limit. Market columns show how that one participant changes
-the game for everyone.
+A condition is one rule set (A or B) and one Jev persona: neutral (no persona)
+or one of the six trader types in algorithm wording (`jev:<type>`) or
+behaviour wording (`jev:<type>-desc`). Each condition takes the tested seat
+against the same three opponents (the paper's line-up: fundamentalist,
+bottom-feeder, noise trader). Each twin, the rule-based trader of the same
+type, takes the same seat in the same games; the twin of neutral is the
+fundamentalist. All conditions and twins use the same game seeds, so game g
+has the same deal everywhere. All seats and games run at once; one rate
+limiter and one call budget cover the whole run.
+
+Output, per rule set: <out>/<mech>/games/<name>.jsonl (full game records,
+also the checkpoint: a rerun with the same arguments resumes) and
+<out>/<mech>/logs/<name>.jsonl (every Jev request and response with its game,
+seat and decision number). <out>/run.json records the code version, the
+settings and which twin belongs to which condition. Analyse with
+figgie.experiments.paired.
 
 Usage:
-  python -m figgie.experiments.sweep --backend mock --games 10
-  python -m figgie.experiments.sweep --backend jev --games 20 --field fundamentalist,bottom_feeder,chartist
+  python -m figgie.experiments.sweep --backend mock --games 2 --out /tmp/stage2
+  python -m figgie.experiments.sweep --backend jev --provider openrouter --games 40 --out results/stage2
 """
 
 from __future__ import annotations
@@ -19,82 +30,94 @@ import os
 from concurrent.futures import ThreadPoolExecutor
 from types import SimpleNamespace
 
-from ..agents import CLASSICAL
-from ..jev import MAX_RPS, RateLimiter, make_client
-from ..personalities import PERSONALITIES
+from ..agents import TYPES
+from ..jev import MAX_RPS, CallBudget, RateLimiter, make_client
+from ..records import write_run_header
+from .tournament import add_common_args
 from .tournament import run as run_tournament
+
+
+def conditions(types, wordings, neutral: bool = True) -> list[str]:
+    """Jev personas: neutral, then each type in each wording."""
+    out = ["neutral"] if neutral else []
+    for t in types:
+        for w in wordings:
+            out.append(t if w == "alg" else f"{t}-desc")
+    return out
+
+
+def twin_of(persona: str) -> str:
+    base = persona.removesuffix("-desc")
+    return "fundamentalist" if base == "neutral" else base
 
 
 def main(argv=None):
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    ap.add_argument("--backend", choices=["mock", "jev"], default="mock")
-    ap.add_argument("--provider", choices=["openrouter", "typesafe"], default=None,
-                    help="Jev route (default: OpenRouter if OPENROUTER_API_KEY is set, else TypeSafe)")
+    add_common_args(ap)
+    ap.add_argument("--mechanisms", default="A,B")
     ap.add_argument("--field", default="fundamentalist,bottom_feeder,noise", help="the three fixed opponents")
-    ap.add_argument("--personalities", default=",".join(PERSONALITIES))
-    ap.add_argument("--baselines", default=",".join(CLASSICAL),
-                    help="rule-based agents to put in the same seat for reference ('' for none)")
-    ap.add_argument("--assist", action="store_true", help="give each Jev agent the exact goal probabilities")
-    ap.add_argument("--context", default="", help="comma list of extra context parts: log, summary, known, assist")
-    ap.add_argument("--games", type=int, default=10)
-    ap.add_argument("--duration", type=float, default=240.0)
-    ap.add_argument("--jev-latency", type=float, default=None)
-    ap.add_argument("--seed", type=int, default=0)
-    ap.add_argument("--max-calls", type=int, default=5000, help="hard cap on Jev API calls per personality")
+    ap.add_argument("--types", default=",".join(TYPES))
+    ap.add_argument("--wordings", default="alg,desc", help="alg (algorithm persona), desc (behaviour persona)")
+    ap.add_argument("--no-neutral", action="store_true")
+    ap.add_argument("--context", default="summary", help="Jev state version: comma list of log, summary, known, assist")
+    ap.add_argument("--games", type=int, default=40)
+    ap.add_argument("--max-calls", type=int, default=140_000, help="hard cap on Jev calls for the whole run")
     ap.add_argument("--max-rps", type=float, default=MAX_RPS, help="Jev requests per second, shared by all seats")
-    ap.add_argument("--log-dir", help="write each Jev seat's requests and responses to <dir>/<personality>.jsonl")
-    ap.add_argument("--out", help="write sweep.json here; finished games are checkpointed in <out>/games/ and a "
-                    "rerun with the same arguments resumes from them")
+    ap.add_argument("--out", required=True)
     args = ap.parse_args(argv)
 
     field = args.field.split(",")
     if len(field) != 3:
         raise SystemExit("--field needs exactly 3 agents")
-    parts = [p for p in args.context.split(",") if p] + (["assist"] if args.assist else [])
-    flags = "".join(f"+{p}" for p in parts)
-    seats = [(p, f"jev:{p}{flags}") for p in args.personalities.split(",") if p]
-    seats += [(f"[{b}]", b) for b in args.baselines.split(",") if b]
-    limiter = RateLimiter(args.max_rps)
-    if args.log_dir:
-        os.makedirs(args.log_dir, exist_ok=True)
-    if args.out:
-        os.makedirs(os.path.join(args.out, "games"), exist_ok=True)
+    flags = "".join(f"+{p}" for p in args.context.split(",") if p)
+    personas = conditions([t for t in args.types.split(",") if t], args.wordings.split(","), not args.no_neutral)
+    twins = sorted({twin_of(p) for p in personas})
+    mechanisms = args.mechanisms.split(",")
+    run_id = os.path.basename(os.path.normpath(args.out))
+    write_run_header(args.out, "stage2", {**vars(args), "personas": personas, "twins": twins,
+                                          "twin_of": {p: twin_of(p) for p in personas}})
+
+    seats = []
+    for mech in mechanisms:
+        for sub in ("games", "logs"):
+            os.makedirs(os.path.join(args.out, mech, sub), exist_ok=True)
+        seats += [(mech, p, f"jev:{p}{flags}") for p in personas]
+        seats += [(mech, f"[{t}]", t) for t in twins]
+    limiter, budget = RateLimiter(args.max_rps), CallBudget(args.max_calls)
 
     def play(seat):
-        p, spec = seat
+        mech, name, spec = seat
         client = None
         if spec.startswith("jev"):
-            log = os.path.join(args.log_dir, f"{p}.jsonl") if args.log_dir else None
-            client = make_client(args.backend, seed=args.seed, log_path=log, max_calls=args.max_calls,
-                                 provider=args.provider, limiter=limiter)
+            client = make_client(args.backend, seed=args.seed, provider=args.provider, limiter=limiter, budget=budget,
+                                 log_path=os.path.join(args.out, mech, "logs", f"{name}.jsonl"))
         t = SimpleNamespace(backend=args.backend, provider=args.provider, lineup=",".join([spec] + field),
-                            games=args.games, duration=args.duration, jev_latency=args.jev_latency, seed=args.seed,
-                            max_calls=args.max_calls, log=None, out=None, workers=None,
-                            checkpoint=os.path.join(args.out, "games", f"{p}.jsonl") if args.out else None)
+                            games=args.games, duration=args.duration, max_events=args.max_events, speed=args.speed,
+                            decode=args.decode, seed=args.seed, mechanism=mech, tested=0, condition=f"{mech}/{name}",
+                            run_id=run_id, max_calls=None, log=None, out=None, workers=None,
+                            checkpoint=os.path.join(args.out, mech, "games", f"{name}.jsonl"))
         try:
             s = run_tournament(t, client)
         except RuntimeError as e:
-            print(f"WARNING {p}: {e}")
-            return p, None
+            print(f"WARNING {mech}/{name}: {e}")
+            return (mech, name), None
         key = spec if spec in s["agents"] else f"{spec}#0"
-        return p, {"games": s["games"], "jev": s["agents"][key], "field": {k: v["mean_pnl"] for k, v in s["agents"].items() if k != key},
-                   "market": s["market"], "calls": s.get("jev_calls", 0), "cost_usd": s.get("cost_usd", 0.0)}
+        return (mech, name), {"games": s["games"], "failed": s["games_failed"], "seat": s["agents"][key],
+                              "market": s["market"], "calls": s.get("jev_calls", 0), "cost_usd": s.get("cost_usd", 0.0)}
 
-    # Every seat and every game runs at once; the shared limiter paces the Jev calls.
     with ThreadPoolExecutor(max_workers=len(seats)) as pool:
-        rows = {p: r for p, r in pool.map(play, seats) if r is not None}
+        rows = {k: r for k, r in pool.map(play, seats) if r is not None}
 
     if args.backend == "mock":
-        print("NOTE: the mock backend answers at random and ignores personalities; Jev rows say nothing about Jev.\n")
-    print(f"{'agent in seat':<18}{'games':>6}{'P&L':>9}{'95% CI':>20}{'trades':>9}{'mkt trades':>12}{'mispricing':>12}")
-    for p, r in rows.items():
-        lo, hi = r["jev"]["ci95"]
-        print(f"{p:<18}{r['games']:>6}{r['jev']['mean_pnl']:>9.1f}{f'[{lo:.0f}, {hi:.0f}]':>20}{r['jev']['trades_per_game']:>9.1f}"
-              f"{r['market']['trades_per_game']:>12.1f}{r['market']['mean_mispricing_chips']:>12.2f}")
-    if args.out:
-        os.makedirs(args.out, exist_ok=True)
-        with open(os.path.join(args.out, "sweep.json"), "w") as f:
-            json.dump(rows, f, indent=2)
+        print("NOTE: the mock backend answers at random and ignores personas; Jev rows say nothing about Jev.\n")
+    print(f"{'condition':<28}{'games':>6}{'P&L':>9}{'95% CI':>18}{'trades':>8}{'calls':>8}{'US$':>8}")
+    for (mech, name), r in sorted(rows.items()):
+        lo, hi = r["seat"]["ci95"]
+        print(f"{mech + '/' + name:<28}{r['games']:>6}{r['seat']['mean_pnl']:>9.1f}{f'[{lo:.0f}, {hi:.0f}]':>18}"
+              f"{r['seat']['trades_per_game']:>8.1f}{r['calls']:>8}{r['cost_usd']:>8.3f}")
+    print(f"\ntotal Jev calls {budget.calls}, estimated cost US${sum(r['cost_usd'] for r in rows.values()):.2f}")
+    with open(os.path.join(args.out, "summary.json"), "w") as f:
+        json.dump({f"{m}/{n}": r for (m, n), r in rows.items()}, f, indent=2)
 
 
 if __name__ == "__main__":
