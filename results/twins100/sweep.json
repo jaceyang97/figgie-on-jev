@@ -1,0 +1,114 @@
+{
+  "[fundamentalist]": {
+    "games": 100,
+    "jev": {
+      "mean_pnl": 32.98,
+      "ci95": [
+        22.02,
+        43.95
+      ],
+      "trades_per_game": 16.48,
+      "rejected_orders_per_game": 70.51
+    },
+    "field": {
+      "bottom_feeder": -0.3,
+      "noise": -65.65
+    },
+    "market": {
+      "trades_per_game": 33.83,
+      "mean_mispricing_chips": 6.09
+    },
+    "calls": 0,
+    "cost_usd": 0.0
+  },
+  "[bottom_feeder]": {
+    "games": 100,
+    "jev": {
+      "mean_pnl": 15.13,
+      "ci95": [
+        7.51,
+        23.58
+      ],
+      "trades_per_game": 8.91,
+      "rejected_orders_per_game": 90.6
+    },
+    "field": {
+      "fundamentalist": 40.48,
+      "noise": -70.74
+    },
+    "market": {
+      "trades_per_game": 29.31,
+      "mean_mispricing_chips": 6.2
+    },
+    "calls": 0,
+    "cost_usd": 0.0
+  },
+  "[chartist]": {
+    "games": 100,
+    "jev": {
+      "mean_pnl": -96.3,
+      "ci95": [
+        -116.13,
+        -77.65
+      ],
+      "trades_per_game": 10.89,
+      "rejected_orders_per_game": 47.68
+    },
+    "field": {
+      "fundamentalist": 97.03,
+      "bottom_feeder": 52.06,
+      "noise": -52.79
+    },
+    "market": {
+      "trades_per_game": 32.91,
+      "mean_mispricing_chips": 10.16
+    },
+    "calls": 0,
+    "cost_usd": 0.0
+  },
+  "[noise]": {
+    "games": 100,
+    "jev": {
+      "mean_pnl": -62.06,
+      "ci95": [
+        -70.97,
+        -54.1
+      ],
+      "trades_per_game": 20.95,
+      "rejected_orders_per_game": 45.31
+    },
+    "field": {
+      "fundamentalist": 91.91,
+      "bottom_feeder": 32.21
+    },
+    "market": {
+      "trades_per_game": 42.21,
+      "mean_mispricing_chips": 7.03
+    },
+    "calls": 0,
+    "cost_usd": 0.0
+  },
+  "[market_maker]": {
+    "games": 100,
+    "jev": {
+      "mean_pnl": -31.94,
+      "ci95": [
+        -42.72,
+        -20.58
+      ],
+      "trades_per_game": 14.19,
+      "rejected_orders_per_game": 131.3
+    },
+    "field": {
+      "fundamentalist": 71.23,
+      "bottom_feeder": 20.35,
+      "noise": -59.64
+    },
+    "market": {
+      "trades_per_game": 33.03,
+      "mean_mispricing_chips": 7.08
+    },
+    "calls": 0,
+    "cost_usd": 0.0
+  }
+}
