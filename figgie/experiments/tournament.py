@@ -184,7 +184,7 @@ def add_common_args(ap: argparse.ArgumentParser) -> None:
     ap.add_argument("--duration", type=float, default=240.0)
     ap.add_argument("--max-events", type=int, default=None, help="end games after this many events (the paper: 10000)")
     ap.add_argument("--speed", default="equal", help="'equal' (0.5/s, 0.3 s), 'paper' (1/s, 0 s) or '<rate>/<latency>'")
-    ap.add_argument("--decode", choices=["sample", "argmax", "hierarchical"], default="sample")
+    ap.add_argument("--decode", choices=["sample", "argmax"], default="sample")
     ap.add_argument("--seed", type=int, default=0)
 
 

@@ -46,19 +46,24 @@ Jev context flags: `+summary` and `+log` add facts from the game (the public tra
 
 Speed: `--speed equal` (default; every trader decides 0.5 times per second on average and its order arrives 0.3 s later), `--speed paper` (1 per second, no delay) or `--speed <rate>/<latency>`. A spec can carry its own speed: `fundamentalist@1/200`.
 
-Jev's action is a sample from its probabilities over the whole menu (`--decode sample`, the default). The menu has pass, take the best price, cancel (A only) and bids and asks at the prices 1 to 20 and 22 to 40 in steps of 2: at most 253 options, below Jev's limit of 255.
+Jev's action is a sample from its probabilities over the whole menu (`--decode sample`, the default; `--decode argmax` takes Jev's most probable option instead). The menu has pass, take the best price, cancel (A only) and bids and asks at the prices 1 to 20 and 22 to 40 in steps of 2: at most 253 options, below Jev's limit of 255.
 
 ## Experiments
 
 | Stage | Command | What it does | Cost |
 |---|---|---|---|
 | 0 | `figgie.experiments.replicate --out results/stage0` | The paper's line-ups (figures 3 to 5, tables 2 and 3), 100 games each, in A with 10,000 events, A with 240 s and B with 240 s, at the paper's speed and the equal speed. Also the profit noise of each trader type in the stage 2 line-up. Writes `report.md`. | Free |
-| 1 | `figgie.experiments.stage1 moments / ask / analyse` | Frozen moments from rule-based games. 1a: persona wording (algorithm, behaviour, none) against the twin. 1b: five state versions, goal-suit belief against card counting. 1c: repeatability. | About US$1.5 |
-| 2 | `figgie.experiments.sweep --backend jev --out results/stage2` | 26 conditions (2 rule sets × (neutral + 6 types × 2 wordings)), 40 games each, and each condition's twin, against a fundamentalist, a bottom-feeder and a noise trader. All conditions use the same game seeds. `--max-calls` is a hard spending limit. | About US$28 |
+| 1 | `figgie.experiments.stage1 moments / ask / analyse` | Frozen moments from rule-based games. 1a: persona wording (algorithm, behaviour, none) against the twin. 1b: five state versions, goal-suit belief against card counting. 1c: repeatability. | US$1.02 (4,700 requests) |
+| 2 | `figgie.experiments.sweep --backend jev --out results/stage2` | 26 conditions (2 rule sets × (neutral + 6 types × 2 wordings)), 40 games each, and each condition's twin, against a fundamentalist, a bottom-feeder and a noise trader. All conditions use the same game seeds. `--max-calls` is a hard spending limit. | US$29.98 (117,789 requests) |
 | 2 | `figgie.experiments.paired --run results/stage2 --stage1 results/stage1/report.json` | Jev minus twin in the same seat and games: per condition, per rule set, A minus B, behaviour minus algorithm wording, the regression with and without the starting goal cards, neutral Jev against the fundamentalist and noise-trader twins (H4a), and the rank correlation of stage 1 overlap with the profit gap (H4b). | Free |
 | any | `figgie.experiments.tournament` | Any four-trader line-up. Seats rotate each game. | Free with rule-based traders |
 
-`figgie.experiments.compare` is the first run's decision study (rule set B only), kept to reproduce it.
+## Results and paper
+
+- `results/final/`: the study reported in the paper. `stage0/` holds the replication report; `stage1/` and `stage2/` hold every game record and every Jev request log (gzip; a local rerun writes the same files uncompressed), `run*.json` headers and the analysis reports (`report.json`, `paired.json`, `pairs.csv`).
+- `paper/`: `paper.tex` and `paper.pdf`, with `make_figures.py`, which rebuilds every figure and table from `results/final/` (needs matplotlib): `python paper/make_figures.py`, then `pdflatex paper.tex` twice in `paper/`.
+
+To rerun the analysis from the committed files, unzip them first: `find results/final -name '*.jsonl.gz' -exec gunzip -k {} +`.
 
 ## What is logged
 

@@ -26,7 +26,6 @@ from dataclasses import dataclass, field
 from .cards import SUITS
 
 MAX_ORDERS_PER_SIDE = 5  # rule set A; the paper gives no limit, this is our choice
-MECHANISMS = ("A", "B")
 
 
 @dataclass(frozen=True)

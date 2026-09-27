@@ -36,19 +36,6 @@ EXTENSION_SOURCES = {
 }
 
 
-def take_edges(view: View, values: dict[str, tuple[float, float]]) -> dict[Action, float]:
-    """Immediate expected gain, in chips, of every take (buy/sell) available right now."""
-    edges = {}
-    for s in SUITS:
-        buy_val, sell_val = values[s]
-        ask, bid = view.asks[s], view.bids[s]
-        if ask is not None and ask.player != view.me and ask.price <= view.chips:
-            edges[Action("buy", s)] = buy_val - ask.price
-        if bid is not None and bid.player != view.me and view.hand[s] > 0:
-            edges[Action("sell", s)] = bid.price - sell_val
-    return edges
-
-
 def trade_prices(view: View, suit: str) -> list[int]:
     return [t.price for t in view.trades if t.suit == suit]
 
@@ -148,19 +135,6 @@ class BottomFeeder(PaperAgent):
                     mids.append((sum(buys[-K_PREY:]) / K_PREY + sum(sells[-K_PREY:]) / K_PREY) / 2)
             out[s] = (sum(mids) / len(mids),) * 2 if mids else None
         return out
-
-
-def order_history(view: View, player: int, suit: str) -> tuple[list[int], list[int]]:
-    """Prices of the buy and sell orders `player` sent in `suit`, oldest first: quotes plus orders that traded."""
-    events: list[tuple[float, str, int]] = []
-    for o in view.orders:
-        if o.player == player and o.suit == suit:
-            events.append((o.t, o.side, o.price))
-    for t in view.trades:
-        if t.suit == suit and t.aggressor == player:
-            events.append((t.t, "bid" if t.buyer == player else "ask", t.price))
-    events.sort(key=lambda e: e[0])
-    return [p for _, side, p in events if side == "bid"], [p for _, side, p in events if side == "ask"]
 
 
 class Chartist(PaperAgent):

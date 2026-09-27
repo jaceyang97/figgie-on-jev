@@ -239,37 +239,14 @@ def add_context(view: View, known=None, goal_probs=None, log: bool = False, summ
     return state
 
 
-def hierarchical_choice(probs: dict[str, float]) -> str:
-    """Pick the action type with the most total probability, then the suit, then the single best label.
-
-    A plain argmax over the whole menu favours 'pass': it is one option, while
-    the probability of bidding is split over up to 120 (suit, price) options.
-    Summing within type and then suit first compares like with like.
-    """
-    def best(groups: dict[str, float]) -> str:
-        return max(groups, key=groups.get)
-
-    by_kind: dict[str, float] = {}
-    for label, p in probs.items():
-        by_kind[label.split("_")[0]] = by_kind.get(label.split("_")[0], 0.0) + p
-    kind = best(by_kind)
-    labels = {k: p for k, p in probs.items() if k.split("_")[0] == kind}
-    by_suit: dict[str, float] = {}
-    for label, p in labels.items():
-        suit = label.split("_")[1] if "_" in label else ""
-        by_suit[suit] = by_suit.get(suit, 0.0) + p
-    suit = best(by_suit)
-    return best({k: p for k, p in labels.items() if (k.split("_")[1] if "_" in k else "") == suit})
-
-
-DECODES = ("sample", "argmax", "hierarchical")
+DECODES = ("sample", "argmax")
 
 
 class JevAgent(Agent):
     """Asks Jev which action to take and, in the same request, which suit is the goal suit.
 
     The action is drawn at random with Jev's probabilities (`decode="sample"`, the experiment's setting);
-    "argmax" and "hierarchical" are kept to reproduce earlier runs. Context flags add the full event log
+    "argmax" (Jev's most probable option) is kept to reproduce an earlier run. Context flags add the full event log
     (`log`), a numeric summary of it (`summary`), or code-derived fields for ablations (`known`, `assist`).
     Every decision is kept in `trace` for the game record, and every request carries `meta` (run, condition,
     game, seat, time, decision number) into the client's log so calls can be joined to games.
@@ -296,7 +273,6 @@ class JevAgent(Agent):
         self.ask_goal = ask_goal
         flags = [f for f, on in (("log", log), ("summary", summary), ("known", known), ("assist", assist)) if on]
         self.name = f"jev:{personality}" + "".join(f"+{f}" for f in flags)
-        self.last_answer = None
 
     def start(self, *a, **kw):
         super().start(*a, **kw)
@@ -316,15 +292,12 @@ class JevAgent(Agent):
                 "persona": self.personality, "decode": self.decode}
         answers = self.client.ask(state, questions, meta=meta)
         answer = answers["action"]
-        self.last_answer = answer
         probs = answer.get("probabilities") or {answer["choice"]: 1.0}
         if self.decode == "argmax":
             label = answer["choice"]
-        elif self.decode == "sample":
+        else:
             labels = [k for k in probs if k in menu]
             label = self.rng.choices(labels, weights=[probs[k] for k in labels])[0] if labels else "pass"
-        else:
-            label = hierarchical_choice(probs)
         action = menu.get(label, (PASS, ""))[0]
         kinds: dict[str, float] = {}
         for k, p in probs.items():
