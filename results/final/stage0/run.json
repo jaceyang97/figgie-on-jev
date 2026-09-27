@@ -6,11 +6,11 @@
   "python": "3.11.15",
   "platform": "Linux-6.18.44-fc-v37-x86_64-with-glibc2.39",
   "argv": [
-    "/home/user/figgie-on-jev/figgie/experiments/replicate.py",
+    "figgie/experiments/replicate.py",
     "--workers",
     "3",
     "--out",
-    "/tmp/claude-0/-home-user-figgie-on-jev/2c011722-8036-5cab-b29d-a9348a71145c/scratchpad/stage0"
+    "results/final/stage0"
   ],
   "args": {
     "games": 100,
@@ -18,6 +18,6 @@
     "mde_games": 40,
     "seed": 0,
     "workers": 3,
-    "out": "/tmp/claude-0/-home-user-figgie-on-jev/2c011722-8036-5cab-b29d-a9348a71145c/scratchpad/stage0"
+    "out": "results/final/stage0"
   }
 }
