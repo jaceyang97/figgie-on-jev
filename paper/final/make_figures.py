@@ -193,7 +193,11 @@ def stage1():
     save(fig, "stage1_shares.pdf")
 
     # 1b: log loss per state version
-    fig, axes = plt.subplots(1, 2, figsize=(7.0, 2.0), sharey=True)
+    fig = plt.figure(figsize=(7.0, 2.3))
+    gs = fig.add_gridspec(1, 3, width_ratios=[1.0, 1.0, 0.85], wspace=0.35)
+    axes = [fig.add_subplot(gs[0, 0])]
+    axes.append(fig.add_subplot(gs[0, 1], sharey=axes[0]))
+    cal_ax = fig.add_subplot(gs[0, 2])
     versions = [("basic", "basic"), ("summary", "+summary"), ("log,summary", "+log+summary"), ("known", "+known"),
                 ("assist", "+assist")]
     for ax, mech in zip(axes, "AB"):
@@ -211,12 +215,12 @@ def stage1():
         ax.set_title(f"Rule set {mech}")
     axes[0].set_ylabel("log loss of the goal-suit belief\n(lower is better)")
     axes[0].legend(frameon=False, loc="upper left")
-    save(fig, "stage1_logloss.pdf")
+    plt.setp(axes[1].get_yticklabels(), visible=False)
 
     # calibration, +summary, A and B pooled
     moments = {m["id"]: m for m in load_jsonl("stage1", "moments.jsonl")}
     rows = [r for r in load_jsonl("stage1", "1b.jsonl") if r["context"] == "summary"]
-    fig, ax = plt.subplots(figsize=(2.6, 2.4))
+    ax = cal_ax
     for name, get, col in (("Jev (+summary)", lambda r: r["goal_probs"], C["jev"]),
                            ("card counting", lambda r: moments[r["moment"]]["card_counting"], C["cc"])):
         bins = [[0, 0.0, 0] for _ in range(10)]
@@ -232,11 +236,12 @@ def stage1():
         ax.plot([x for x, _, _ in pts], [y for _, y, _ in pts], "o-", ms=3, lw=0.9, color=col, label=name)
     ax.plot([0, 1], [0, 1], color="black", lw=0.6, ls="--")
     ax.set_xlabel("stated probability")
-    ax.set_ylabel("how often the suit was the goal")
+    ax.set_ylabel("share that was the goal suit")
     ax.set_xlim(0, 1)
     ax.set_ylim(0, 1)
+    ax.set_title("Calibration (A and B)")
     ax.legend(frameon=False, loc="upper left")
-    save(fig, "stage1_calibration.pdf")
+    save(fig, "stage1_belief.pdf")
 
     lines = []
     for mech in "AB":
@@ -355,7 +360,98 @@ def stage2():
     open(os.path.join(TAB, "stage2_secondary.tex"), "w").write("\n".join(lines) + "\n")
 
 
+# --- figure 1: one moment ---------------------------------------------------------------------------------------
+
+EXAMPLE = "A/fundamentalist/24/207.523"
+
+
+def example():
+    """One frozen moment: the facts fix the goal suit, Jev does not see it, and its persona does not help."""
+    moment = next((m for m in load_jsonl("stage1", "moments.jsonl") if m["id"] == EXAMPLE), None)
+    if moment is None:
+        return
+    goal = moment["goal"]
+    twelve = max(moment["known"], key=moment["known"].get)
+    beliefs = {r["context"]: r["goal_probs"] for r in load_jsonl("stage1", "1b.jsonl") if r["moment"] == EXAMPLE}
+    acts = {r["wording"]: r["action_probs"] for r in load_jsonl("stage1", "1a.jsonl")
+            if r["moment"] == EXAMPLE and r["persona"] in ("fundamentalist", "fundamentalist-desc")}
+    suits = [goal, twelve] + [s for s in SUITS if s not in (goal, twelve)]
+    fig, axes = plt.subplots(1, 2, figsize=(7.0, 2.2), gridspec_kw={"width_ratios": [1.0, 1.35]})
+    ax = axes[0]
+    series = [("card counting", {s: moment["card_counting"][s] for s in SUITS}, C["cc"]),
+              ("Jev, +summary", beliefs.get("summary"), C["jev"]),
+              ("Jev, +log+summary", beliefs.get("log,summary"), "#E8A07A"),
+              ("Jev, +known", beliefs.get("known"), "#999999")]
+    w = 0.2
+    for k, (lab, probs, col) in enumerate(series):
+        if probs:
+            ax.bar([i + (k - 1.5) * w for i in range(4)], [probs.get(s, 0) for s in suits], w, color=col, label=lab)
+    ax.set_xticks(range(4), [f"{suits[0]}\n(goal)", f"{suits[1]}\n(12 cards)", suits[2], suits[3]])
+    ax.set_ylabel("P(goal suit)")
+    ax.set_ylim(0, 1.3)
+    ax.set_yticks([0, 0.2, 0.4, 0.6, 0.8, 1.0])
+    ax.legend(frameon=False, loc="upper right", ncol=2, fontsize=6.5)
+    ax.set_title("(a) Which suit is the goal suit?")
+
+    def cats(d):
+        sell_bid = d.get(f"sell_{goal}", 0.0)
+        out = {"pass": d.get("pass", 0.0), f"sell a\n{goal[:-1]}\nat the bid": sell_bid,
+               f"offer a\n{goal[:-1]}\nabove it": sum(p for a, p in d.items() if a.startswith(f"ask_{goal}_")),
+               f"buy or\nbid\n{goal}": sum(p for a, p in d.items() if a in (f"buy_{goal}",) or a.startswith(f"bid_{goal}_")),
+               f"sell or\noffer\n{twelve}": sum(p for a, p in d.items() if a == f"sell_{twelve}" or a.startswith(f"ask_{twelve}_"))}
+        out["other"] = max(0.0, 1.0 - sum(out.values()))
+        return out
+    ax = axes[1]
+    rows = [("twin (rule-based)", moment["twin_dist"], C["twin"]),
+            ("Jev, algorithm persona", acts.get("algorithm"), C["alg"]),
+            ("Jev, behaviour persona", acts.get("behaviour"), C["desc"])]
+    labels = list(cats(moment["twin_dist"]))
+    w = 0.26
+    for k, (lab, d, col) in enumerate(rows):
+        if d:
+            v = cats(d)
+            ax.bar([i + (k - 1) * w for i in range(len(labels))], [v[x] for x in labels], w, color=col, label=lab)
+    ax.set_xticks(range(len(labels)), labels, fontsize=6.5)
+    ax.set_ylabel("probability")
+    ax.legend(frameon=False, loc="upper right")
+    ax.set_title("(b) What does the trader do?")
+    fig.tight_layout(w_pad=2)
+    save(fig, "example_moment.pdf")
+
+
+def decided():
+    """Stage 2 decisions at which card counting is certain of the goal suit: what does Jev believe there?"""
+    out = {}
+    for mech in "AB":
+        games_dir = os.path.join(RES, "stage2", mech, "games")
+        if not os.path.isdir(games_dir):
+            return
+        on_goal, on_ruled_out, games, total = [], [], 0, 0
+        for fn in sorted(os.listdir(games_dir)):
+            if fn.startswith("[") or not fn.endswith(".jsonl"):
+                continue
+            for line in open(os.path.join(games_dir, fn)):
+                rec = json.loads(line)
+                hit = False
+                for t in rec.get("jev_trace", {}).get(str(rec["tested_seat"]), []):
+                    if "goal" not in t or "card_counting" not in t:
+                        continue
+                    total += 1
+                    cc = t["card_counting"]
+                    if max(cc.values()) >= 0.999:
+                        hit = True
+                        on_goal.append(t["goal"].get(rec["goal"], 0.0))
+                        on_ruled_out.append(sum(t["goal"].get(s, 0.0) for s, p in cc.items() if p < 1e-9))
+                games += hit
+        out[mech] = {"decisions": total, "decided": len(on_goal), "games_with_decided": games,
+                     "jev_on_goal": round(mean(on_goal), 3), "jev_on_ruled_out": round(mean(on_ruled_out), 3)}
+    json.dump(out, open(os.path.join(TAB, "decided.json"), "w"), indent=1)
+    print("wrote decided.json", out)
+
+
 if __name__ == "__main__":
+    example()
+    decided()
     stage0()
     stage1()
     stage2()

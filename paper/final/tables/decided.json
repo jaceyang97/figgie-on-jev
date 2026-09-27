@@ -1,0 +1,16 @@
+{
+ "A": {
+  "decisions": 57635,
+  "decided": 1989,
+  "games_with_decided": 62,
+  "jev_on_goal": 0.263,
+  "jev_on_ruled_out": 0.737
+ },
+ "B": {
+  "decisions": 57717,
+  "decided": 859,
+  "games_with_decided": 30,
+  "jev_on_goal": 0.288,
+  "jev_on_ruled_out": 0.712
+ }
+}
